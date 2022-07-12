@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_vm01_name": {
+            "value": null
+        },
+        "virtualNetworks_vnet1_name": {
+            "value": null
+        },
+        "networkInterfaces_vm01VMNic_name": {
+            "value": null
+        },
+        "networkSecurityGroups_vm01NSG_name": {
+            "value": null
+        },
+        "publicIPAddresses_vm01PublicIP_name": {
+            "value": null
+        }
+    }
+}

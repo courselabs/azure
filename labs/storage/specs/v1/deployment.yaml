@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-worker
+spec:
+  selector:
+    matchLabels:
+      app: queue-worker
+  template:
+    metadata:
+      labels:
+        app: queue-worker
+    spec:
+      containers:
+        - name: app
+          image: courselabs/queue-worker:6.0
+          volumeMounts:
+            - name: config
+              mountPath: "/app/appsettings.json"
+              subPath: appsettings.json
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name:  config-queue-worker
+            

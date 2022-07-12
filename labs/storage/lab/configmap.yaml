@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-queue-worker
+data:
+  appsettings.json: |-
+    {
+      "Logging": {
+        "LogLevel": {
+          "Default": "Debug",
+          "Microsoft.Hosting.Lifetime": "Warning"
+        }
+      },
+      "App": {
+        "Environment": "PROD",
+        "SleepMilliseconds": 20000
+      },
+      "Paths": {
+        "Cache": "/mnt/cache",
+        "Database": "/mnt/database",
+        "Temp": "/app/tmp"
+      }
+    }
