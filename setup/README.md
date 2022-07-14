@@ -30,11 +30,11 @@ Docker Desktop is the easiest way to get Kubernetes:
 
 - [Install Docker Desktop - Mac or Windows](https://www.docker.com/products/docker-desktop)
 
-- [Install Docker Desktop - Linux beta version](https://docs.docker.com/desktop/linux/#download-and-install)
+- [Install Docker Desktop - Linux ](https://docs.docker.com/desktop/install/linux-install/)
 
 The download and install takes a few minutes. When it's done, run the _Docker_ app and you'll see the Docker whale logo in your taskbar (Windows) or menu bar (macOS).
 
-> On Windows 10 the install may need a restart before you get here.
+> On Windows the install may need a restart before you get here.
 
 Right-click that whale and click _Settings_:
 

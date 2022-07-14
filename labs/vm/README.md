@@ -19,14 +19,14 @@ Open the Portal and search to create a new Virtual Machine resource. There are l
 - size - how does compute capacity affect cost?
 - authentication and inbound ports - how will you connect to your VM?
 
-Select the _SQL databases_ otion and choose to create a _Single database_. Look at the required options - what other resources do you need to create before you get to the database?
+The basic options cover the OS type, CPU, memory and connectivity. Look at the required options - what other resources do you need to create before you get to the VM?
 
-> A SQL database belongs to a SQL Server instance, which belongs in a resource group; you can typically create dependent resources directly in the portal.
+> All resources belong inside a resource group; you can typically create dependent resources directly in the portal.
 
-Follow the link to create a new SQL Server for your database:
+Check the _Disks_ and _Networking_ tabs and you'll see how you can configure VMs with the exact setup you need:
 
-- you need a server name and a location. Can you use any name?
-- you also need to select the authentication types. Windows authentication is preferred in the datacenter, but the default here is for SQL authentication. Why might that be more suitable in the cloud?
+- you can add multiple disks to the VM. What are the performance differences with disk types?
+- you can configure network access at the port level. What type of object can you create to enforce those rules?
 
 We won't go on to create the VM in the portal, we'll use the CLI instead.
 
@@ -44,19 +44,19 @@ _Find a valid (small) VM size for your subscription & region:_
 
 ```
 # with PowerShell:
-az vm list-sizes -o table --query "[?numberOfCores<=``2`` && memoryInMb < ``2000``]" --location "westeurope"
+az vm list-sizes -o table --query "[?numberOfCores<=``2`` && memoryInMb==``2048``]" --location "westeurope"
 
 # or Bash:
-az vm list-sizes -o table --query "[?numberOfCores<=\`2\` && memoryInMb < \`2000\`]" --location "westeurope"
+az vm list-sizes -o table --query "[?numberOfCores<=\`2\` && memoryInMb==\`2048\`]" --location "westeurope"
 ```
 
+> JMESPath takes some getting used to. How are we filtering the list of VMs?
 
+The VM sizes available will depend on your subscription, the region you choose and the spare capacity in that region. The Azure free trial subscriptions might have restrictions which paid subscriptions don't. 
 
-Now you can create the SQL Server which will be the host for the database.
+Now you can create a small VM which will be cheap to run.
 
-> You'll need to find a globally unique name for the server, because it gets used as the public DNS name.
-
-📋 Create a database server using a `sql server create` command. There are a few parameters you'll need to specify.
+📋 Create an Ubuntu Server VM using a `vm create` command. There are a few parameters you'll need to specify.
 
 <details>
   <summary>Not sure how?</summary>
@@ -64,92 +64,81 @@ Now you can create the SQL Server which will be the host for the database.
 Print the help text:
 
 ```
-az sql server create --help
+az vm create --help
 ```
 
 As a minimum you need to specify:
 
 - resource group
 - location
-- server name (must be globally unique)
-- administrator account name
-- administrator password (must meet the password policy) 
+- VM name 
+- OS image
 
 This will get you started:
 
 ```
-# you'll need to supply your own name and password:
-az sql server create -l eastus -g labs-sqlserver -n <server-name> -u sqladmin -p <admin-password>
+# it's good to include a size, as the default might not be available
+az vm create -l eastus -g labs-vm -n vm01 --image UbuntuLTS --size Standard_A1_v2
 ```
 
 </details><br/>
 
-> Creating a new SQL Server takes a few minutes. While it's running, check the docs to answer this:
+> Creating a new VM takes a few minutes. While it's running, check the docs to answer this:
 
-- what is the running cost for a SQL Server with no databases?
+- what is the running cost for your new VM?
+- why is an "A" or "B" series VM not a good idea for normal workloads?
 
-When your SQL Server is created, browse to the portal and find the server properties. Now you can see that the server name needs to be globally unique.
+When your VM is created, browse to the portal and open the Resource Group. You'll see the VM together with all the supporting resources.
 
-## Create a SQL Database
+## Connect to the VM
 
-The SQL Server is a container for zero or more databases. When it's created you can use the `sql db create` command to create a new database in the server.
+This is a Linux VM, so you can use [SSH]() to connect - the SSH command line is installed by default on MacOS, Linux and the latest Windows machines.
 
-📋 Create a database called `db01` in your SQL Server using the `az` command.
+📋 Find the IP address of your server and connect with `ssh`. 
 
 <details>
   <summary>Not sure how?</summary>
 
-You need to supply the SQL Server name, resource group and a database name:
+The key details of the VM are printed when the `vm create` command completes. You can print them again with the `vm show` command:
 
 ```
-az sql db create -g labs-sqlserver -n db01 -s <server-name>
+az vm show --help
 ```
 
+You'll see there's a parameter to set if you want to include the IP address in the response:
+
+```
+az vm show -g labs-vm -n vm01 --show-details
+```
+
+The field you want is `publicIps`. You can add a query to return just that field and store the IP address in a variable:
+
+```
+# using PowerShell:
+$pip=$(az vm show -g labs-vm -n vm01 --show-details --query "publicIps" -o tsv)
+
+# or a Linux shell:
+pip=$(az vm show -g labs-vm -n vm01 --show-details --query "publicIps" -o tsv)
+```
+
+(Or you can find the public IP address from the Portal).
+
+Now you can connect:
+
+```
+# PowerShell:
+ssh $pip
+```
 </details><br/>
 
-> This will also take a couple of minutes; check the portal to see the status. In the meantime, can you answer:
+You should be able to connect without specifying a username or password. 
 
-- what is the default size for a new database?
-- why don't you need to supply admin credentials for the new database?
+This is a standard Ubuntu Server VM. You can run typical commands like:
 
-When the database is created, it's just a standard SQL Server instance which you can connect to from a remote client.
-
-## Connect to the Database
-
-The portal view for SQL Databases shows connection strings. Use that to connect to the database with a SQL client:
-
-- you can use Visual Studio or SQL Server Management Studio if you have them
-- or the [SQL Server Extension for VS Code](https://docs.microsoft.com/en-us/sql/tools/visual-studio-code/sql-server-develop-use-vscode?view=sql-server-ver15)
-- or a simple client like [Sqlectron](https://github.com/sqlectron/sqlectron-gui/releases/tag/v1.32.1) (don't download a newer version than 1.32 because of [issue 699](https://github.com/sqlectron/sqlectron-gui/issues/699))
-
-📋 Try to connect with the SQL Server credentials - can you access the database?
-
-<details>
-  <summary>Not sure?</summary>
-
-You'll see an error like this:
-
-*Cannot open server 'sql-labs-03' requested by the login. Client with IP address '216.213.184.119' is not allowed to access the server. To enable access, use the Windows Azure Management Portal or run sp_set_firewall_rule on the master database to create a firewall rule for this IP address or address range. It may take up to five minutes for this change to take effect.*
-
-</details><br/>
-
-SQL Server has an IP block, so you need to explicitly allow access to clients based on the originating IP address.
-
-In the portal, open the **SQL Server** instance and find the firewall settings. On that page you can easily add your own IP address to the rules, so you will be allowed access - then try the connection again.
-
-## Query the Database
-
-When you successfuly connect, you're using the administrator credentials so you can run DDL and DML statements:
-
-```
-CREATE TABLE students (id INT IDENTITY, email NVARCHAR(150))
-
-INSERT INTO students(email) VALUES ('elton@sixeyed.com')
-
-SELECT * FROM students
-```
-
-> You could use this database with a .NET application - setting the connection string in config, and having the database schema automatically created with Entity Framework.
+- `top` to see the processes running
+- `uname -a` to see the details of the Linux build
+- etc
+- `exit` to leave the SSH session
 
 ## Lab
 
@@ -164,5 +153,5 @@ ___
 If you didn't finish the lab, you can delete the RG with this command to remove all the resources:
 
 ```
-az group delete -y -n labs-sqlserver
+az group delete -y -n labs-vm
 ```
