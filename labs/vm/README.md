@@ -78,7 +78,7 @@ This will get you started:
 
 ```
 # it's good to include a size, as the default might not be available
-az vm create -l eastus -g labs-vm -n vm01 --image UbuntuLTS --size Standard_A1_v2
+az vm create -l westeurope -g labs-vm -n vm01 --image UbuntuLTS --size Standard_A1_v2
 ```
 
 </details><br/>
@@ -126,7 +126,6 @@ pip=$(az vm show -g labs-vm -n vm01 --show-details --query "publicIps" -o tsv)
 Now you can connect:
 
 ```
-# PowerShell:
 ssh $pip
 ```
 </details><br/>
@@ -137,12 +136,12 @@ This is a standard Ubuntu Server VM. You can run typical commands like:
 
 - `top` to see the processes running
 - `uname -a` to see the details of the Linux build
-- etc
+- `curl https://azure.courselabs.co` to make an HTTP request
 - `exit` to leave the SSH session
 
 ## Lab
 
-Use CLI to delete the SQL database. When the database is gone the SQL Server still exists - can you retrieve the data from your deleted database? Now delete the resource group, does the SQL Server still exist?
+Use the CLI to delete the print the details of the VM's disk. What is the disk performance in read/write IOPS? Then delete the VM - does the disk get deleted too?
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
@@ -150,7 +149,7 @@ ___
 
 ## Cleanup
 
-If you didn't finish the lab, you can delete the RG with this command to remove all the resources:
+Delete the RG with this command and that will remove all the resources:
 
 ```
 az group delete -y -n labs-vm
