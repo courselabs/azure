@@ -1,5 +1,6 @@
 # Virtual Machines - Web Server
 
+vm as web server - public access, DNS entry, IP address
 
 
 ## Reference
@@ -133,7 +134,7 @@ Run this to stop and deallocate the VM :
 
 ```
 az vm deallocate -g labs-vm-web -n vm01
-```
+``` 
 
 Then check your PIP:
 
