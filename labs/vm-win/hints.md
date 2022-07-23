@@ -1,7 +1,7 @@
 # Lab Hints
 
-When resources are related to each other in Azure you can usually find the ID or name of related objects when you print the details of the main object. Running `az vm show` with additional details will get you the 
+Disks need to be initialized and formatted in Windows before you can use them
 
-To get all the details you need to look at the resource directly - the [Azure CLI docs](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest) are worth exploring so you know how to find what you need.
+Look for a disk management app in your Windows session...
 
 > Need more? Here's the [solution](solution.md).

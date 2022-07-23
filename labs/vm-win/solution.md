@@ -1,37 +1,11 @@
 # Lab Solution
 
-Print the details of the VM:
+Open _Disk management_. It will tell you the new disk needs to be initialized:
 
-```
-az vm show -g labs-vm -n vm01
-```
+- click _OK_ to initialize it
+- right-click the 2TB disk and select _New Simple volume_
+- click _Next_ all the way through the wizard until you get to click _Finish_
 
-In there you'll see a section for `osDisk` which includes the ID and name. That's nested inside the `storageProfile` object. You can filter the output to store the disk name in a variable:
-
-```
-# PowerShell:
-$diskName=$(az vm show -g labs-vm -n vm01 --query "storageProfile.osDisk.name" -o tsv)
-
-# sh:
-diskName=$(az vm show -g labs-vm -n vm01 --query "storageProfile.osDisk.name" -o tsv)
-```
-
-Now you can use the [az disk]() commands to show all the details of the disk:
-
-```
-az disk show --help
-
-az disk show -g labs-vm -n $diskName
-```
-
-You'll see the IOPS in the field `diskIopsReadWrite` - different disk types have different performance levels.
-
-Now delete the VM:
-
-```
-az vm delete -g labs-vm -n vm01 --yes
-```
-
-Check the Resource Group in the Portal - you'll see the disk and all the network resources are retained after the VM is deleted.
+Now you'll have a nice big data drive attached to your VM as `E:`.
 
 > Back to the [exercises](README.md).

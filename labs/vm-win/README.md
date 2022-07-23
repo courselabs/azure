@@ -110,13 +110,19 @@ az vm disk attach -g labs-vm-win --vm-name dev01 --name dev01data --new --sku Pr
 
 ## Connect and install dev tools
 
-- RDP/mac/remima
+You can connect to your VM using a Remote Desktop client:
 
--ps script to install choco, then git & vscode
+- on Windows - use the built-in Remote Desktop Connection app
+- on Mac - install Microsoft Remote Desktop from the App Store
+- on Linux - [Remmina](https://remmina.org) is a good option
+
+Use your DNS name and admin credentials to connect to the VM. You'll launch into a Windows session with the final installation steps.
+
+Copy the [setup.ps1](setup.ps1) PowerShell script to the VM and run it in a PowerShell session. That installs Git and VS Code, so you'll be ready to work.
 
 ## Lab
 
-
+Open Windows Explorer on your VM and check the machine setup. You'll see there's only one disk. But check in the Azure Portal and you'll see the second data disk attached to the VM. It's there but you'll need to configure the OS to initialize it.
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 

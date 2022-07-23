@@ -20,9 +20,9 @@ _Resource Groups and Virtual Machines_
 - [Signing In](labs/signin/README.md)
 - [Regions and Resource Groups](labs/resourcegroups/README.md)
 - [Virtual Machines](labs/vm/README.md)
-- New VM, explore sizes, images, disks, networking
-- Create Windows VM, explore automation options, connect with RDP
-- Create Linux VM, explore automation, connect with SSH
+- [VMs as Linux Web servers](labs/vm-web/README.md)
+- [VMs as Windows dev machines](labs/vm-win/README.md)
+- [Automating VM configuration](labs/vm-config/README.md)
 
 _SQL Databases and ARM_
 
