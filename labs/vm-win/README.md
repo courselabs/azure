@@ -69,11 +69,12 @@ Windows VMs need some more information - you need to specify:
 - admin username
 - admin password
 
-This will get you started:
+This will get you started - be sure to use the latest version of the Windows 11 image, it will have a URN like this: _MicrosoftWindowsDesktop:windows-11:win11-21h2-pro:22000.795.220629_
+
 
 ```
 # your password will be verified - it needs to be strong:
-az vm create -l westeurope -g labs-vm-win -n dev01 --image MicrosoftWindowsDesktop:windows-11:win11-21h2-pro:22000.795.220629 --size Standard_D4s_v5 --admin-username labs --public-ip-address-dns-name <your-unique-dns-name> --admin-password <your-strong-password>
+az vm create -l westeurope -g labs-vm-win -n dev01 --image <image-urn> --size Standard_D4s_v5 --admin-username labs --public-ip-address-dns-name <your-unique-dns-name> --admin-password <your-strong-password>
 ```
 
 </details><br/>
