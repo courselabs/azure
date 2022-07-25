@@ -123,22 +123,35 @@ Now you can log in to the VM:
 - connect then run this SQL to register the UDF
 
 ```
+sp_configure 'show advanced options', 1
+RECONFIGURE
+GO
+
+sp_configure 'clr enabled', 1
+RECONFIGURE
+GO
+
+sp_configure 'clr strict security', 0
+RECONFIGURE
+GO
+
 CREATE ASSEMBLY FormattedDate FROM 'C:\FormattedDate.dll';  
 GO  
   
-CREATE FUNCTION LegacyDate() RETURNS DATETIME   
-AS EXTERNAL NAME FirstFormattedDate.FormattedDate.LegacySystem;   
+CREATE FUNCTION LegacyDate() RETURNS NVARCHAR(7)   
+AS EXTERNAL NAME FormattedDate.FormattedDate.LegacyNow;   
 GO  
   
-SELECT LegacyDate();  
+SELECT dbo.LegacyDate();  
 GO
+
 ```
 
 You'll see the current date in a legacy system format. You can't do this with the other Azure SQL options because they don't give you access to the underlying OS.
 
 ## Lab
 
-Use CLI to delete the SQL database. When the database is gone the SQL Server still exists - can you retrieve the data from your deleted database? Now delete the resource group, does the SQL Server still exist?
+TODO
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
