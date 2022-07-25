@@ -9,7 +9,7 @@ az sql db delete --help
 You need to specify the database name, server name and Resource Group, e.g:
 
 ```
-az sql db delete --name db01 --resource-group labs-sqlserver --server <server-name>
+az sql db delete --name db01 --resource-group labs-sql --server <server-name>
 ```
 
 > You'll be asked for confirmation.
@@ -21,7 +21,7 @@ You can [restore a deleted database in the Portal](https://docs.microsoft.com/en
 Deleting the Resource Group will delete the SQL Server:
 
 ```
-az group delete -n labs-sqlserver -y
+az group delete -n labs-sql -y
 ```
 
 That removes any databases and backups, and you can no longer restore deleted databases.

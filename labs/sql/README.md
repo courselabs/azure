@@ -36,7 +36,7 @@ First we need to create a Resource Group where the new SQL resources will live. 
 _Create the group - use your own preferred location:_
 
 ```
-az group create -n labs-sqlserver --tags courselabs=azure -l westeurope
+az group create -n labs-sql --tags courselabs=azure -l westeurope
 ```
 
 Now you can create the SQL Server which will be the host for the database.
@@ -66,7 +66,7 @@ This will get you started:
 
 ```
 # you'll need to supply your own name and password:
-az sql server create -l eastus -g labs-sqlserver -n <server-name> -u sqladmin -p <admin-password>
+az sql server create -l eastus -g labs-sql -n <server-name> -u sqladmin -p <admin-password>
 ```
 
 </details><br/>
@@ -89,7 +89,7 @@ The SQL Server is a container for zero or more databases. When it's created you 
 You need to supply the SQL Server name, resource group and a database name:
 
 ```
-az sql db create -g labs-sqlserver -n db01 -s <server-name>
+az sql db create -g labs-sql -n db01 -s <server-name>
 ```
 
 </details><br/>
@@ -151,5 +151,5 @@ ___
 If you didn't finish the lab, you can delete the RG with this command to remove all the resources:
 
 ```
-az group delete -y -n labs-sqlserver
+az group delete -y -n labs-sql
 ```
