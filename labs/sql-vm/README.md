@@ -117,15 +117,24 @@ az network nsg rule create -g labs-sql-vm --nsg-name sql01NSG -n rdp --priority 
 
 Now you can log in to the VM:
 
-- copy the DLL file  `labs/sql-vm/udf.dll` from your machine to the VM
+- copy the DLL file  `labs/sql-vm/udf/FormattedDate.dll` from your machine to the VM
 - run _SQL Server Management Studio_
 - the default connection settings use the machine name and Windows auth, which is all fine
-- connect then 
+- connect then run this SQL to register the UDF
 
+```
+CREATE ASSEMBLY FormattedDate FROM 'C:\FormattedDate.dll';  
+GO  
+  
+CREATE FUNCTION LegacyDate() RETURNS DATETIME   
+AS EXTERNAL NAME FirstFormattedDate.FormattedDate.LegacySystem;   
+GO  
+  
+SELECT LegacyDate();  
+GO
+```
 
-TODO- upload DLL and create CLR UDF:
-
-see https://docs.microsoft.com/en-us/sql/relational-databases/clr-integration-database-objects-user-defined-functions/clr-scalar-valued-functions?view=sql-server-ver15#example-of-a-clr-scalar-valued-function
+You'll see the current date in a legacy system format. You can't do this with the other Azure SQL options because they don't give you access to the underlying OS.
 
 ## Lab
 
