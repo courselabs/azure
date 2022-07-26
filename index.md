@@ -26,9 +26,9 @@ _Resource Groups and Virtual Machines_
 
 _SQL Databases and ARM_
 
-- [SQL Server](labs/sqlserver/README.md)
-- Create & manage SQL instance, portal and AZ CLI 
-- Connect with SQL client and deploy schema
+- [SQL Server](labs/sql/README.md)
+- [SQL Server VMs](labs/sql-vm/README.md)
+- [Deploying database schemas]()
 - Automation with ARM, explore templates & quickstarts
 - Scripting VM & database creation with ARM templates
 
