@@ -1,4 +1,4 @@
-# Azure Resource Manager templates
+# Azure Resource Manager JSON templates
 
 Repeatable deployments, templated with variables; versioned in scm
 
@@ -33,6 +33,8 @@ Repeatable deployments, templated with variables; versioned in scm
       }
     ]
 ```
+
+- https://docs.microsoft.com/en-us/azure/templates/microsoft.storage/storageaccounts?tabs=json
 
 ## Desired-state deployment
 
