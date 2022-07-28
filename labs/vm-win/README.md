@@ -44,13 +44,16 @@ az vm list-sizes -o table --query "[?numberOfCores==\`4\` && memoryInMb==\`16384
 
 To find the OS image to use, there's the `vm image list` command. You can filter with the `offer` option:
 
-- TODO, publisher, offer, urn
+- TODO, publisher, offer, sku, urn
 
 ```
 az vm image list-offers --publisher MicrosoftWindowsDesktop --location westeurope -o table
 
+az vm image list-skus -l westus -f windows-11 -p MicrosoftWindowsDesktop -o table
+
 # this will take a while to run...
 az vm image list --offer windows-11 --location westeurope -o table --all
+
 ```
 
 📋 Create an Windows 11 VM using a `vm create` command. Include a DNS name so you can access the machine without using the IP address.
@@ -69,8 +72,9 @@ Windows VMs need some more information - you need to specify:
 - admin username
 - admin password
 
-This will get you started - be sure to use the latest version of the Windows 11 image, it will have a URN like this: _MicrosoftWindowsDesktop:windows-11:win11-21h2-pro:22000.795.220629_
+This will get you started - you can use the exact version of the Windows 11 image, it will have a URN like this: _MicrosoftWindowsDesktop:windows-11:win11-21h2-pro:22000.795.220629_
 
+or replace the version number with _latest_
 
 ```
 # your password will be verified - it needs to be strong:

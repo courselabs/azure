@@ -111,7 +111,7 @@ You should find the Bicep file much easier to navigate and edit.
 
 Bicep templates are typically meant to describe all the resources in the resource group. 
 
-The default deployment mode for ARM is _incremental_ which means any new resources in the template get added and any matching ones are left as they are.
+The default deployment mode for ARM is _incremental_ which means any new resources in the template get added, any matching ones are left as they are, and anything extra in the Resource Group (not described in the template) is left as-is.
 
 - labs/arm-bicep/vm-and-sql-db/main.bicep - adds a SQL Server and database spec to the existing Linux VM template
 

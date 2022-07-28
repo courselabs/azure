@@ -78,9 +78,12 @@ Blob storage can be used as a public file share. Your blob will have a URL like 
 
 You can't download from that address though - by default new blob containers are set to private, so they can only be accessed within Azure. That's fine for what we want to do.
 
-## Import the Dacpac into a new database
+## Import the Bacpac into a new database
 
-In the CLI you need to create a new database first, then you can import Dacpac into that database:
+**TODO - needs to be Bacpac**
+
+
+In the CLI you need to create a new database first and grant access from your local machine, then you can import Dacpac into that database:
 
 ```
 az sql db create -g $rg -n $database -s $server
@@ -101,6 +104,14 @@ Check the help text:
 
 ```
 az sql db import --help
+
+# allow access for internal Azure services:
+az sql server firewall-rule create -g $rg -s $server -n azure --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
+
+# find your public IP address (or browse to https://www.whatsmyip.org)
+curl ifconfig.me
+
+az sql server firewall-rule create -g $rg -s $server -n client --start-ip-address <ip-address> --end-ip-address <ip-address> 
 ```
 
 The help text only talks about Bacpacs - but remember Dacpacs use the same format, so they're valid too. You need to specify:
@@ -126,7 +137,7 @@ az sql db import -s $server -n $database -g $rg --storage-key-type SharedAccessK
 
 There are a few pieces you need to put together here, but if there are any issues the CLI output should help you to fix them up.
 
-Creating the database will take a little while
+> Creating the database [can take a long time](https://docs.microsoft.com/en-US/azure/azure-sql/database/database-import-export-hang?view=azuresql) - you can check the progress in the Portal, opening the _Import/Export history_ tab from the SQL Server blade.
 
 ## Use the new database
 
@@ -137,14 +148,23 @@ Open the database in the Portal and open the _Query Editor_ blade - this lets yo
 <details>
   <summary>Not sure how?</summary>
 
-You'll get a connection error to start with because public IP addresses are blocked. The Portal will let you easily add your current IP address to the allowlist.
+The query editor window has an object explorer on the left hand side - you can navigate the schema here and find the table and column names.
 
-Then
+Then it's just standard SQL statements you can run inside the editor:
+
+
+```
+SELECT * FROM Locations
+
+SELECT PostalCode FROM Locations WHERE Country='UK'
+```
+
+</details><br/>
 
 
 ## Lab
 
-Use CLI to delete the SQL database. When the database is gone the SQL Server still exists - can you retrieve the data from your deleted database? Now delete the resource group, does the SQL Server still exist?
+
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
