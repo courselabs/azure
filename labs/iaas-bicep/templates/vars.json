@@ -1,0 +1,5 @@
+{
+    "vnetName": "app-vnet",
+    "subnetName": "app-subnet",
+    "nsgName": "app-nsg"
+}

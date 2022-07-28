@@ -13,7 +13,7 @@ $database='signup'
 
 
 
-# create RG, server & database:
+# create RG
 az group create -n $rg  -l $location --tags courselabs=azure
 ```
 
