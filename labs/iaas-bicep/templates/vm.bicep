@@ -1,11 +1,12 @@
-
 param location string = resourceGroup().location
 var common = loadJsonContent('vars.json')
 param vmName string = uniqueString('vm', resourceGroup().id)
 param dnsLabelPrefix string = toLower('signup-${vmName}')
-param vmSize string = 'Standard_D2v3'
+param vmSize string = 'Standard_D2s_v5'
 param adminUsername string = 'vmadm'
-
+param sqlServerName string
+@secure()
+param sqlPassword string
 @secure()
 param adminPassword string
 
@@ -107,18 +108,25 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   }
 }
 
-
-# TODO - script location; protected params - sql creds
 resource vmRunCommand 'Microsoft.Compute/virtualMachines/runCommands@2022-03-01' = {
   name: 'vmSetup'
   location: location
   parent: vm
   properties: {
     asyncExecution: false
+    protectedParameters: [
+      {
+        name: 'sqlServer'
+        value: sqlServerName
+      }
+      {
+        name: 'sqlPassword'
+        value: sqlPassword
+      }
+    ]
     source: {
-      commandId: 'string'
-      script: 'string'
-      scriptUri: 'string'
+      commandId: 'RunPowerShellScript'
+      scriptUri: 'https://TODO-GITHUB_URL/vm-setup.ps1'
     }
     timeoutInSeconds: 600
   }
