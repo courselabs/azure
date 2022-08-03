@@ -31,10 +31,10 @@ RDP
 ```
 Install-WindowsFeature Web-Server,NET-Framework-45-ASPNET,Web-Asp-Net45
 
+rm -fo C:\inetpub\wwwroot\iisstart.htm
+
 # TODO - fix URL:
 curl -o C:/inetpub/wwwroot/default.aspx https://raw.githubusercontent.com/sixeyed/docker4.net/master/docker/01-05-dockerfiles-and-images/hostname-app/default.aspx
-
-rm -fo C:\inetpub\wwwroot\iisstart.htm
 
 curl.exe http://localhost
 ```
@@ -66,6 +66,14 @@ az vm show --show-details -g labs-vm-image -n app01-base
 az image create -g labs-vm-image -n app01-image --source app01-base --hyper-v-generation V2
 
 az image list -o table
+
+> Copy the image to another RG so lifecycle is separate - may take a while; use same location
+
+az group create -n labs-vmss-win --location westeurope
+
+az image copy --source-resource-group labs-vm-image --source-object-name app01-image  --target-location westeurope --target-resource-group labs-vmss-win
+
+
 
 > Check in the portal - option to create a VM or clone to a new image
 
