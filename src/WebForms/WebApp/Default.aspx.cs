@@ -5,10 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class _Default : Page
+namespace WebApp
 {
-    protected void Page_Load(object sender, EventArgs e)
-    {
+	public partial class _Default : Page
+	{
+		protected void Page_Load(object sender, EventArgs e)
+		{
 
-    }
+		}
+	}
 }

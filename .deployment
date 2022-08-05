@@ -1,2 +1,2 @@
 [config]
-project = src/WebForms/WebApp/WebApp
+project = src/WebForms/WebApp/WebApp.csproj

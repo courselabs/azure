@@ -1,10 +1,9 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.Mobile.master.cs" Inherits="Site_Mobile" %>
-
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Mobile.master.cs" Inherits="WebApp.Site_Mobile" %>
 <%@ Register Src="~/ViewSwitcher.ascx" TagPrefix="friendlyUrls" TagName="ViewSwitcher" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
+<head runat="server">
     <meta name="viewport" content="width=device-width" />
     <title></title>
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
@@ -17,7 +16,7 @@
         <section class="content-wrapper main-content clear-fix">
             <asp:ContentPlaceHolder runat="server" ID="MainContent" />
         </section>
-        <friendlyUrls:ViewSwitcher ID="ViewSwitcher1" runat="server" />
+        <friendlyUrls:ViewSwitcher runat="server" />
     </div>
     </form>
 </body>
