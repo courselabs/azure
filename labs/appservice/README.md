@@ -43,8 +43,13 @@ Browse to your app URL, you'll see "web app is running and waiting for your cont
 
 ## Deploy the web app
 
-[.deployment file](/.deployment)
+- set branch; expects `master` but we use `main`:
 
+az webapp config appsettings set --settings DEPLOYMENT_BRANCH='main' -g labs-appservice -n aspnet-app01 #<dns-unique-app-name>
+
+az webapp config appsettings set --settings PROJECT='src/WebForms/WebApp/WebApp.csproj' -g labs-appservice -n aspnet-app01 #<dns-unique-app-name>
+
+- for info only - there is a remote git repo where you can push code & trigger deployment
 az webapp deployment source config-local-git -g labs-appservice -n aspnet-app01 #<dns-unique-app-name>
 
 > output id URL to use for git deployment
@@ -61,10 +66,24 @@ git remote add webapp '<url-with-creds>'
 verify
 git remote -v
 
-git push webapp
 
-- error about branch; expects `master` but we use `main`:
-
-az webapp config appsettings set --settings DEPLOYMENT_BRANCH='main' -g labs-appservice -n aspnet-app01 #<dns-unique-app-name>
 
 git push webapp main
+
+- post deployment hook runs build, you'll see msbuild output
+
+## Check the build
+
+Portal - web app, browse
+
+console blade
+
+```
+dir
+
+dir .\bin
+```
+
+## Lab 
+
+change homepage content and redeploy
