@@ -24,7 +24,7 @@ Check default app config in src/rng/Numbers.Api/appsettings.json
 
 Add a config setting so the API fails after 3 calls:
 
-az webapp config appsettings set --settings FailAfterCallCount='3' -g labs-appservice-config -n rng-api-es2  #<dns-unique-app-name>
+az webapp config appsettings set --settings Rng__FailAfter__CallCount='3' -g labs-appservice-config -n rng-api-es2  #<dns-unique-app-name>
 
 > Output includes default settings for web app - not values from config JSON
 
