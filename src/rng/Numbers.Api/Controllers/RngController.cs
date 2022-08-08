@@ -15,39 +15,42 @@ namespace Numbers.Api.Controllers
 
         private readonly ILogger<RngController> _logger;
         private readonly IConfiguration _config;
-        private readonly int _failAfterCallCount;
-        private readonly bool _useFailureId;
         private readonly string _instance;
 
         public RngController(IConfiguration config, ILogger<RngController> logger)
         {
             _config = config;
             _logger = logger;
-            _failAfterCallCount = _config.GetValue<int>("FailAfterCallCount");
-            _useFailureId = _config.GetValue<bool>("UseFailureId");
             _instance = Dns.GetHostName();
+
+            if (_CallCount == 0)
+            {
+                _logger.LogInformation("Random number generator initialized");
+            }
         }
 
         [HttpGet]
         public IActionResult Get()
         {
             _CallCount++;
-            
+
             if (Status.Healthy)
             {
-                var n = _Random.Next(0, 100);
-                _logger.LogDebug($"Instance: {_instance}. Returning random number: {n}");
+                var min = _config.GetValue<int>("Rng:Range:Min");
+                var max = _config.GetValue<int>("Rng:Range:Max");
+                var n = _Random.Next(min, max);
+                _logger.LogDebug($"Instance: {_instance}. Call: {_CallCount}. Returning random number: {n}, from min: {min}, max: {max}");
 
-                if (_failAfterCallCount > 0 && _CallCount >= _failAfterCallCount)
+                var failAfterCallCount = _config.GetValue<int>("Rng:FailAfter:CallCount");
+                if (failAfterCallCount > 0 && _CallCount >= failAfterCallCount)
                 {
                     Status.Healthy = false;
                 }
-
                 return Ok(n);
             }
             else
             {
-                var message = _useFailureId ? $"Instance: {_instance}. Unhealthy! Failure ID: {Guid.NewGuid()}" : $"Instance: {_instance}. Unhealthy!";
+                var message = $"Instance: {_instance}. Unhealthy!";
                 _logger.LogWarning(message);
                 return StatusCode(500, new { message= message });
             }
