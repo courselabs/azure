@@ -1,3 +1,5 @@
 **/.DS_Store
 **/.azure
 labs/arm-bicep/vm-simple-linux/azuredeploy.bicep
+**/bin
+**/obj
