@@ -47,7 +47,7 @@ namespace Numbers.Api.Controllers
             }
             else
             {
-                var message = _useFailureId ? $"Instance: {_instance}. Unhealthy! Failure ID: {Guid.NewGuid()}" : "Instance: {_instance}. Unhealthy!";
+                var message = _useFailureId ? $"Instance: {_instance}. Unhealthy! Failure ID: {Guid.NewGuid()}" : $"Instance: {_instance}. Unhealthy!";
                 _logger.LogWarning(message);
                 return StatusCode(500, new { message= message });
             }
