@@ -44,7 +44,6 @@ Browse to your app URL, you'll see "web app is running and waiting for your cont
 ## Deploy the web app
 
 - set branch; expects `master` but we use `main`:
-
 az webapp config appsettings set --settings DEPLOYMENT_BRANCH='main' -g labs-appservice -n aspnet-app01 #<dns-unique-app-name>
 
 az webapp config appsettings set --settings PROJECT='src/WebForms/WebApp/WebApp.csproj' -g labs-appservice -n aspnet-app01 #<dns-unique-app-name>
