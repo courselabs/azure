@@ -10,6 +10,8 @@ SMB file share; directory structure; shared access - multiple components, cloud 
 
 - [`az storage file` commands](https://docs.microsoft.com/en-us/cli/azure/storage/file?view=azure-cli-latest)
 
+- [Microsoft Learn: Configure Azure files and Azure File Sync](https://docs.microsoft.com/en-us/learn/modules/configure-azure-files-file-sync/)
+
 ## Create a File Share
 
 Azure Files is a feature of a Storage Account. Start by creating the RG and SA:
