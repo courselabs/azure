@@ -1,5 +1,7 @@
 # Blob Storage
 
+Storage - flat structur (mimic directory in object names)
+
 ## Reference
 
 - [Blob storage access tiers](https://docs.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview)
