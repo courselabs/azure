@@ -1,0 +1,56 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+        
+@if (@Model.AssetTypes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h1 class="display-4">Asset Types</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var assetType in @Model.AssetTypes)
+            {
+                <tr>
+                    <td>@assetType.Id</td>
+                    <td>@assetType.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+    <h1 class="display-4">Locations</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Address</th>
+                <th>Postal Code</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var location in @Model.Locations)
+            {
+                <tr>
+                    <td>@location.AddressLine1</td>
+                    <td>@location.PostalCode</td>
+                    <td>@location.Country</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+</div>

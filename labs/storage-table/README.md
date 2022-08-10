@@ -10,6 +10,8 @@ Table -> rows. Rows have partition key (top-level grouping) and row key (item ID
 
 - [Table storage design guidelines](https://docs.microsoft.com/en-us/azure/storage/tables/table-storage-design-guidelines)
 
+- [OData query tutorial](https://www.odata.org/getting-started/basic-tutorial/#queryData)
+
 - [`az storage table` commands](https://docs.microsoft.com/en-us/cli/azure/storage/table?view=azure-cli-latest)
 
 ## Create a table
