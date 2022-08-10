@@ -1,0 +1,1 @@
+dotnet Fulfilment.Processor.dll

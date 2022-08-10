@@ -110,3 +110,5 @@ Force reload with purge:
 az cdn endpoint purge --content-paths '/index.html' -g labs-storage-static --profile-name labs-storage-static -n static-blob-es 
 
 > May take a while - usually use --no-wait flag; check site again on completion
+
+Refresh browser - check with developer tools to see 304 for cached version, 200 on update

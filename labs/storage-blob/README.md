@@ -75,7 +75,7 @@ az storage container policy create --help
 
 az storage container policy create -n labs-reader --container-name labs --permissions r --account-name labsstorageblobes
 
-Now create a SAS token for the blob, backed by the access policy:
+Now create a SAS token for the blob, backed by the access policy. Expiry date needs to be in the format _YYYY-MM-DDTHH:MMZ_ e.g. _2022-08-10T11:44Z_
 
 ```
 az storage blob generate-sas --help

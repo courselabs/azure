@@ -4,3 +4,4 @@ labs/arm-bicep/vm-simple-linux/azuredeploy.bicep
 **/bin
 **/obj
 download*.*
+**/.deploy
