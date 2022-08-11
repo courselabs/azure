@@ -59,7 +59,9 @@ Now you can create a small VM which will be cheap to run.
 📋 Create an Ubuntu Server VM using a `vm create` command. There are a few parameters you'll need to specify.
 
 <details>
-  <summary>Not sure how?</summary>
+  <summary>
+    Not sure how?
+  </summary>
 
 Print the help text:
 
