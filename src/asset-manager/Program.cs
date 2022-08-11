@@ -1,17 +1,21 @@
-using AssetManager.Entities;
-using AssetManager.Services;
-using Microsoft.EntityFrameworkCore;
+using AssetManager;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
-var databaseName = builder.Configuration.GetValue<string>("Database:Name");
-var connectionString = builder.Configuration.GetConnectionString(databaseName);
+var dbApi = builder.Configuration.GetValue<string>("Database:Api");
+var dbName = builder.Configuration.GetValue<string>("Database:Name");
+Console.WriteLine($"Using database name: {dbName}; with API: {dbApi}");
 
-Console.WriteLine($"Using database name: {databaseName}; connection string: {connectionString}");
+var connectionString = builder.Configuration.GetConnectionString(dbName);
+_ = dbApi switch
+{
+    "Sql" => Dependencies.AddSqlDatabaseServices(builder.Services, connectionString, dbName),
 
-builder.Services.AddDbContext<AssetContext>(options => options.UseCosmos(connectionString, databaseName));
-builder.Services.AddScoped<AssetService>();
+    "Mongo" => Dependencies.AddMongoDatabaseServices(builder.Services, connectionString, dbName),
+
+    _ => throw new NotSupportedException("Supported database APIs: Sql and Mongo")
+};
 
 var app = builder.Build();
 

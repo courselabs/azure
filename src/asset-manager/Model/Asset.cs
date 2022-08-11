@@ -1,8 +1,7 @@
-namespace AssetManager.Entities;
+namespace AssetManager.Model;
 
-public class Asset
+public class Asset : EntityBase
 {
-    public Guid Id { get; set; }
     public DateTime PurchaseDate { get; set; }
     public double PurchasePrice { get; set; }
     public string AssetTag { get; set; }

@@ -24,7 +24,7 @@ else
             @foreach (var assetType in @Model.AssetTypes)
             {
                 <tr>
-                    <td>@assetType.Id</td>
+                    <td>@assetType.GetId()</td>
                     <td>@assetType.Description</td>
                 </tr>
             }

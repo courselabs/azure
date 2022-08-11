@@ -1,5 +1,7 @@
+using AssetManager.Model;
 using Microsoft.EntityFrameworkCore;
-namespace AssetManager.Entities;
+
+namespace AssetManager.Sql;
 
 public class AssetContext : DbContext
 {

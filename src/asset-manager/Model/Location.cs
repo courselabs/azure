@@ -1,8 +1,7 @@
-namespace AssetManager.Entities;
+namespace AssetManager.Model;
 
-public class Location
+public class Location : EntityBase
 {
-    public Guid Id { get; set; }
     public string Country { get; set; }
     public string PostalCode { get; set; }
     public string AddressLine1 { get; set; }
