@@ -37,6 +37,12 @@ The [az](https://docs.microsoft.com/en-us/cli/azure/) command line is another op
 
 Try running the `az` command to see how the integrated help works.
 
+Upgrade to make sure you have the latest version:
+
+```
+az upgrade
+```
+
 Then login to Azure:
 
 ```

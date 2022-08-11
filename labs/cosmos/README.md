@@ -55,10 +55,10 @@ Open _Keys_ to see the connection string for client apps - make a note of the pr
 az cosmosdb keys list --type connection-strings -g labs-cosmos -n labs-cosmos-es
 ```
 
-## Deploy an ORM app using Cosmos DB
+## Deploy an app using Cosmos DB with Entity Framework
 
-- [Asset.cs](src/asset-manager/Entities/Model/Asset.cs) - POCO model with relationships
-- [AssetContext.cs](src/asset-manager/Entities/AssetContext.cs) - EF context
+- [Asset.cs](src/asset-manager/Model/Asset.cs) - POCO model with relationships
+- [AssetContext.cs](src/asset-manager/Sql/AssetContext.cs) - EF context
 - [Program.cs](src/asset-manager/Program.cs) - app configuration using Cosmos
 
 
@@ -71,9 +71,7 @@ cd src/asset-manager
 
 az webapp up --sku S1 -g labs-cosmos --plan labs-cosmos-app-plan --os-type Linux  --runtime dotnetcore:6.0 -n labs-cosmos-app-es # dns name 
 
-az webapp config appsettings set -g labs-cosmos -n labs-cosmos-app-es --settings ConnectionStrings__AssetsDb='AccountEndpoint=https://labs-cosmos-es.documents.azure.com:443/;AccountKey=57RTIHQVOn01wxSsiXGlay3EBoSQ5Sufwe3iLYIgdDZ3BCdbgwv9PjLkCNeCNqRoI8O905DTEpXRt1I9osVlLA==;'
-
-
+az webapp config appsettings set -g labs-cosmos -n labs-cosmos-app-es --settings Database__Api='Sql' ConnectionStrings__AssetsDb='AccountEndpoint=https://labs-cosmos-es.documents.azure.com:443/;AccountKey=57RTIHQVOn01wxSsiXGlay3EBoSQ5Sufwe3iLYIgdDZ3BCdbgwv9PjLkCNeCNqRoI8O905DTEpXRt1I9osVlLA==;'
 ```
 
 Browse to the app. 
@@ -99,3 +97,6 @@ Add a new location (e.g. copy an existing one - not the `_` fields):
 
 - Discriminator is an EF mechanism for identifying object type
 - Id is an object property, id is the item identifier (includes Discriminator)
+
+
+## Lab
