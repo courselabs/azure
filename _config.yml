@@ -1,3 +1,5 @@
 title: Azure Course Labs
 markdown: kramdown
+kramdown:
+  parse_block_html: true
 google_analytics: G-TQNDKELFXN
