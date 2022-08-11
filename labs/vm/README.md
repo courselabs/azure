@@ -59,10 +59,10 @@ Now you can create a small VM which will be cheap to run.
 📋 Create an Ubuntu Server VM using a `vm create` command. There are a few parameters you'll need to specify.
 
 <details>
-  <summary>
-    Not sure how?
+  <summary>    
+    Not sure how?  
   </summary>
-
+    
 Print the help text:
 
 ```
@@ -99,7 +99,9 @@ This is a Linux VM, so you can use [SSH]() to connect - the SSH command line is 
 📋 Find the IP address of your server and connect with `ssh`. 
 
 <details>
-  <summary>Not sure how?</summary>
+  <summary>
+    Not sure how?
+  </summary>
 
 The key details of the VM are printed when the `vm create` command completes. You can print them again with the `vm show` command:
 
