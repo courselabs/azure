@@ -1,5 +1,3 @@
 title: Azure Course Labs
-markdown: CommonMarkGhPages
+markdown: kramdown
 google_analytics: G-TQNDKELFXN
-plugins:
- - jekyll-remote-theme
