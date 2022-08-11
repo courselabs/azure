@@ -122,7 +122,7 @@ A storage account connection string is in the format:
 
 > You can also see the full connection string in the Portal, under _Access keys_
 
-Update the appsettings json file with your connection details; then we'll deploy the app as an App Service WebJob (which is a background worker running in appservice):
+We'll deploy the app as an App Service WebJob (which is a background worker running in appservice):
 
 ```
 az appservice plan create -g labs-storage-table  -n app-plan-01 --sku B1 --number-of-workers 1
