@@ -1,6 +1,6 @@
 # Virtual Machines
 
-
+Virtual Machines in the cloud are pretty much the same as VMs in the datacenter or on your desktop. They're an isolated compute environment running with a full operating system, where you have admin permissions to install and configure whatever you need. Azure can run Linux and Windows VMs, with a large choice of preconfigured images and compute sizes.
 
 ## Reference
 

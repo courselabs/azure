@@ -122,7 +122,7 @@ You'll see an error like this:
 
 SQL Server has an IP block, so you need to explicitly allow access to clients based on the originating IP address.
 
-In the portal, open the **SQL Server** instance and find the firewall settings. On that page you can easily add your own IP address to the rules, so you will be allowed access - then try the connection again.
+In the portal, open the **SQL Server** instance (not the database) and find the firewall settings. On that page you can easily add your own IP address to the rules, so you will be allowed access - then try the connection again.
 
 ## Query the Database
 
