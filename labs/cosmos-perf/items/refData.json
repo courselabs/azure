@@ -1,0 +1,74 @@
+[
+    {
+        "refDataType": "Products",
+        "items": [
+            {
+                "productId": "01",
+                "name": "p1",
+                "price": 11.0
+            },
+            {
+                "productId": "02",
+                "name": "p2",
+                "price": 22.0
+            },
+            {
+                "productId": "03",
+                "name": "p3",
+                "price": 33.0
+            },
+            {
+                "productId": "04",
+                "name": "p4",
+                "price": 44.0
+            },
+            {
+                "productId": "05",
+                "name": "p5",
+                "price": 55.0
+            },
+            {
+                "productId": "06",
+                "name": "p6",
+                "price": 66.0
+            },
+            {
+                "productId": "07",
+                "name": "p7",
+                "price": 77.0
+            },
+            {
+                "productId": "08",
+                "name": "p8",
+                "price": 88.0
+            },
+            {
+                "productId": "09",
+                "name": "p9",
+                "price": 99.0
+            },
+            {
+                "productId": "10",
+                "name": "p10",
+                "price": 100.0
+            }
+        ]
+    },
+    {
+        "refDataType": "Countries",
+        "items": [
+            {
+                "countryCode": "CN",
+                "name": "China"
+            },
+            {
+                "countryCode": "US",
+                "name": "United States of America"
+            },
+            {
+                "countryCode": "UK",
+                "name": "United Kingdom"
+            }
+        ]
+    }
+]
