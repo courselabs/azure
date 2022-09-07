@@ -122,9 +122,7 @@ az keyvault secret list-versions --name sql-password --vault-name <kv-name>
 
 ## Lab
 
-A common use for a Key Vault is for automated deployments. You'll create the Key Vault in your pipeline and use it to store credentials you need for other services - maybe generating a random password for a SQL Server admin account.
-
-In that scenario you only want the Key Vault to be accessible while the pipeline is running. How can you lock down a Key Vault so it can't be used when the pipeline has finished?
+Secrets are just one type of data which you can store in KeyVault. You can also generate and store encryption keys and TLS certificates. Use the CLI to create a self-signed certificate where the subject common name (CN) is `azure.courselabs.co` and which is valid for 6 months. Download the public and private keys for your new certificate.
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
