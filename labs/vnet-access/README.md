@@ -14,7 +14,7 @@ az network vnet subnet create -g labs-vnet-access --vnet-name vnet1 -n subnet1 -
 ## Create NSG and VM
 
 ```
-  az network nsg create -g labs-vnet-access -n nsg01
+az network nsg create -g labs-vnet-access -n nsg01
 ```
 
 Check in Portal - default rules applied:

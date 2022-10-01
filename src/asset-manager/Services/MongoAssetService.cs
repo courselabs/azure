@@ -31,7 +31,7 @@ public class MongoAssetService : IAssetService
     {
         return await _locations.Find(_ => true).ToListAsync();
     }
-    
+
     public async Task<IEnumerable<Asset>> GetAssetsAsync()
     {
         return await _assets.Find(_ => true).ToListAsync();
@@ -41,38 +41,20 @@ public class MongoAssetService : IAssetService
     {
         if (!_SeedDataChecked)
         {
-            if (_locations.CountDocuments(_=>true) == 0)
+            if (_locations.CountDocuments(_ => true) == 0)
             {
-                _locations.InsertOne(new Location
+                foreach (var location in SeedData.Locations.GetSeedData())
                 {
-                    Country = "USA",
-                    PostalCode = "DC 20500",
-                    AddressLine1 = "1600 Pennsylvania Ave NW"
-                });
-                _locations.InsertOne(new Location
-                {
-                    Country = "UK",
-                    PostalCode = "SW1A 0AA",
-                    AddressLine1 = "Houses of Parliament"
-                });
+                    _locations.InsertOne(location);
+                }
             }
-
-            if (_assetTypes.CountDocuments(_=>true) == 0)
+            if (_assetTypes.CountDocuments(_ => true) == 0)
             {
-                _assetTypes.InsertOne(new AssetType
+                foreach (var assetType in SeedData.AssetTypes.GetSeedData())
                 {
-                    Description = "Laptop"
-                });
-                _assetTypes.InsertOne(new AssetType
-                {
-                    Description = "Desktop"
-                });
-                _assetTypes.InsertOne(new AssetType
-                {
-                    Description = "Phone"
-                });
+                    _assetTypes.InsertOne(assetType);
+                }
             }
-            
             _SeedDataChecked = true;
         }
     }

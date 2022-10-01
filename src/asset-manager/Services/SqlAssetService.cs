@@ -26,7 +26,7 @@ public class SqlAssetService : IAssetService
     {
         return await _context.Locations.ToArrayAsync();
     }
-    
+
     public async Task<IEnumerable<Asset>> GetAssetsAsync()
     {
         return await _context.Assets.ToArrayAsync();
@@ -38,36 +38,19 @@ public class SqlAssetService : IAssetService
         {
             if (_context.Locations.Count() == 0)
             {
-                _context.Locations.Add(new Location
+                foreach (var location in SeedData.Locations.GetSeedData())
                 {
-                    Country = "USA",
-                    PostalCode = "DC 20500",
-                    AddressLine1 = "1600 Pennsylvania Ave NW"
-                });
-                _context.Locations.Add(new Location
-                {
-                    Country = "UK",
-                    PostalCode = "SW1A 0AA",
-                    AddressLine1 = "Houses of Parliament"
-                });
+                    _context.Locations.Add(location);
+                }
             }
 
             if (_context.AssetTypes.Count() == 0)
             {
-                _context.AssetTypes.Add(new AssetType
+                foreach (var assetType in SeedData.AssetTypes.GetSeedData())
                 {
-                    Description = "Laptop"
-                });
-                _context.AssetTypes.Add(new AssetType
-                {
-                    Description = "Desktop"
-                });
-                _context.AssetTypes.Add(new AssetType
-                {
-                    Description = "Phone"
-                });
+                    _context.AssetTypes.Add(assetType);
+                }
             }
-
             _context.SaveChanges();
             _SeedDataChecked = true;
         }
