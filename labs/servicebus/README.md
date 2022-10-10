@@ -1,6 +1,6 @@
 # Service Bus Messaging
 
-Service bus - high throughput, reliable async message queue as a service.
+Service bus - high throughput, reliable async message queue as a service. Messaging patterns - fire & forget - for command publishing to decouple workflow.
 
 ## Reference
 
@@ -50,7 +50,7 @@ Subscribers listen on a queue in an infinite loop; when they receive a message t
 # get the connection string for your queue:
 az servicebus namespace authorization-rule keys list -n RootManageSharedAccessKey -g labs-servicebus  --query primaryConnectionString -o tsv --namespace-name labsservicebuses # <unique-dns-name>
 
-cd src/queues/queue-subscriber
+cd src/servicebus/subscriber
 
 dotnet run -cs '<connection-string>'
 ```
@@ -60,7 +60,7 @@ This app connects to the queue - it will sit and listen for messages.
 In a different console run another app to publish messages:
 
 ```
-cd src/queues/queue-publisher
+cd src/servicebus/publisher
 
 dotnet run -cs '<connection-string>'
 ```
@@ -87,7 +87,7 @@ Run the subscriber. What does it do?
 Open another console and run another instance of the subscriber:
 
 ```
-cd src/queues/queue-subscriber
+cd src/servicebus/subscriber
 
 dotnet run -cs "$(az servicebus namespace authorization-rule keys list -n RootManageSharedAccessKey -g labs-servicebus  --query primaryConnectionString -o tsv --namespace-name labsservicebuses)"
 ```

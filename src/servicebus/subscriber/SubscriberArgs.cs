@@ -1,6 +1,6 @@
 using PowerArgs;
 
-namespace QueueSubscriber
+namespace Subscriber
 {
     public class SubscriberArgs
     {
@@ -11,6 +11,12 @@ namespace QueueSubscriber
         [ArgDefaultValue("echo")]
         [ArgShortcut("q")]
         public string Queue { get; set; }
+
+        [ArgShortcut("t")]
+        public string Topic { get; set; }
+
+        [ArgShortcut("s")]
+        public string Subscription { get; set; }
 
         [ArgDefaultValue(true)]
         [ArgShortcut("ack")]

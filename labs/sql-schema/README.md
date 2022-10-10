@@ -80,9 +80,6 @@ You can't download from that address though - by default new blob containers are
 
 ## Import the Bacpac into a new database
 
-**TODO - needs to be Bacpac**
-
-
 In the CLI you need to create a new database first and grant access from your local machine, then you can import Dacpac into that database:
 
 ```

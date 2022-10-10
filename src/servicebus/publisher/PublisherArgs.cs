@@ -1,6 +1,6 @@
 using PowerArgs;
 
-namespace QueuePublisher
+namespace Publisher
 {
     public class PublisherArgs
     {
@@ -11,6 +11,9 @@ namespace QueuePublisher
         [ArgDefaultValue("echo")]
         [ArgShortcut("q")]
         public string Queue { get; set; }
+
+        [ArgShortcut("t")]
+        public string Topic { get; set; }
 
         [ArgDefaultValue(5)]
         [ArgShortcut("b")]

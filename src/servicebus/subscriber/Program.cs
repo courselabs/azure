@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using PowerArgs;
 
-namespace QueueSubscriber
+namespace Subscriber
 {
     class Program
     {
@@ -18,15 +18,23 @@ namespace QueueSubscriber
 
             var clientOptions = new ServiceBusClientOptions() { TransportType = ServiceBusTransportType.AmqpWebSockets };
             client = new ServiceBusClient(arguments.ConnectionString, clientOptions);
-            processor = client.CreateProcessor(arguments.Queue, new ServiceBusProcessorOptions(){AutoCompleteMessages = false});
+            if (string.IsNullOrEmpty(arguments.Topic) && string.IsNullOrEmpty(arguments.Subscription))
+            {                
+                processor = client.CreateProcessor(arguments.Queue, new ServiceBusProcessorOptions(){AutoCompleteMessages = false});
+                Console.WriteLine($"Listening for messages on QUEUE: {arguments.Queue}");
+            }
+            else
+            {
+                processor = client.CreateProcessor(arguments.Topic, arguments.Subscription);
+                Console.WriteLine($"Listening for messages on TOPIC: {arguments.Topic}; SUBSCRIPTION: {arguments.Subscription}");
+            }
 
             try
             {
                 processor.ProcessMessageAsync += MessageHandler;
                 processor.ProcessErrorAsync += ErrorHandler;
                 await processor.StartProcessingAsync();
-
-                Console.WriteLine($"Listening for messages on queue: {arguments.Queue}");
+                
                 Console.ReadKey();
 
                 await processor.StopProcessingAsync();

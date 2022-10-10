@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using PowerArgs;
 
-namespace QueuePublisher
+namespace Publisher
 {
     class Program
     {
@@ -16,7 +16,16 @@ namespace QueuePublisher
             var arguments = Args.Parse<PublisherArgs>(args);
             var clientOptions = new ServiceBusClientOptions() { TransportType = ServiceBusTransportType.AmqpWebSockets };
             client = new ServiceBusClient(arguments.ConnectionString, clientOptions);
-            sender = client.CreateSender(arguments.Queue);
+            if (string.IsNullOrEmpty(arguments.Topic))
+            {
+                sender = client.CreateSender(arguments.Queue);
+                Console.WriteLine($"Publisher: {publisherId} sending to QUEUE: {arguments.Queue}");
+            }
+            else
+            {
+                sender = client.CreateSender(arguments.Topic);
+                Console.WriteLine($"Publisher: {publisherId} sending to TOPIC: {arguments.Topic}");
+            }
 
             var batchCount=1;
             while (true)
