@@ -24,9 +24,15 @@ The `az` command is a cross-platform tool for managing Azure resources:
 
 - [Install the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 
+## .NET 6.0 - Mac, Windows or Linux
+
+We'll us C# for simple demo applications:
+
+- [Download .NET SDK](https://dotnet.microsoft.com/en-us/download)
+
 ## Docker Desktop - Mac, Windows or Linux
 
-Docker Desktop is the easiest way to get Kubernetes:
+Docker Desktop is for running containers locally and gives you a Kubernetes environment:
 
 - [Install Docker Desktop - Mac or Windows](https://www.docker.com/products/docker-desktop)
 
@@ -54,6 +60,8 @@ When you're done you should be able to run these commands and get a response wit
 git version
 
 az --version
+
+dotnet --list-sdks
 
 docker version
 
