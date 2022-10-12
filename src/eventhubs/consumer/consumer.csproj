@@ -11,4 +11,8 @@
     <PackageReference Include="PowerArgs" Version="3.6.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../model/model.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -62,15 +62,15 @@ Connection uses the same access policy semantics, and Namespaces are created wit
 
 ```
 # get the connection string:
-az eventhubs namespace authorization-rule keys list -n RootManageSharedAccessKey --query primaryConnectionString -o tsv -g labs-eventhubs --namespace-name labseventhubses # <unique-dns-name>
+az eventhubs namespace authorization-rule keys list -n RootManageSharedAccessKey --query primaryConnectionString -o tsv -g labs-eventhubs --namespace-name labseventhubses # ``<unique-dns-name>
 
-# run the publisher:
+# run the producer:
 dotnet run --project ./src/eventhubs/producer -cs '<connection-string>'
 ```
 
-You'll see 20 different producers, each send a batch of 100 messages.
+You'll see 100 different producers, each send a batch of 10 messages.
 
-Check in te Portal to see how the traffic is shown.
+Check in the Portal to see how the traffic is shown.
 
 
 ## Preview the Events with Stream Analytics
@@ -92,3 +92,7 @@ Make a note of the earliest event time. Exit the query editor and then load it a
 
 ## Receive Events from a Consumer Group
 
+```
+# run the producer:
+dotnet run --project ./src/eventhubs/consumer -cs '<connection-string>'
+```

@@ -1,19 +1,18 @@
 using PowerArgs;
 
-namespace Consumer
+namespace Consumer;
+
+public class ConsumerArgs
 {
-    public class ConsumerArgs
-    {
-        [ArgRequired(PromptIfMissing = true)]
-        [ArgShortcut("cs")]
-        public string ConnectionString { get; set; }
+    [ArgRequired(PromptIfMissing = true)]
+    [ArgShortcut("cs")]
+    public string ConnectionString { get; set; }
 
-        [ArgDefaultValue("devicelogs")]
-        [ArgShortcut("e")]
-        public string EventHub { get; set; }
+    [ArgDefaultValue("devicelogs")]
+    [ArgShortcut("e")]
+    public string EventHub { get; set; }
 
-        [ArgDefaultValue("$Default")]
-        [ArgShortcut("g")]
-        public string ConsumerGroup { get; set; }
-    }
+    [ArgDefaultValue("$Default")]
+    [ArgShortcut("g")]
+    public string ConsumerGroup { get; set; }
 }
