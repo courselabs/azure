@@ -65,8 +65,7 @@ Now you can create a small VM which will be cheap to run.
     
 Print the help text:
 
-```
-az vm create --help
+```az vm create --help
 ```
 
 As a minimum you need to specify:
