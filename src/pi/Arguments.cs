@@ -15,12 +15,14 @@ public class Arguments
     public string ConnectionString { get; set; }
 
     [ArgDefaultValue(false)]
-    [ArgShortcut("cache")]
     [ArgDescription("Cache calculation results")]
     public bool UseCache { get; set; }
 
     [ArgDefaultValue(false)]
-    [ArgShortcut("events")]
     [ArgDescription("Publish calculation events")]
     public bool PublishEvents { get; set; }
+
+    [ArgDefaultValue(false)]
+    [ArgDescription("Print debug logs")]
+    public bool Debug { get; set; }
 }
