@@ -23,8 +23,7 @@ class Program
             {
                 break;
             }
-        }
-        
+        }        
 
         Console.WriteLine($"Read: {eventCount} events. Exiting.");
         await consumer.CloseAsync();
