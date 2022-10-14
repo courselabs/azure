@@ -15,4 +15,8 @@ public class ConsumerArgs
     [ArgDefaultValue("$Default")]
     [ArgShortcut("g")]
     public string ConsumerGroup { get; set; }
+
+    [ArgDefaultValue(50)]
+    [ArgShortcut("r")]
+    public int ReadCount { get; set; }
 }

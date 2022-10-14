@@ -12,7 +12,7 @@ public class ProducerArgs
     [ArgShortcut("e")]
     public string EventHub { get; set; }
 
-    [ArgDefaultValue(100)]
+    [ArgDefaultValue(10)]
     [ArgShortcut("p")]
     public int ProducerCount { get; set; }
 

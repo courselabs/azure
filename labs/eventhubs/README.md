@@ -68,7 +68,7 @@ az eventhubs namespace authorization-rule keys list -n RootManageSharedAccessKey
 dotnet run --project ./src/eventhubs/producer -cs '<connection-string>'
 ```
 
-You'll see 100 different producers, each send a batch of 10 messages.
+You'll see 10 different producers, each send a batch of 10 messages.
 
 Check in the Portal to see how the traffic is shown.
 
@@ -93,6 +93,20 @@ Make a note of the earliest event time. Exit the query editor and then load it a
 ## Receive Events from a Consumer Group
 
 ```
-# run the producer:
+# run the consumer:
 dotnet run --project ./src/eventhubs/consumer -cs '<connection-string>'
 ```
+
+> You may see events being read from different partitions. This is a simple consumer which doesn't have any logic around the events it receives.
+
+Run the consumer a few more times and you'll see events from different partitions; keep running it and you'll see the same events being read again:
+
+```
+dotnet run --project ./src/eventhubs/consumer -cs '<connection-string>'
+```
+
+
+## Lab
+
+The consumer prints some more information about the message - the _offset_ - what do you think that is and how could you use it in message processing?
+
