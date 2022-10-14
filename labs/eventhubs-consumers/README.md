@@ -107,4 +107,6 @@ dotnet run --project ./src/eventhubs/processor -cs '<event-hub-connection-string
 
 ## Lab
 
-This library is all about processing at scale. Stop your processor, pen two more terminal windows and run a consumer in each - so you have three running in total. Then run the producer to create some more message batches. Do all the consumers do some processing? Explore the Storage Account to see how they share the work. Try stopping a processor midway through a batch. What happens to the rest of the message in that processor's partition?
+This library is all about processing at scale. Stop your processor, pen two more terminal windows and run a consumer in each - so you have three running in total. Then run the producer to create some more message batches. Do all the consumers do some processing? Explore the Storage Account to see how they share the work. 
+
+Try stopping a processor midway through a batch. What happens to the rest of the message in that processor's partition? And what if you start a consumer with a different consumer group (-g parameter) - which messages does it pick up?
