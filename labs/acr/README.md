@@ -4,6 +4,8 @@ Open source applications are often published as container images on Docker Hub. 
 
 ## Reference
 
+- [Docker Hub overview](https://docs.docker.com/docker-hub/)
+
 - [Container Registry documentation](https://docs.microsoft.com/en-gb/azure/container-registry/)
 
 - [`az acr` commands](https://docs.microsoft.com/en-us/cli/azure/acr?view=azure-cli-latest)
@@ -53,7 +55,7 @@ When the command completes you have your own registry, available at the domain n
 
 ## Pull and Push Images to ACR
 
-Docker image names can include a registry domain. The default registry is Docker Hub so you don't need a domain for that - the full name for the image `nginx:alpine` is actually `docker.io/nginx:alpine`.
+Docker image names can include a registry domain. The default registry is Docker Hub (`docker.io`) so you don't need a domain for that - the full name for the image `nginx:alpine` is actually `docker.io/nginx:alpine`.
 
 Pulling an image downloads the latest version:
 
@@ -61,7 +63,7 @@ Pulling an image downloads the latest version:
 docker image pull docker.io/nginx:alpine
 ```
 
-You can store a copy of that image in ACR, but you need to change the name to use your ACR domain instead of Docker Hub. The `tag` command does that:
+You can upload a copy of that image to ACR, but you need to change the name to use your ACR domain instead of Docker Hub. The `tag` command does that:
 
 _Make sure you use **your** ACR domain name:_
 
@@ -118,7 +120,7 @@ You can run a container from that image with this command:
 docker run -d -p 8080:80 <acr-name>.azurecr.io/labs-acr/nginx:alpine-2204
 ```
 
-Any container runtime which has access to your ACR can run the same app from the image.
+You can browse the app at http://localhost:8080. It's the standard Nginx app, but it's available from your own image registry. Anyone who has access to your ACR can run the same app from the image.
 
 ## Build and Push a Custom Image
 

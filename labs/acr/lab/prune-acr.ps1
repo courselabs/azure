@@ -1,17 +1,17 @@
 
-$acrName = <acr-name>
-$acrMaxImageTags=5
+$acrName='labsacres'
+$acrMaxImageTags=1
 
 $repositories = az acr repository list --name $acrName --output tsv
 foreach ($repository in $repositories) {
-    echo "Pruning repository $repository" | timestamp
-    $tags = az acr repository show-tags --name $acrName --repository $repository --output tsv --orderby time_desc
+    echo "Pruning repository $repository"
+    $tags = az acr repository show-tags --name $acrName --repository $repository --orderby time_desc | ConvertFrom-Json
 
-    if ($tags.length -gt $acrMaxImageTags) {
-        echo "Repository tag count: $($tags.length); max tags: $acrMaxImageTags; pruning excess"
-        for ($i=$acrMaxImageTags; $i -lt $tags.length; $i++) {
+    if ($tags.count -gt $acrMaxImageTags) {
+        echo "Repository tag count: $($tags.count); max tags: $acrMaxImageTags; pruning excess"
+        for ($i=$acrMaxImageTags; $i -lt $tags.count; $i++) {
             $imageName = "$($repository):$($tags[$i])"
-            echo "Deleting: $imageName" | timestamp
+            echo "Deleting: $imageName"
             az acr repository delete --name $acrName --image $imageName --yes --only-show-errors
         }
     }
