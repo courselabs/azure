@@ -99,3 +99,4 @@ Check in the Azure Portal and you will see the events being published.
 
 ## Lab
 
+Redis isn't a reliable message queue like Service Bus or Event Hubs. What happens if you have mutiple subscriber consoles and then calculate Pi, do they all receive the event? What if there are no subscribers running when you publish events from the Pi app?

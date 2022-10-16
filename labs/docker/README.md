@@ -6,7 +6,7 @@ How would you run a .NET app on an Azure VM? You'd have to provision the VM, the
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) - the easiest way to run containers on your local machine
 - [Getting Started guide](https://docs.docker.com/get-started/) from Docker
-- [.NET container images](https://hub.docker.com/_/microsoft-dotnet) - .NET Core & 5.0+ cross-platform images
+- [.NET container images](https://hub.docker.com/_/microsoft-dotnet) - .NET Core & 6 cross-platform images
 - [.NET Framework container images](https://hub.docker.com/_/microsoft-dotnet-framework) - .NET 3.5 & 4.8 Windows images
 
 ## Run an ASP.NET container
@@ -61,7 +61,7 @@ docker run -d -p 8082:80 mcr.microsoft.com/dotnet/samples:aspnetapp
 
 > When your new container is running, browse to http://localhost:8082
 
-Is your Nginx app still running? Can you print the logs from the ASP.NET sample app?
+Is your Nginx app still running? What version of .NET is inside the container? Can you print the logs from the ASP.NET sample app?
 
 ## Runtime & SDK images
 
@@ -126,7 +126,7 @@ Run this to build an image called `simple-web` from the Dockerfile and the sourc
 docker build -t simple-web src/simple-web
 ```
 
-You'll see familiar `dotnet` commands in the Docker output.
+You'll see Docker print the output from `dotnet` commands, building and compiling the app..
 
 📋 Run a background container from the new image and publish port `8083` from your machine to port `80` in the container.
 
@@ -145,7 +145,7 @@ docker run -d -p 8083:80 simple-web
 
 > Browse to http://localhost:8083 to see the app
 
-The app is very simple, but you can improve it. Edit code in the `src/simple-web/src` folder and run the build command again to package up your changes. You can't repeat the same run command though - why is that?
+The app is very simple, but you can improve it. Edit code in the `src/simple-web/src` folder and run the build command again to package up your changes. Test it by running a new container - you can't repeat the same `docker run` command though - why is that?
 
 ## Lab
 

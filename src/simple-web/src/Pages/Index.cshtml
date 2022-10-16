@@ -1,0 +1,18 @@
+﻿@page
+@using System.Diagnostics
+@using System.Net
+@using System.Runtime.InteropServices
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Courselabs Containerized ASP.NET App</h1>
+    <hr />
+    <h2>This environment is: @Model.Configuration["App:Environment"]</h2>
+    <hr />     
+    <h3>Served by: @Dns.GetHostName()</h3>
+    <hr />  
+    <h3>Running on: @RuntimeInformation.FrameworkDescription | OS: @RuntimeInformation.OSDescription | CPU: @RuntimeInformation.OSArchitecture | Cores: @Environment.ProcessorCount</h3>
+</div>
