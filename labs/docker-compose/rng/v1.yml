@@ -1,0 +1,21 @@
+services:
+  rng-api:
+    image: courselabs/rng-api:21.05
+    environment:
+      - Logging__LogLevel__Default=Debug
+    ports:
+      - "8089:80"
+    networks:
+      - app-net
+
+  rng-web:
+    image: courselabs/rng-web:21.05
+    environment:
+      - Logging__LogLevel__Default=Debug
+    ports:
+      - "8090:80"
+    networks:
+      - app-net
+
+networks:
+  app-net:
