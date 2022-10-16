@@ -19,7 +19,7 @@ Open the Portal and search to create a new Container Instance resource. Look at 
 - in the networking options you can publish ports and choose a DNS name to access your app
 - in the advanced options you can set environment variables for the container
 
-You can run Linux and Windows containers with ACI, so you can run .NET Core and .NET Framework apps. The UX is the same - we'll see how the service works using the command line.
+You can run Linux and Windows containers with ACI, so you can run new and old applications. The UX is the same - we'll see how the service works using the command line.
 
 ## Create an ACI container with the CLI
 
@@ -52,7 +52,7 @@ az container create -g labs-aci --name simple-web --image courselabs/simple-web:
 
 When the command returns, the new container is running. The output includes an `fqdn` field, which is the full DNS name you can use to browse to your container app.
 
-> Browse to the app. It's the same container image we built in the [Docker lab](/labs/docker/README.md).
+> Browse to the app. **It may take a couple of minutes to come online**. It's the same container image we built in the [Docker lab](/labs/docker/README.md).
 
 You can configure a lot more details in the `container create` command. How much CPU and RAM does your container have? That can't be changed when the container is running, but you could replace this container with a new one from the same image and specify the compute.
 
@@ -69,7 +69,7 @@ az container logs -g labs-aci -n simple-web
 
 </details><br/>
 
-You'll see the ASP.NET application logs from the container. If you're used to .NET Core and .NET 5.0, you'll see the logs are in a different format - the default is use JSON [console log formatting](https://docs.microsoft.com/en-us/dotnet/core/extensions/console-log-formatter) from .NET 6.0.
+You'll see the ASP.NET application logs from the container.
 
 ## Deploy to ACI from Docker
 
@@ -129,7 +129,7 @@ docker run -d -p 80:80 --domainname <new-aci-domain> courselabs/simple-web:6.0
 
 </details><br/>
 
-List out your containers and you'll see the new Docker-created instance as well as the original created with `az`:
+The output will include a random name which Docker generates. List out your containers and you'll see the new Docker-created instance as well as the original created with `az`:
 
 ```
 az container list -o table
