@@ -21,7 +21,7 @@ There's already a `Program.cs`; click the _Upload/Download Files_ icon in the sh
 Now you need to move it:
 
 ```
-mv ../Program.cs .
+mv ~/Program.cs .
 ```
 
 Check the source file and run the app:

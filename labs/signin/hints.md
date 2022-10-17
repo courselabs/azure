@@ -1,6 +1,6 @@
 # Lab Hints
 
-Azure Cloud Shell comes with .NET installed - currently it's .NET Core 3.1.
+Azure Cloud Shell comes with .NET installed - currently it's .NET 6.0.
 
 `dotnet new` doesn't create a project on its own, but it does tell you the other information you need.
 

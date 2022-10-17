@@ -22,7 +22,7 @@ Select _Create a Resource_ from the _Azure services_ section, search for Resourc
 - click create and watch for an alert to say the resource is ready
 - browse to the Resource Group and explore the UI
 
-> Each region is a collection of nearby data centres. Typically you put all the components for an app into the same region, for minimal network latency. You may put additional deployments in other regions for high availability.
+> Each _region_ is a collection of nearby data centres. Typically you put all the components for an app into the same region, for minimal network latency. You may put additional deployments in other regions for high availability.
 
 You can't do much with a Resource Group on its own, but we'll always create an RG to house other resources.
 
@@ -45,7 +45,7 @@ Help applies for groups of commands and individual commands:
 az group create --help
 ```
 
-The only required parameters are the group name and the region - which is also referred to as the location.
+The only required parameters are the group name and the region - which is confusingly referred to as the _location_ in most other `az` commands.
 
 </details><br/>
 
@@ -92,7 +92,7 @@ We added the same tag to both RGs. Tags are simple key-value pairs which you can
 You can add a query parameter to `list` commands to filter the results. Complete this query to print RGs which have the matching tag:
 
 ```
-az group list -o table --query "[?tags ...
+az group list -o table --query "[?tags.courselabs ...
 ```
 
 > The query parameter uses [JMESPath](http://jmespath.org/), a JSON query language. Results find all matching RGs across all regions.

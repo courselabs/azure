@@ -65,7 +65,8 @@ Now you can create a small VM which will be cheap to run.
     
 Print the help text:
 
-```az vm create --help
+```
+az vm create --help
 ```
 
 As a minimum you need to specify:
@@ -144,7 +145,7 @@ This is a standard Ubuntu Server VM. You can run typical commands like:
 
 ## Lab
 
-Use the CLI to delete the print the details of the VM's disk. What is the disk performance in read/write IOPS? Then delete the VM - does the disk get deleted too?
+Use the CLI to print the details of the VM's disk. What is the disk performance in read/write IOPS? Then delete the VM - does the disk get deleted too?
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
