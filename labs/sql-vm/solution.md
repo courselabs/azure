@@ -1,27 +1,29 @@
 # Lab Solution
 
-Print the help for the delete command:
+Using SSMS on the SQL VM, create a new login with a strong password with the [CREATE LOGIN](https://learn.microsoft.com/en-us/sql/t-sql/statements/create-login-transact-sql?view=sql-server-ver16) statement:
 
 ```
-az sql db delete --help
+CREATE LOGIN labs2   
+   WITH PASSWORD = '00234$$$jhjhj' 
+GO  
 ```
 
-You need to specify the database name, server name and Resource Group, e.g:
+The SQL VM is already configured for public access, so you can connect. If you try to use the UDF:
 
 ```
-az sql db delete --name db01 --resource-group labs-sqlserver --server <server-name>
+SELECT dbo.LegacyDate() 
 ```
 
-> You'll be asked for confirmation.
+You'll see an error:
 
-When the command completes, browse to the SQL Server instance in the Portal and open the _Deleted databases_ section. 
+_The EXECUTE permission was denied on the object 'LegacyDate', database 'master', schema 'dbo'_
 
-You can [restore a deleted database in the Portal](https://docs.microsoft.com/en-us/azure/azure-sql/database/recovery-using-backups#deleted-database-restore-by-using-the-azure-portal), but it will take a few minutes before newly-deleted databases show up.
-
-Deleting the Resource Group will delete the SQL Server:
+So back in the VM you need to [grant object permission](https://learn.microsoft.com/en-us/sql/t-sql/statements/grant-object-permissions-transact-sql?view=sql-server-ver16) - but permissions are granted to a user, so you need to create a user for your login first:
 
 ```
-az group delete -n labs-sqlserver -y
+CREATE USER labs2 FOR LOGIN labs2
+
+GRANT EXECUTE ON LegacyDate TO labs2
 ```
 
-That removes any databases and backups, and you can no longer restore deleted databases.
+Now in your remote session you can execute the UDF. 

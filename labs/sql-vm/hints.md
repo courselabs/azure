@@ -1,9 +1,13 @@
 # Lab Hints
 
-You can print the help for `sql db` commands to see how to delete an individual database. 
+This is standard SQL Server stuff, but it applies to the managed Azure SQL as well as SQL VMs. 
 
-SQL Server is a managed service so you don't need to take your own backups. Explore the portal and you may find a backup of the deleted database is available to restore.
+It's useful because lots of SQL databases are getting migrated to the cloud and authentication is often a difficult problem.
 
-Then if you delete the Resource Group you'll see what happens to all the resources from the group.
+Here's some documentation which will help if you're not used to SQL Server:
+
+- [Create a SQL login](https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/create-a-login?view=sql-server-ver16)
+
+That should let you connect, but your new login will need to be [granted permission]() to use the UDF.
 
 > Need more? Here's the [solution](solution.md).

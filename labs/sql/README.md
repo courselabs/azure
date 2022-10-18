@@ -31,7 +31,7 @@ We won't go on to create the database in the portal, we'll use the CLI instead.
 
 ## Create a SQL Server with the CLI
 
-First we need to create a Resource Group where the new SQL resources will live. This should be familiar from the [Resource Groups](/labs/resourcegroups/README.md) lab:
+First we need to create a Resource Group where the new SQL resources will live.
 
 _Create the group - use your own preferred location:_
 
@@ -75,11 +75,11 @@ az sql server create -l eastus -g labs-sql -n <server-name> -u sqladmin -p <admi
 
 - what is the running cost for a SQL Server with no databases?
 
-When your SQL Server is created, browse to the portal and find the server properties. Now you can see that the server name needs to be globally unique.
+When your SQL Server is created, browse to the portal and find the server properties. You can see that the server name needs to be globally unique.
 
 ## Create a SQL Database
 
-The SQL Server is a container for zero or more databases. When it's created you can use the `sql db create` command to create a new database in the server.
+The SQL Server is a container for zero or more databases. When you have a SQL Server you can use the `sql db create` command to create a new database in the server.
 
 📋 Create a database called `db01` in your SQL Server using the `az` command.
 
@@ -136,11 +136,11 @@ INSERT INTO students(email) VALUES ('elton@sixeyed.com')
 SELECT * FROM students
 ```
 
-> You could use this database with a .NET application - setting the connection string in config, and having the database schema automatically created with Entity Framework.
+> You could use an empty database with any application that uses an ORM (Entity Framework in .NET or Hibernate in Java) - setting the connection string in config, and having the database schema automatically when the app first runs.
 
 ## Lab
 
-Use CLI to delete the SQL database. When the database is gone the SQL Server still exists - can you retrieve the data from your deleted database? Now delete the resource group, does the SQL Server still exist?
+Use the CLI to delete the SQL database. When the database is gone the SQL Server still exists - can you retrieve the data from your deleted database? Now delete the resource group, does the SQL Server still exist?
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 

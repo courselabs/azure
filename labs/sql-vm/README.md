@@ -1,5 +1,8 @@
 # SQL Server VMs
 
+Managed SQL Server databases take care of a lot of admin tasks and should be your preferred choice, but you can't always use them. They don't support 100% of the features you get with SQL Server in the datacentre, and there will be some occasions where you need a feature that isn't there in the managed options.
+
+In this lab we'll use the SQL VM service, which lets you set up the underlying operating system and the SQL Server deployment however you need to.
 
 ## Reference
 
@@ -21,7 +24,7 @@ We won't go on to create the database in the portal, we'll use the CLI instead.
 
 ## Create a Managed SQL Server with the CLI
 
-First we need to create a Resource Group where the new SQL resources will live. This should be familiar from the [Resource Groups](/labs/resourcegroups/README.md) lab:
+First we need to create a Resource Group where the new SQL resources will live.
 
 _Create the group - use your own preferred location:_
 
@@ -29,25 +32,28 @@ _Create the group - use your own preferred location:_
 az group create -n labs-sql-vm --tags courselabs=azure -l westeurope
 ```
 
-Next we need to find the VM image to use. We'll use SQL Server 2019 on a Windows Server 2022 machine:
+Next we need to find the VM image to use. We'll use SQL Server 2019 Standard on a Windows Server 2022 machine:
 
 ```
 # find the offers for SQL Server images - this includes Windows and Linux:
-az vm image list-offers --publisher MicrosoftSQLServer
+az vm image list-offers --publisher MicrosoftSQLServer -o table
+
+# find a SKU:
+az vm image list-skus -f sql2019-ws2022 -p MicrosoftSQLServer --location westeurope -o table
 
 # list all the images, e.g:
-az vm image list --offer sql2019-ws2022 --location westeurope -o table --all
+az vm image list --sku standard -f sql2019-ws2022 -p MicrosoftSQLServer --location westeurope -o table --all
 ```
 
-📋 Create a SQL Server VM using the standard `vm create` command. 
+📋 Create a SQL Server VM using the normal `vm create` command. 
 
 <details>
   <summary>Not sure how?</summary>
 
-This will get you started - be sure to use the latest image version, it will have a URN like this: _MicrosoftSQLServer:sql2019-ws2022:standard:15.0.220712_
+This will get you started - be sure to use the latest image version, it will have a URN like this: _MicrosoftSQLServer:sql2019-ws2022:standard:15.0.220913_
 
 ```
-az vm create -l westeurope -g labs-sql-vm -n sql01 --image <urn> --size Standard_D2_v3 --admin-username labs  --public-ip-address-dns-name  <your-dns-name> 
+az vm create -l westeurope -g labs-sql-vm -n sql01 --image <urn> --size Standard_D2_v3 --admin-username labs --admin-password <your-strong-password> --public-ip-address-dns-name  <your-dns-name> 
 ```
 
 </details><br/>
@@ -60,7 +66,7 @@ Even if you could access the VM, what is the admin username and password? You ca
 
 ## Register the VM for SQL Server Management
 
-TODO
+The SQL Server extension effectively turns your VM into something more like a managed database service.
 
 📋 Register your VM for SQL Server management using `sql vm create` command. Configure it for public access and set a username and password for SQL Authentication
 
@@ -83,18 +89,21 @@ You need to specify:
 This will convert your VM to a SQL Server VM with public access:
 
 ```
-az sql vm create -g labs-sql-vm -n sql01 --license-type PAYG --sql-mgmt-type Full --connectivity-type PUBLIC --sql-auth-update-username labs --sql-auth-update-pwd <strong-password> 00**abcDEF123!!$
+az sql vm create -g labs-sql-vm -n sql01 --license-type PAYG --sql-mgmt-type Full --connectivity-type PUBLIC --sql-auth-update-username labs --sql-auth-update-pwd <strong-password>
 ```
 
 </details><br/>
 
-> Now browse to the VM in the Portal - the UI is exactly the same :) But open the Resource Group and you'll see there's a new SQL Virtual Machine resource.
+> Now browse to the VM in the Portal - the UI is almost exactly the same... But open the Resource Group and you'll see there's a new SQL Virtual Machine resource.
 
-From the Portal you can see your connectivity setup in the _Security Configuration_ blade. Check the NSG again and you'll see a new rule has been added to allow incoming traffic on port 1433.
+From the Portal you can see your connectivity setup in the _Security Configuration_ blade:
+
+- set the connectivity to _Public_
+- check the NSG and you'll see a new rule has been added to allow incoming traffic on port 1433
 
 ## Customize the SQL Server VM
 
-The SQL Server images have SSMS pre-installed, so you can log in and work with the database. First you'll need to enable RDP access for the VM. 
+The SQL Server images have SQL Server Management Studio pre-installed, so you can log in and have a UI to work with the database. First you'll need to enable RDP access for the VM. 
 
 📋 Add an NSG rule to allow port 3389 connections from the Internet.
 
@@ -107,7 +116,7 @@ Find the name of your NSG:
 az network nsg list -g labs-sql-vm  -o table
 ```
 
-And add the RDP rule:
+Check all the details and add the RDP rule:
 
 ```
 az network nsg rule create -g labs-sql-vm --nsg-name sql01NSG -n rdp --priority 150 --source-address-prefixes Internet --destination-port-ranges 3389 --access Allow
@@ -115,12 +124,13 @@ az network nsg rule create -g labs-sql-vm --nsg-name sql01NSG -n rdp --priority 
 
 </details><br/>
 
-Now you can log in to the VM:
+Now you can log in to the VM. We'll demonstrate using a SQL Server feature which isn't available on other services - creating a custom function which calls some .NET code.
 
-- copy the DLL file  `labs/sql-vm/udf/FormattedDate.dll` from your machine to the VM
+- copy the DLL file  `labs/sql-vm/udf/FormattedDate.dll` from your machine to the VM - in the root of the C: drive
+- (this binary file contains the .NET code we want to make available through SQL Server)
 - run _SQL Server Management Studio_
 - the default connection settings use the machine name and Windows auth, which is all fine
-- connect then run this SQL to register the UDF
+- connect and click _New Query_ then run this SQL to register a UDF - User-Defined Function - to call the .NET code
 
 ```
 sp_configure 'show advanced options', 1
@@ -141,17 +151,26 @@ GO
 CREATE FUNCTION LegacyDate() RETURNS NVARCHAR(7)   
 AS EXTERNAL NAME FormattedDate.FormattedDate.LegacyNow;   
 GO  
-  
-SELECT dbo.LegacyDate();  
-GO
-
 ```
 
-You'll see the current date in a legacy system format. You can't do this with the other Azure SQL options because they don't give you access to the underlying OS.
+> Don't worry about all this stuff if you're not a SQL Server guru :) 
+
+You couldn't do this with the other Azure SQL options because you don't have access to upload files to disk, and some of these commands would be restricted.
+
+Now we can test the UDF:
+
+```  
+SELECT dbo.LegacyDate();  
+GO
+```
+
+You'll see the current date in a legacy system format, which was generated by the .NET code you uploaded in the DLL.
 
 ## Lab
 
-TODO
+One other use-case for SQL VMs is that you can own  authentication without using the standard Azure auth, and you can create multiple users with whatever access levels you need. 
+
+Create a new SQL Server login with a username and password. Confirm you can access the database server from your own machine using those credentials, and run the `SELECT dbo.LegacyDate()` query.  
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
@@ -159,8 +178,8 @@ ___
 
 ## Cleanup
 
-If you didn't finish the lab, you can delete the RG with this command to remove all the resources:
+Delete the RG with this command to remove all the resources:
 
 ```
-az group delete -y -n labs-sqlserver
+az group delete -y -n labs-sql-vm
 ```
