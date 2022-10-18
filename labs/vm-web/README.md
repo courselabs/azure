@@ -1,20 +1,26 @@
 # Virtual Machines - Web Server
 
-vm as web server - public access, DNS entry, IP address
+VMs are a simple way to get a workload running in the cloud - something like a web server which needs to be available 24x7. Web servers have other requirements too, like a public IP address and a DNS name for access.
 
+In this lab we'll see how to create a VM and manually deploy a web server, by connecting to the VM and installing the packages we need.
 
 ## Reference
 
-- [Azure Virtual Machine docs](https://docs.microsoft.com/en-gb/azure/virtual-machines/)
+- [Azure public IP addresses](https://learn.microsoft.com/en-us/azure/virtual-network/ip-services/public-ip-addresses)
 
-- [`az vm` commands](https://docs.microsoft.com/en-us/cli/azure/vm?view=azure-cli-latest)
+- [`az network public-ip` commands](https://learn.microsoft.com/en-us/cli/azure/network/public-ip?view=azure-cli-latest)
 
 - [`az vm image` commands](https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest)
 
 
-## Explore VMs in the Portal
+## Explore VM in the Portal
 
-VM in portal - PIP config
+Open the Portal and search to create a new Virtual Machine resource. Under the _Networking_ tab you can specify the Public IP:
+
+- you have to create a new resource for that, the Public IP Address (PIP)
+- you can't choose an actual IP address though...
+- you can also configure a network security group (NSG)
+- you can set to delete the PIP and NSG when the VM is deleted
 
 ## Create a Linux VM with a public DNS name
 
@@ -47,7 +53,7 @@ az vm create -l westeurope -g labs-vm-web -n vm01 --image UbuntuLTS --size Stand
 
 </details><br/>
 
-The DNS name is attached to the PIP (public IP address) which the VM uses. PIPs have their own lifecycle - you can manage them indpendently of any VMs using the CLI:
+The DNS name is attached to the PIP (public IP address) which the VM uses. PIPs have their own lifecycle - you can manage them independently of any VMs using the CLI:
 
 _List all the PIPs in the Resource Group:_
 
@@ -89,9 +95,9 @@ curl localhost
 
 > Open a web browser and navigate to the FQDN for your machine, http://[vm-name].[region].cloudapp.azure.com
 
-You can access the website from the VM **but not** from outside - that's because the Network Security Group (NSG) is set up to block incoming traffic.
+You can access the website from the VM **but not** from outside - that's because of the Network Security Group (NSG). An NSG is created by default and attached to the VM. It's like a firewall which is set up to block incoming traffic.
 
-When you're troubleshooting, the Portal can be more useful than the CLI.
+When you're troubleshooting, the Portal can often be more useful than the CLI.
 
 📋 Browse to the Portal and find the NSG for your VM. Change the configuration to allow inbound traffic on port 80.
 
@@ -102,7 +108,7 @@ Find your Resource Group in the portal and open the NSG - it will be called `[vm
 
 - on the _Overview_ page you'll see the inbound rules
 - port 22 is allowed (for SSH connections) and some 65000+ ports
-- all other ports are blocked but 
+- all other ports are blocked 
 - open the _Inbound Security Rules_ page
 - add a new rule to allow HTTP traffic from any source
 
@@ -121,7 +127,6 @@ You're billed for VMs all the time they're running. When you're finished working
 <details>
   <summary>Not sure how?</summary>
 
-
 You can print all the available commands for a VM, then drill into the details for `stop`:
 
 ```
@@ -130,17 +135,18 @@ az vm --help
 az vm deallocate --help
 ```
 
-Run this to stop and deallocate the VM :
+Run this to stop and deallocate the VM:
 
 ```
 az vm deallocate -g labs-vm-web -n vm01
-``` 
+```
 
 Then check your PIP:
 
 ```
 az network public-ip show -g labs-vm-web -n vm01PublicIP
 ```
+
 </details><br/>
 
 > The IP address allocated to the PIP is gone - deallocating the VM also frees up the IP address for another user. 
@@ -151,7 +157,7 @@ If you restart the VM then you'll see the PIP gets a new public IP address, but 
 
 Dynamic IP addresses are usually fine - there will be a DNS entry to route them anyway - but sometimes you want to have a fixed IP address which you keep even if the VM is deallocated.
 
-ETC.
+You can configure a PIP to use a fixed IP address, even if the PIP isn't allocated to a VM. Change the PIP to use a constant IP address and check the address is retained when you start, stop and deallocate the VM.
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
