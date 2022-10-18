@@ -2,7 +2,7 @@
 
 VMs are a simple way to get a workload running in the cloud - something like a web server which needs to be available 24x7. Web servers have other requirements too, like a public IP address and a DNS name for access.
 
-In this lab we'll see how to create a VM and manually deploy a web server, by connecting to the VM and installing the packages we need.
+In this lab we'll see how to create a Linux VM and manually deploy a web server, by connecting to the VM and installing the packages we need.
 
 ## Reference
 
