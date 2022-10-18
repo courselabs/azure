@@ -1,6 +1,8 @@
 # Automating VM configuration
 
-no good connecting to a VM and running scripts - do it as part of setup
+All new VMs will need some additional configuration after they're created, and it's not feasible to keep doing that manually. It's time-consuming, error-prone and doesn't scale. Azure gives you multiple options to automate VM configuration as part of the deployment, or after the VM is created. 
+
+In this lab we'll use some simple options for running deployment scripts on Linux and Windows VMs. 
 
 ## Reference
 
@@ -17,10 +19,11 @@ no good connecting to a VM and running scripts - do it as part of setup
 
 Open the Portal and search to create a new Virtual Machine resource. Switch to the _Advanced_ tab and check out the configuration options. There are three configuration mechanisms:
 
-- **extensions** - 
-- **applications** -
-- **cloud-init scripts** -
+- **extensions** 
+- **applications**
+- **cloud-init scripts**
 
+These are all mechanisms for configuring the VM.
 
 ## Linux with custom script extension
 
@@ -36,7 +39,7 @@ az group create -n labs-vm-config --tags courselabs=azure -l westeurope
 az vm create -l westeurope -g labs-vm-config -n web01 --image UbuntuLTS --size <your-vm-size> --public-ip-address-dns-name <your-dns-name>
 ```
 
-Custom scripts are specified in JSON. There's an extensive [schema](https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-linux#extension-schema) which you can use to provide a file URL, confidential settings and more. 
+Custom scripts are specified in JSON. There's an extensive [schema](https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-linux#extension-schema) which you can use to provide a file URL, confidential settings for passwords, and more. 
 
 But we'll start simple with a shell command inside a JSON string:
 
@@ -57,7 +60,7 @@ az vm extension --help
 az vm extension set --help
 ```
 
-The syntax is a bit clunky because it's the same command for all extensions, so the spec goes into the `settings` parameter. JSON strings are treated differently in Bash and PowerShell:
+The syntax is a bit clunky because it's the same command for all extensions, so the spec goes into the `settings` parameter. It's easiest to store the JSON string in a variable, but they are treated differently in Bash and PowerShell:
 
 ```
 # in PowerShell:
@@ -65,7 +68,11 @@ $json='{ ""commandToExecute"": ""apt-get -y update && apt-get install -y nginx""
 
 # or Bash:
 json='{ "commandToExecute": "apt-get -y update && apt-get install -y nginx" }'
+```
 
+Now you can set the custom script extension to run the shell script on the VM:
+
+```
 # add the extension:
 az vm extension set -g labs-vm-config --vm-name web01 --name customScript --publisher Microsoft.Azure.Extensions --settings $json
 ```
@@ -130,7 +137,7 @@ An easier option is to use `vm run-command`, which can read a local script file 
 First create the VM - be sure to use a VM size you have access to, the latest Windows 11 image and a strong password:
 
 ```
-az vm create -l westeurope -g labs-vm-config -n dev01 --image MicrosoftWindowsDesktop:windows-11:win11-21h2-pro:22000.795.220629 --size Standard_D4s_v5 --admin-username labs --public-ip-address-dns-name <your-unique-dns-name> --admin-password <your-strong-password>
+az vm create -l westeurope -g labs-vm-config -n dev01 --image <windows-11-image> --size Standard_D4s_v5 --admin-username labs --public-ip-address-dns-name <your-unique-dns-name> --admin-password <your-strong-password>
 ```
 
 When the VM is created you can run the command:
@@ -149,7 +156,7 @@ You can connect to your VM with an RDP client to confirm the tools are installed
 
 You can run full scripts with `run-command` and there are some built-in commands which mean you don't need a script. That's very useful for quick debugging.
 
-We've created two VMs but we didn't specify anything to connect them together across the network. They are in the same Resource Group so you may think they are connected together anyway. Run commands in the Linux and  Windows VMs to print the IP addresses and see if they can reach each other across a private network.
+We've created two VMs but we didn't specify anything to connect them together across a network. They are in the same Resource Group so you may think they are connected together anyway. Run commands in the Linux and  Windows VMs to print the IP addresses and see if they can reach each other across a private network.
 
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
