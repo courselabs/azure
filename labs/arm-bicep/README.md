@@ -168,8 +168,10 @@ ___
 
 ## Cleanup
 
-You can delete an ARM deployment with the CLI:
+Remember you need to delete the Resource Groups, not the deployment:
 
 ```
-az deployment group delete -g labs-arm -n storage-account
+az group group delete -n labs-arm-bicep
+
+az group group delete -n labs-arm-bicep-lab
 ```
