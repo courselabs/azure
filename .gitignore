@@ -6,3 +6,4 @@ labs/arm-bicep/vm-simple-linux/azuredeploy.bicep
 download*.*
 **/.deploy
 *.pfx
+password.txt

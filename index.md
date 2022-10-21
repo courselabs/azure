@@ -28,14 +28,14 @@ _SQL Databases and ARM_
 
 - [SQL Server](labs/sql/README.md)
 - [SQL Server VMs](labs/sql-vm/README.md)
-- [Deploying database schemas]()
-- Automation with ARM, explore templates & quickstarts
-- Scripting VM & database creation with ARM templates
+- [Deploying database schemas](labs/sql-schema/README.md)
+- [Automation with ARM](labs/arm/README.md)
+- [Automation with Bicep](labs/arm-bicep/README.md)
 
 _App Deployment with IaaS_
 
-- Working with IaaS: manual app deployment
-- Automating app deployment with VMs
+- [IaaS app deployment](labs/iaas-apps/README.md)
+- [Automating IaaS app deployment](labs/iaas-bicep/README.md)
 - Creating and using VM images
 - Scaling with VM Scale Sets
 - Requesting additional quota

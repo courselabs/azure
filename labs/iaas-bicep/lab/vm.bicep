@@ -125,8 +125,10 @@ resource vmRunCommand 'Microsoft.Compute/virtualMachines/runCommands@2022-03-01'
       }
     ]
     source: {
-      scriptUri: 'https://courselabspublic.blob.core.windows.net/iaasbicep/vm-setup.ps1'
+      scriptUri: 'https://courselabspublic.blob.${environment().suffixes.storage}/iaasbicep/vm-setup.ps1'
     }
     timeoutInSeconds: 600
   }
 }
+
+output url string = 'http://${publicIPAddress.properties.dnsSettings.fqdn}/signup'
