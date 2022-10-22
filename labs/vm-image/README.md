@@ -161,7 +161,7 @@ The copy command takes source and target parameters:
 ```
 az image copy --help
 
-az image copy --source-resource-group labs-vm-image --source-object-name app01-image  --target-location westeurope --target-resource-group labs-vmss-win
+az image copy --source-type image --source-resource-group labs-vm-image --source-object-name app01-image  --target-location westeurope --target-resource-group labs-vmss-win
 ```
 
 </details><br/>
@@ -169,6 +169,8 @@ az image copy --source-resource-group labs-vm-image --source-object-name app01-i
 Copying an image can take a while - Azure takes a snapshot of the OS disk and copies it to a temporary storage account. It will start slowly - 1%... 2%... 3% - then suddenly speed up.
 
 > You don't need to wait for this part to complete - open a new terminal window and carry on.
+
+> **BUT** if you see an error from the CLI with `KeyError: 'IMPORT_ENUM'`, this is a [known issue](https://github.com/Azure/azure-cli/issues/24263). Switch to the Portal and move the VM image to the new RG instead, so we can use the image later.
 
 You can use the normal `vm create` command, using your image name instead of a marketplace URN. 
 
@@ -183,7 +185,6 @@ Try browsing to the app on one of your VMs, using its public IP address.
 ## Lab
 
 You can't access the app because the NSG blocks traffic. Add a new rule to allow port 80 and confirm you can reach each of the VMs - you'll see the same page from each, but with a different VM name displayed. These are three instances of the same application, it would be good to have a single DNS address and let Azure load-balance betweeen them. Create a _Traffic Manager Profile_ resource in the Portal and configure it to do that.
-
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
