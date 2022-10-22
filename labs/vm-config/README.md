@@ -158,7 +158,6 @@ You can run full scripts with `run-command` and there are some built-in commands
 
 We've created two VMs but we didn't specify anything to connect them together across a network. They are in the same Resource Group so you may think they are connected together anyway. Run commands in the Linux and  Windows VMs to print the IP addresses and see if they can reach each other across a private network.
 
-
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
 ___
