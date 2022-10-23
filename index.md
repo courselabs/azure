@@ -36,9 +36,9 @@ _App Deployment with IaaS_
 
 - [IaaS app deployment](labs/iaas-apps/README.md)
 - [Automating IaaS app deployment](labs/iaas-bicep/README.md)
-- Creating and using VM images
-- Scaling with VM Scale Sets
-- Requesting additional quota
+- [Creating and using VM images](labs/vm-image/README.md)
+- [Scaling with VM Scale Sets](labs/vmss-win/README.md)
+- [Provisiong Scale Sets with cloud-init](labs/vmss-linux/README.md)
 
 _App Service_
 
