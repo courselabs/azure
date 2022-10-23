@@ -8,7 +8,6 @@ app.use(function(req, res, next) {
 })
 
 app.get('/user', function(req,res){
-  //res.send(JSON.stringify(req.headers))
   res.send(`IdP: ${req.headers['x-ms-client-principal-idp']}; principal: ${req.headers['x-ms-client-principal-name']}`)
 });
 
