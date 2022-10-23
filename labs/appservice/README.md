@@ -1,4 +1,4 @@
-# App Service
+# App Service for Web Apps
 
 IaaS options are great when you need access to the host machine to configure and deploy your app, but it leaves you with a lot of management overhead. Platform-as-a-Service (PaaS) takes care of that for you, simplifying deployment and updates, provided your application is supported in the PaaS environment. Azure has a few PaaS options - App Service is a very popular one.
 
