@@ -42,11 +42,11 @@ _App Deployment with IaaS_
 
 _App Service_
 
-- New App Service, explore plans & capabilities
-- Create & static Web App, portal and AZ CLI
-- Create & manage Web App, portal and AZ CLI
-- Configuration and app management
-- Packaging and automating deployments
+- [App Service for web applications](labs/appservice/README.md)
+- [App Service for static web apps](labs/appservice-static/README.md)
+- [App Service for distributed apps](labs/appservice-api/README.md)
+- [App Service configuration and administration](labs/appservice-config/README.md)
+- [App Service CI/CD](labs/appservice-cicd/README.md)
 
 _Project_
 
