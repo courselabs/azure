@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RNG v2 - Single Page App</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $("button").click(function(event){
+ 
+    var settings = {
+          'cache': false,
+          "async": true,
+          "crossDomain": true,
+          "url": 'https://<api-fqdn>/rng',
+          "method": "GET",
+          "headers": {
+              "accept": "application/json",
+              "Access-Control-Allow-Origin":"*"
+          }
+      }
+
+      $.ajax(settings).done(function (response) {
+        $("#output").html(response);
+      });
+  });
+ 
+});
+</script>
+</head>
+<body>
+    <div class="formClass">
+      <button type="button">Get a random number</button><br>
+      <div id="output"></div>    
+    </div>
+</body>
+</html> 
