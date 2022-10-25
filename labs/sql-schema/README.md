@@ -132,7 +132,7 @@ az storage blob generate-sas  -c databases -n assets-db.bacpac --permissions r -
 You'll get a key in the output which you can plug into the `import` command:
 
 ```
-az sql db import -s $server -n $database -g $rg --storage-key-type SharedAccessKey -u sqladmin -p <server-password>  --storage-key <sas-key> --storage-uri <bacpac-url>
+az sql db import -s $server -n $database -g $rg --storage-key-type SharedAccessKey -u sqladmin -p <server-password> --storage-uri <bacpac-url> --storage-key <sas-key>
 ```
 
 </details><br/>
@@ -169,13 +169,13 @@ Insert some data into the assets table:
 
 ```
 INSERT INTO [dbo].[Assets] (AssetTypeId, LocationId, AssetDescription)
-VALUES (1, 1, 'Elton's MacBook Air')
+VALUES (1, 1, 'Elton''s MacBook Air')
 
 INSERT INTO [dbo].[Assets] (AssetTypeId, LocationId, AssetDescription)
-VALUES (2, 2, 'Elton's Mac Studio')
+VALUES (2, 2, 'Elton''s Mac Studio')
 
 INSERT INTO [dbo].[Assets] (AssetTypeId, LocationId, AssetDescription)
-VALUES (3, 2, 'Elton's iPhone')
+VALUES (3, 2, 'Elton''s iPhone')
 ```
 
 This is additional data, not present in the original Bacpac. Export a Bacpac from the Azure database. How would you use that file to recreate the data in another instance.

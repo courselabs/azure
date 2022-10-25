@@ -74,7 +74,7 @@ Now you can set the custom script extension to run the shell script on the VM:
 
 ```
 # add the extension:
-az vm extension set -g labs-vm-config --vm-name web01 --name customScript --publisher Microsoft.Azure.Extensions --settings $json
+az vm extension set -g labs-vm-config --vm-name web01 --name customScript --publisher Microsoft.Azure.Extensions --settings "$json"
 ```
 
 </details><br/>
