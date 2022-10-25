@@ -7,3 +7,4 @@ download*.*
 **/.deploy
 *.pfx
 password.txt
+**/todo-list.db*
