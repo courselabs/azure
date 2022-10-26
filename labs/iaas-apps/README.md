@@ -30,7 +30,7 @@ az group create -n $rg  -l $location --tags courselabs=azure
 
 The application we're going to deploy will create the database schema, so we just need to start with an empty database we can connect to.
 
-📋 Create a SQL Server and a SQL Database in the Resource Group (we covered this in the [SQL lab](labs/sql/README.md)).
+📋 Create a SQL Server and a SQL Database in the Resource Group (we covered this in the [SQL lab](/labs/sql/README.md)).
 
 <details>
   <summary>Not sure how?</summary>
@@ -53,7 +53,7 @@ Our application needs the .NET Framework to run. That's an older Windows-only pl
 
 Windows Server VM images are listed under the publisher `MicrosoftWindowsServer` and the offer `WindowsServer`.
 
-📋 Create a VM using the latest release of Windows Server 2022, with the Datacenter Core 2nd-generation SKU (we saw how to search SKUs in the [Windows VM lab](labs/vm-win/README.md)).
+📋 Create a VM using the latest release of Windows Server 2022, with the Datacenter Core 2nd-generation SKU (we saw how to search SKUs in the [Windows VM lab](/labs/vm-win/README.md)).
 
 <details>
   <summary>Not sure how?</summary>

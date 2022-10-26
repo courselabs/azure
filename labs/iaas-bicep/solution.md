@@ -2,7 +2,7 @@
 
 The sample solution changes the path to the script URI and adds an output line:
 
-- [lab/vm.bicep](labs/iaas-bicep/lab/vm.bicep)
+- [lab/vm.bicep](/labs/iaas-bicep/lab/vm.bicep)
 
 It uses the [environment](https://learn.microsoft.com/en-gb/azure/azure-resource-manager/bicep/bicep-functions-deployment#environment) function to avoid hard-coding the domain name, with string interpolation to build up the full URI:
 

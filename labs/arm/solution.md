@@ -1,7 +1,7 @@
 # Lab Solution
 
 Here's my sample solution: 
-- [lab/azuredeploy.json](labs/arm/lab/azuredeploy.json)
+- [lab/azuredeploy.json](/labs/arm/lab/azuredeploy.json)
 
 It changes the IP address allocation method to static and sets a specific IP address together with the IP address version.
 

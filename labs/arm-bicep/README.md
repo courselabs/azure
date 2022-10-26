@@ -31,7 +31,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-06-01' = {
 }
 ```
 
-The resource type specifies the version of the schema its using, but the rest of the template is much more readable than the JSON alternative:
+The resource type specifies the version of the schema its using, but the rest of the template [storage-account/main.bicep](/labs/arm-bicep/storage-account/main.bicep) is much more readable than the JSON alternative:
 
 - the syntax is cleaner - field names and values don't need to be quoted and there is less indentation
 - paramaters and variables have simple names (`location` and `storageSku`)
@@ -64,7 +64,7 @@ az deployment group create -g labs-arm-bicep --template-file labs/arm-bicep/stor
 
 > The output from the deployment command is the same for JSON and Bicep specs.
 
-What-if support is there too - run this command with a different SKU parameter but the same account name, and the ourput will tell you what would change:
+What-if support is there too - run this command with a different SKU parameter but the same account name, and the output will tell you what would change:
 
 ```
 az deployment group create -g labs-arm-bicep --template-file labs/arm-bicep/storage-account/main.bicep --what-if --parameters storageSku=Standard_GRS storageAccountName=<unique-name> 
@@ -85,9 +85,9 @@ az bicep --help
 
 > If that doesn't work for you try another [Bicep installation option](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#deployment-environment)
 
-This ARM spec is for the same Linux VM in the [ARM lab](labs/arm/README.md) - all the resources are defined in JSON format:
+This ARM spec is for the same Linux VM in the [ARM lab](/labs/arm/README.md) - all the resources are defined in JSON format:
 
-- [vm-simple-linux/azuredeploy.json](labs/arm-bicep/vm-simple-linux/azuredeploy.json)
+- [vm-simple-linux/azuredeploy.json](/labs/arm-bicep/vm-simple-linux/azuredeploy.json)
 
 📋 Use the Bicep CLI to generate a Bicep file from the JSON.
 
@@ -125,7 +125,7 @@ az deployment group create -g labs-arm-bicep --template-file labs/arm-bicep/vm-s
 
 Here's an example of the updated file:
 
-- [vm-simple-linux/azuredeploy-updated.bicep](labs/arm-bicep/vm-simple-linux/azuredeploy-updated.bicep)
+- [vm-simple-linux/azuredeploy-updated.bicep](/labs/arm-bicep/vm-simple-linux/azuredeploy-updated.bicep)
 
 The sets the same _privateIP_ values we used in the ARM lab.
 
@@ -143,7 +143,7 @@ Bicep templates are typically meant to describe all the resources in the Resourc
 
 The default deployment mode for ARM is _incremental_ which means any new resources in the template get added, any matching ones are left as they are, and anything extra in the Resource Group (not described in the template) is left as-is.
 
-- [vm-and-sql-db/main.bicep](labs/arm-bicep/vm-and-sql-db/main.bicep) - adds a SQL Server and database spec to the existing Linux VM template
+- [vm-and-sql-db/main.bicep](/labs/arm-bicep/vm-and-sql-db/main.bicep) - adds a SQL Server and database spec to the existing Linux VM template
 
 The resource identifiers have been tidied up from the generated Bicep, but the specs are the same. 
 

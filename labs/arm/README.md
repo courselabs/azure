@@ -142,7 +142,7 @@ ARM templates are meant to be repeatable but they may not be. Some Azure setting
 
 Check out this template which comes from the Azure Quickstart repo on GitHub:
 
-- [vm-simple-linux/azuredeploy.json](labs/arm/vm-simple-linux/azuredeploy.json) - defines a VM  and all the associated resources: VNet, subnet, PIP, NSG and NIC
+- [vm-simple-linux/azuredeploy.json](/labs/arm/vm-simple-linux/azuredeploy.json) - defines a VM  and all the associated resources: VNet, subnet, PIP, NSG and NIC
 
 📋 Can you find the setting which stops this template being repeatable?
 
@@ -163,7 +163,7 @@ Inside the NIC resource you'll see the IP configuration settings:
               "privateIPAllocationMethod": "Dynamic"
 ```
 
-The allocation method for the private IP address - within the subnet - is set to _Dynamic_. That means a different address could be used each time..
+The allocation method for the private IP address - within the subnet - is set to _Dynamic_. That means a different address could be used each time.
 
 </details><br/>
 
@@ -182,7 +182,7 @@ When the deployment completes, run the command again with the `--what-if` flag -
 
 ## Lab
 
-Change VM spec to use a static IP address `10.1.0.102` in the JSON template. Create a new resource group and deploy the new template - verify that the deployment is repeatable.
+Change the VM spec to use a static IP address `10.1.0.102` in the JSON template. Create a new resource group and deploy the new template - verify that the deployment is repeatable.
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 

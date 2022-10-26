@@ -2,7 +2,7 @@
 
 The home page content is in `src/WebForms/WebApp/Default.aspx` - here's an updated file you can use:
 
-- [lab/Default.aspx](labs/appservice/lab/Default.aspx) - changes the HTML content
+- [lab/Default.aspx](/labs/appservice/lab/Default.aspx) - changes the HTML content
 
 Copy the new file over the original:
 

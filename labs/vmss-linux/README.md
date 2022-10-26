@@ -24,7 +24,7 @@ az group create -n labs-vmss-linux --tags courselabs=azure -l westeurope
 
 cloud-init is a powerful cross-platform system for configuring new machines. You can do all the usual steps for deploying pre-requisites, installing applications and writing config files:
 
-- [cloud-init.txt](labs/vmss-linux/setup/cloud-init.txt) - this is a simple init script which installs the Nginx web server
+- [cloud-init.txt](/labs/vmss-linux/setup/cloud-init.txt) - this is a simple init script which installs the Nginx web server
 
 You can include a cloud-init script as a piece of [custom data](https://learn.microsoft.com/en-us/azure/virtual-machines/custom-data) when you create a VM in Azure
 
@@ -60,7 +60,7 @@ az vm run-command invoke  -g labs-vmss-linux -n web01 --command-id RunShellScrip
 
 Now we've seen how cloud-init works, here's a more interesting setup script which we'll use for a VM Scale Set:
 
-- [cloud-init-custom.txt](labs/vmss-linux/setup/cloud-init-custom.txt) - installs Nginx and writes a custom HTML page; cloud-init lets you inject variables into files, this example puts the VM host name into the web page
+- [cloud-init-custom.txt](/labs/vmss-linux/setup/cloud-init-custom.txt) - installs Nginx and writes a custom HTML page; cloud-init lets you inject variables into files, this example puts the VM host name into the web page
 
 It's the same custom data approach to use cloud-init files with a VMSS.
 
@@ -77,7 +77,7 @@ az vmss create -n vmss-web01 -g labs-vmss-linux --vm-sku Standard_D2s_v5 --insta
 
 </details><br/>
 
-We saw in the [VMSS Windows lab](labs/vmss-win/README.md) that the new VM Scale Set is created with a PIP and a load balancer, but the load balancer rules aren't configured so the traffic doesn't go anywhere. 
+We saw in the [VMSS Windows lab](/labs/vmss-win/README.md) that the new VM Scale Set is created with a PIP and a load balancer, but the load balancer rules aren't configured so the traffic doesn't go anywhere. 
 
 Print the list of rules to confirm there's nothing set up:
 
@@ -128,7 +128,7 @@ az vmss list-instances -g labs-vmss-linux -n vmss-web01
 
 You can update the VMSS with a change to the desired VM state. That changes the model and means the existing VMs will be out of date. We can see what happens if we change the custom data to use a different cloud-init script:
 
-- [cloud-init-updated.txt](labs/vmss-linux/setup/cloud-init-updated.txt) - changes the HTML file which Nginx returns
+- [cloud-init-updated.txt](/labs/vmss-linux/setup/cloud-init-updated.txt) - changes the HTML file which Nginx returns
 
 Updating the custom data isn't as easy as it should be, because we need to set a JSON field. The CLI doesn't let you use a file in this case, you need to load the file into a Base-64 string:
 

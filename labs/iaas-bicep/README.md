@@ -8,9 +8,9 @@ In this lab we'll use Bicep to define a deployment which includes a Windows VM a
 
 Bicep supports larger infrastructure requirements by letting you split the model across multiple files. You can share variable names between files, which lets you refer to resources defined in different Bicep files:
 
-- [templates/vars.json](labs/iaas-bicep/templates/vars.json) - just defines variables, which are the names of resources that get referenced in the Bicep files; this is plain JSON
+- [templates/vars.json](/labs/iaas-bicep/templates/vars.json) - just defines variables, which are the names of resources that get referenced in the Bicep files; this is plain JSON
 
-- [templates/core.bicep](labs/iaas-bicep/templates/core.bicep) - references the variables file with the `loadJsonContent` function; it defines the core resources - a virtual network, subnet and NSG.
+- [templates/core.bicep](/labs/iaas-bicep/templates/core.bicep) - references the variables file with the `loadJsonContent` function; it defines the core resources - a virtual network, subnet and NSG.
 
 It's worth taking some time to look at this Bicep file. It's small enough to be fairly easy to understand, but there are some useful features in use:
 
@@ -20,7 +20,7 @@ It's worth taking some time to look at this Bicep file. It's small enough to be 
 
 - objects which have a parent/child relationship aren't defined as nested, so the file is much easier to read - how are relationships specified?
 
-📋 Create a Resource Group called `labs-iaas-bicep` and deploy the Core Bicep file (we covered this in the [Bicep lab](labs/arm-bicep/README.md)).
+📋 Create a Resource Group called `labs-iaas-bicep` and deploy the Core Bicep file (we covered this in the [Bicep lab](/labs/arm-bicep/README.md)).
 
 <details>
   <summary>Not sure how?</summary>
@@ -47,7 +47,7 @@ az resource list -g labs-iaas-bicep -o table
 
 We have a second Bicep file here which defines the SQL Server database resources:
 
-- [templates/sql.bicep](labs/iaas-bicep/templates/sql.bicep) - defines a SQL Server and a database, loading the shared variable JSON file
+- [templates/sql.bicep](/labs/iaas-bicep/templates/sql.bicep) - defines a SQL Server and a database, loading the shared variable JSON file
 
 There's some good stuff in this template too:
 
@@ -100,15 +100,15 @@ az sql server vnet-rule list -g labs-iaas-bicep --server <sql-server>
 
 ## Windows Application VM
 
-The final Bicep file for this application defines the Windows Server VM. The application we'll be deploying is the same one as the [IaaS apps lab](labs/iaas-apps/README.md), but all the steps are automated here:
+The final Bicep file for this application defines the Windows Server VM. The application we'll be deploying is the same one as the [IaaS apps lab](/labs/iaas-apps/README.md), but all the steps are automated here:
 
-- [templates/vm.bicep](labs/iaas-bicep/templates/vm.bicep) - includes the VM and the resources it needs - the NIC and PIP, with references to the Core resources via the shared JSON variables file
+- [templates/vm.bicep](/labs/iaas-bicep/templates/vm.bicep) - includes the VM and the resources it needs - the NIC and PIP, with references to the Core resources via the shared JSON variables file
 
 There's some more to unpack from this template:
 
 - object names are derived from other object names - but the SQL Server name is repeated from the SQL Bicep file, what are the advantages and disadvantages of that?
 
-- the Bicep resources define the IaaS components, but there's an additional resource to run a PowerShell script after the VM is created; that will run the steps in [scripts/vm-setup.ps1](labs/iaas-bicep/scripts/vm-setup.ps1) to deploy the application.
+- the Bicep resources define the IaaS components, but there's an additional resource to run a PowerShell script after the VM is created; that will run the steps in [scripts/vm-setup.ps1](/labs/iaas-bicep/scripts/vm-setup.ps1) to deploy the application.
 
 📋 Deploy the VM Bicep file as an incremental deployment to the RG - making sure it won't do anything unexpected.
 

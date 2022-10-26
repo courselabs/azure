@@ -84,7 +84,7 @@ Now try to open the file from your local share again. It will fail, maybe with a
 
 Manual steps - capture in an init script (cloud-init or PowerShell)
 
-- [](labs/storage-files/cloud-init/mount-share.sh) - add your account name and key
+- [](/labs/storage-files/cloud-init/mount-share.sh) - add your account name and key
 
 ```
 az vm create -g labs-storage-files -n vm01 --image UbuntuLTS --custom-data labs/storage-files/cloud-init/mount-share.sh

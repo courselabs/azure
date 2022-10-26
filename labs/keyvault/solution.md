@@ -15,7 +15,7 @@ az keyvault certificate get-default-policy > labs/keyvault/lab/default-policy.js
 
 I've edited the default policy to set the certificate values we want in:
 
-- [lab/lab-policy.json](labs/keyvault/lab/lab-policy.json)
+- [lab/lab-policy.json](/labs/keyvault/lab/lab-policy.json)
 
 Now we can create the certificate using that custom policy:
 

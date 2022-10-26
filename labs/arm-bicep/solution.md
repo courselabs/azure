@@ -2,7 +2,7 @@
 
 See the sample Bicep file here:
 
-- [lab/main.bicep](labs/arm-bicep/lab/main.bicep)
+- [lab/main.bicep](/labs/arm-bicep/lab/main.bicep)
 
 That adds two new parameters, each with a list of allowed values:
 

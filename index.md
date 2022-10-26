@@ -17,36 +17,36 @@ These are hands-on resources to help you learn Azure.
 
 _Resource Groups and Virtual Machines_
 
-- [Signing In](labs/signin/README.md)
-- [Regions and Resource Groups](labs/resourcegroups/README.md)
-- [Virtual Machines](labs/vm/README.md)
-- [VMs as Linux Web servers](labs/vm-web/README.md)
-- [VMs as Windows dev machines](labs/vm-win/README.md)
-- [Automating VM configuration](labs/vm-config/README.md)
+- [Signing In](/labs/signin/README.md)
+- [Regions and Resource Groups](/labs/resourcegroups/README.md)
+- [Virtual Machines](/labs/vm/README.md)
+- [VMs as Linux Web servers](/labs/vm-web/README.md)
+- [VMs as Windows dev machines](/labs/vm-win/README.md)
+- [Automating VM configuration](/labs/vm-config/README.md)
 
 _SQL Databases and ARM_
 
-- [SQL Server](labs/sql/README.md)
-- [SQL Server VMs](labs/sql-vm/README.md)
-- [Deploying database schemas](labs/sql-schema/README.md)
-- [Automation with ARM](labs/arm/README.md)
-- [Automation with Bicep](labs/arm-bicep/README.md)
+- [SQL Server](/labs/sql/README.md)
+- [SQL Server VMs](/labs/sql-vm/README.md)
+- [Deploying database schemas](/labs/sql-schema/README.md)
+- [Automation with ARM](/labs/arm/README.md)
+- [Automation with Bicep](/labs/arm-bicep/README.md)
 
 _App Deployment with IaaS_
 
-- [IaaS app deployment](labs/iaas-apps/README.md)
-- [Automating IaaS app deployment](labs/iaas-bicep/README.md)
-- [Creating and using VM images](labs/vm-image/README.md)
-- [Scaling with VM Scale Sets](labs/vmss-win/README.md)
-- [Provisiong Scale Sets with cloud-init](labs/vmss-linux/README.md)
+- [IaaS app deployment](/labs/iaas-apps/README.md)
+- [Automating IaaS app deployment](/labs/iaas-bicep/README.md)
+- [Creating and using VM images](/labs/vm-image/README.md)
+- [Scaling with VM Scale Sets](/labs/vmss-win/README.md)
+- [Provisiong Scale Sets with cloud-init](/labs/vmss-linux/README.md)
 
 _App Service_
 
-- [App Service for web applications](labs/appservice/README.md)
-- [App Service for static web apps](labs/appservice-static/README.md)
-- [App Service for distributed apps](labs/appservice-api/README.md)
-- [App Service configuration and administration](labs/appservice-config/README.md)
-- [App Service CI/CD](labs/appservice-cicd/README.md)
+- [App Service for web applications](/labs/appservice/README.md)
+- [App Service for static web apps](/labs/appservice-static/README.md)
+- [App Service for distributed apps](/labs/appservice-api/README.md)
+- [App Service configuration and administration](/labs/appservice-config/README.md)
+- [App Service CI/CD](/labs/appservice-cicd/README.md)
 
 _Project_
 
@@ -72,8 +72,8 @@ _Cosmos DB_
 
 _KeyVault and Virtual Networks_
 
-- [KeyVault](labs/keyvault/README.md)
-- [Networking](labs/vnet/README.md)
+- [KeyVault](/labs/keyvault/README.md)
+- [Networking](/labs/vnet/README.md)
 - Create Keyvault in VNet, use to store credentials for SQL
 - Understand options for accessing KeyVault
 - Deploy app service app in VNet, using KeyVault to fetch SQL creds
@@ -128,11 +128,11 @@ _Project_
 
 - Project 3
 
-- [ACR Images](labs/acr/README.md)
-- [Azure Container Instances](labs/aci/README.md)
-- [Azure Kubernetes Service](labs/aks/README.md)
-- [Storage and Configuration](labs/storage/README.md)
-- [Ingress and Application Gateway](labs/ingress/README.md)
+- [ACR Images](/labs/acr/README.md)
+- [Azure Container Instances](/labs/aci/README.md)
+- [Azure Kubernetes Service](/labs/aks/README.md)
+- [Storage and Configuration](/labs/storage/README.md)
+- [Ingress and Application Gateway](/labs/ingress/README.md)
 
 ## Serverless and App Management
 

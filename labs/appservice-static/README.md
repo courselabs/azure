@@ -75,7 +75,7 @@ The static web app also has a link to the deployment workflow - open that and yo
 
 Edit the HTML content in this file:
 
-- [html/index.html](labs/appservice-static/html/index.html)
+- [html/index.html](/labs/appservice-static/html/index.html)
 
 📋 Using the git command line, pull from the fork to sync the workflow file, then add your changes, commit them and push to the fork.
 
@@ -135,8 +135,8 @@ If you have some static content and some that needs backend processing, you coul
 
 This lab has a Node.js app which publishes two pieces of content:
 
-- a static HTML page [index.html](labs/appservice-static/node/public/index.html)
-- a /user endpoint in [app.js](labs/appservice-static/node/app.js) which prints the authentication details of the user
+- a static HTML page [index.html](/labs/appservice-static/node/public/index.html)
+- a /user endpoint in [app.js](/labs/appservice-static/node/app.js) which prints the authentication details of the user
 
 📋 Deploy the app from the `node` folder using `webapp up`, using the existing App Service Plan, specifying Node 16 as the runtime.
 
