@@ -13,7 +13,7 @@ We'll be creating a few resources, so start by storing some variables we can reu
 # inPowerShell:
 $location='westeurope'
 $rg='labs-iaas-apps'
-$server='labs-iaas-apps-es' # <unique-dns-name>
+$server='<unique-dns-name>'
 $database='signup'
 
 # OR in Bash:

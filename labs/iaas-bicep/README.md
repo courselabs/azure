@@ -51,7 +51,7 @@ We have a second Bicep file here which defines the SQL Server database resources
 
 There's some good stuff in this template too:
 
-- most of the parameteres have default values, how does the template make sure the SQL Server name is a DNS name which isn't already in use?
+- most of the parameters have default values, how does the template make sure the SQL Server name is a DNS name which isn't already in use?
 
 - the admin password is required, but it has special treatment - what does the `secure` flag do?
 
@@ -141,7 +141,7 @@ The setup script writes log entries to a file; you can use another run-command t
 az vm run-command invoke  --command-id RunPowerShellScript -g labs-iaas-bicep --scripts "cat /vm-setup.log" -n <vm-name>
 ```
 
-> Browse to the app at http://<vm-fqdn>/signup & verify it's working correctly
+> Browse to the app at `http://<vm-fqdn>/signup` & verify it's working correctly
 
 ## Lab
 
