@@ -1,6 +1,8 @@
 # Azure Storage Accounts
 
-New storage account, explore redundancy, security & performance
+Storage Accounts are a managed storage service for data which you can make publicly accessible, or restricted to users or other Azure services. Data is replicated in multiple locations for high availability, and you can choose different levels of performance.
+
+In this lab we'll expolore the basics of Storage Accounts, uploading small and large files.
 
 ## Reference
 
@@ -15,99 +17,154 @@ New storage account, explore redundancy, security & performance
 
 ## Explore Storage Account options
 
-In Portal, create new resource, search for storage account. Create :
+Create a new resource in the Portal, search for Storage Account. Look at the options you have:
 
-- sa name needs to be globally unique
-- select rg & region
-- performance and redundancy
+- the name needs to be globally unique - and the [naming rules](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules#microsoftstorage) are strict
+- region is important, it's where the data is physically stored
+- choose performance and redundancy levels
 
-Local (within datacenter); zone-redundant (within region); geo-redundant (between regions); GZRS
+The redundancy level sets how the data is replicated:
 
-- advanced: security & features
-- data protection: soft deletes & versioning
-- encryption: key management
+- _Locally Redundant Storage_ (LRS) means the data is replicated in a single datacentre
+- _Zone Redundant Storage_ (ZRS) replicates across datacentres in a single region
+- _Geo-Redundant Storage_ (GRS) replicates across regions
 
+Your data is more secure with wider replication, but that comes at higher cost.
 
 ## Create a storage account
 
+We'll use the CLI to create a new Storage Account. Start with a Resource Group and then check the hel text for new accounts:
 
+```
 az group create -n labs-storage  -l westeurope --tags courselabs=azure
 
-az storage account --help
-
 az storage account create --help
-
-
-Create a zone-redundant storage account with standard performance (https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules#microsoftstorage)
-
-```
-# names have stricter rules than most Azure resources
-az storage account create -g labs-storage  -l westeurope --sku Standard_ZRS -n labsstoragees
 ```
 
-Open in the portal - one storage account can support multiple types of storage. Blob storage (Binary Large OBjects) is a simple file storage option - upload the file `document.txt` in this folder as a blob.
+📋 Create a zone-redundant storage account with standard performance.
+
+<details>
+  <summary>Not sure how?</summary>
+
+The SKU parameter includes performance and redundancy settings, e.g:
+
+- `Premium_LRS` is premium performance (SSD-backed storage) with local redundancy
+
+- `Standard_GRS` is standard performance (spinning HDDs) with geo redundancy
+
+```
+az storage account create -g labs-storage  -l westeurope --sku Standard_ZRS -n <sa-name> labsstoragees
+```
+
+</details><br/>
+
+Open the new resource in the Portal - one storage account can support multiple types of storage. Blob storage (Binary Large OBjects) is a simple file storage option, where you can store files in _containers_, which are like folders.
+
+📋 Upload the file [document.txt](/labs/storage/document.txt) in this folder as a blob in a container called _drops_.
+
+<details>
+  <summary>Not sure how?</summary>
 
 The Storage Account blade has an _Upload_ option in the main menu. Select that and you can browse to your local file and upload it.
 
-> Blobs are stored in containers - you can have a multi-level hierarchy within each container.
+You can create a new container from that menu, and supply a container name.
+
+</details><br/>
+
+> Blob storage is not hierarchical - you can't have containers in other containers - but blob names can include forward slashes e.g. `my/blob/file.txt` which lets you approximate nested storage
 
 ## Upload and download blobs
 
-You can manage storage from within the portal - click _Storage browser_ from the left nav and open _Blob containers_.
+You can manage storage with a nice UI from within the portal. Click _Storage browser_ from the left nav and open _Blob containers_.
 
-Navigate to the details of your uploaded blob. What is the URL of the file? Is is publicly accessible?
-
-- open the `newcontainer` and you'll see `document.txt`. Click and you'll get an overview which includes the URL.
+Open the `drops` and you'll see `document.txt`. Click and you'll get an overview which includes the URL. What is the URL of the file? Is is publicly accessible?
 
 Use curl to download it:
 
-curl -o download2.txt https://labsstoragees.blob.core.windows.net/newcontainer/document.txt
+```
+# you won't get any errors here:
+curl -o download2.txt https://<sa-name>.blob.core.windows.net/drops/document.txt
+```
 
+It looks like the file has been downloaded. But check the contents:
+
+```
 cat download2.txt
+```
 
-> XML error message...
+> It's an XML error message... New blob containers default to private access. 
 
-New containers default to private access. Browse back to the container and select _Change access level_. Select Blob access and download again:
+📋 Change the access level of the container so you can download the blob.
 
-curl -o download2.txt https://labsstoragees.blob.core.windows.net/newcontainer/document.txt
+<details>
+  <summary>Not sure how?</summary>
 
-cat download2.txt
+Browse to the _drops_ container in the Portal and select _Change access level_:
 
-Now you can read the file.
+- blob access means anyone with the URL can download the file
+- container access means anyone can list the container contents and download all blobs
+
+</details><br/>
+
+Once you've set a public access level, you can download the file:
+
+```
+curl -o download3.txt https://<sa-name>.blob.core.windows.net/drops/document.txt
+
+cat download3.txt
+```
+
+Now the correct contents are there.
 
 ## Storage for VM disks
 
-Create a VM with custom storage SKU:
+Blob storage can also be used for VM disks, which is useful if you want to manage disks alongside other data.
 
-az vm create -l westeurope -g labs-storage -n vm01 --image UbuntuLTS --size Standard_A1_v2 --storage-sku StandardSSD_ZRS
+Blob storage isn't used by default though. [Managed disks](https://docs.microsoft.com/en-us/azure/virtual-machines/managed-disks-overview) aren't contained in a storage account. 
 
+You can use unmanaged disks if you want to control the storage, which you can specify when you create the VM.
 
-Check the storage accounts:
+📋 Create a premium storage account and a VM with the OS disk stored in that account - check the [VM types](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general) to see which support premium storage.
 
-az storage account list -g labs-storage -o table
+<details>
+  <summary>Not sure how?</summary>
 
-> No new account, only the one you originally created
-
-[Managed disks](https://docs.microsoft.com/en-us/azure/virtual-machines/managed-disks-overview) aren't contained in a storage account. You can use unmanaged disks if you want to control the storage.
-
-Create a premium storage account and a VM with the OS disk stored in that account - check the [VM types](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general) to see which support premium storage.
+The Storage Account is the same command with a different SKU:
 
 ```
-az storage account create -g labs-storage  -l westeurope --sku Premium_LRS -n labsstoragediskes
-
-az storage container create -n vm-disks --account-name labsstoragediskes
-
-az vm create -l westeurope -g labs-storage -n vm04 --image UbuntuLTS --size Standard_D2as_v5  --use-unmanaged-disk --storage-container-name vm-disks --storage-account labsstoragediskes
+az storage account create -g labs-storage  -l westeurope --sku Premium_LRS -n <disk-sa-name>
 ```
+
+You also need a container for the disk to be stored as a blob:
+
+```
+az storage container create -n vm-disks --account-name <disk-sa-name>
+```
+
+Then in the VM create command, specify the SA and container:
+
+```
+az vm create -l westeurope -g labs-storage -n vm04 --image UbuntuLTS --size Standard_D2as_v5  --use-unmanaged-disk --storage-container-name vm-disks --storage-account <disk-sa-name>
+```
+
+</details><br/>
 
 Now browse to the new storage account - how is the disk stored?
 
-> It is a VHD blob in the storage container. Doesn't show as a disk in the RG.
-
-Open the managed disk from vm01 in the Portal - how does it compare to the VHD?
-
-- Managed options - can change size & perf; export; view metrics
+> It is a VHD blob in the storage container. These sorts of disks don't show in the Portal as a separate resource, like managed disks do.
 
 ## Lab
 
-secure the original SA so it can only  be accessed from your own IP address. confirm you can download the document.txt file; login to one of the VMs and confirm that it can't download the file.
+Storage Accounts have a firewall option, similar to SQL Server in Azure. Use it to secure your original SA so it can only  be accessed from your own IP address. Confirm you can download the document.txt file; then login to your VM and confirm that it can't download the file.
+
+> Stuck? Try [hints](hints.md) or check the [solution](solution.md).
+
+___
+
+## Cleanup
+
+Delete the lab RG **but don't delete the labs-vmss-win RG where you copied the image** (we'll use that in the next lab):
+
+```
+az group delete -y -n labs-storage --no-wait
+```
