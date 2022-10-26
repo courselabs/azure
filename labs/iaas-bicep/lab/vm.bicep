@@ -1,5 +1,5 @@
 param location string = resourceGroup().location
-var common = loadJsonContent('vars.json')
+var common = loadJsonContent('../templates/vars.json')
 param vmName string = uniqueString('vm', resourceGroup().id)
 param dnsLabelPrefix string = toLower('signup-${vmName}')
 param vmSize string = 'Standard_D2s_v5'

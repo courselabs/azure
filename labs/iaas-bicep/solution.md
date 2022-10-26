@@ -16,6 +16,10 @@ And it adds an [output](https://learn.microsoft.com/en-gb/azure/azure-resource-m
 output url string = 'http://${publicIPAddress.properties.dnsSettings.fqdn}/signup'
 ```
 
-If you run the deployment command again, you will see a new output with the full URL which you can browse to and check the application.
+If you run the deployment command again, you will see a new output with the full URL which you can browse to and check the application:
+
+```
+az deployment group create -g labs-iaas-bicep --name vm2 --template-file labs/iaas-bicep/lab/vm.bicep --mode incremental --parameters adminPassword=<vm-password> sqlPassword=<sql-password>
+```
 
 Repeating the deployment of a VM with a run-command doesn't repeat the command again - if you print the log file you should see the same timestamp from the first time you ran it.
