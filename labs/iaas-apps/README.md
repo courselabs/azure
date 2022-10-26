@@ -141,7 +141,7 @@ Get-WebApplication
 You can test the application on the VM by making an HTTP request to localhost. You'll get a response here but it will be full of error logs - we haven't finished the deployment yet:
 
 ```
-curl.exe http://localhost/signup
+curl.exe -L http://localhost/signup
 ```
 
 > This will take a while to respond and then show an error - _The server was not found or was not accessible._ 
@@ -167,7 +167,13 @@ Find the connection string for your database (the Portal is good for this) and u
 notepad C:\docker4.net\SignUp.Web\connectionStrings.config
 ```
 
-Try the app again locally with curl - you'll get a new error :) The SQL database needs to be configured to allow access from the VM.
+Try the app again locally with curl - you'll get a new error :)
+
+```
+curl.exe -L http://localhost/signup
+```
+
+The SQL database needs to be configured to allow access from the VM.
 
 ### Database configuration
 
@@ -176,7 +182,11 @@ Open the SQL Server (the server not the database) in the Portal and select the _
 - add a virtual network rule to allow access from the vnet the VM is connected to
 - pay attention to the messages from the UI...
 
-Test the app again with curl in the VM - you should see an HTML response with no errors.
+Test the app again with curl in the VM - you should see an HTML response with no errors:
+
+```
+curl.exe -L http://localhost/signup
+```
 
 ## Lab
 
@@ -184,7 +194,7 @@ Now the app is working locally, we need to publish it so we can access it from t
 
 - http://[vm-fqdn]/signup
 
-![/img/signup-homepage.png]
+![Sign Up app](/img/signup-homepage.png)
 
 Click the _Sign Up_ button and add some details. Run some queries in the SQL database to verify your data is saved.
 
