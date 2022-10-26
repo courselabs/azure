@@ -1,7 +1,10 @@
 #!/bin/bash
 
-ACCOUNT_NAME='labsstoragefileses'
-ACCOUNT_KEY='IFEEDndnIM5rsE6xBg2LX2scN95baMgnooO5bEn/PrhrLsTqGhhzmcj00I5A60tEspsRCUtdQbkG+AStIAGbtg=='
+# *** replace these with your actual SA name and key:
+ACCOUNT_NAME='<sa-name>'
+ACCOUNT_KEY='<sa-key>'
+# ***
+
 CONTAINER_NAME='labs'
 SMB_FILE='/etc/smbcredentials/azure-files.cred'
 

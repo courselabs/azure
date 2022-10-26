@@ -180,6 +180,7 @@ Stored access policies let you revoke access, so even if the SAS token is known,
 Blob storage doesn't usually need high performance, and Azure has _access tiers_ to let you get the best mix of performance and storage cost. _Hot_ access is faster but expensive; _cool_ is cheaper but slower and _archive_ is cheapest.
 
 Change the readme for this lab to the archive tier and try to download it. What do you need to do to gain access to archived blobs? 
+
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
 ___
