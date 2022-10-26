@@ -50,15 +50,15 @@ _App Service_
 
 _Project_
 
-- Project 1
+- [Project 1: Lift and Shift](/projects/lift-and-shift/README.md)
 
 ## Storage and Communication
 
 _Storage Accounts_
 
-- New storage account, explore redundancy, security & performance
-- Create and manage blob storage, use with simple consumer app
-- Create and manage Azure files, use with SMB client
+- [Storage Accounts](/labs/storage/README.md)
+- [Blob storage](/labs/storage-blob/README.md)
+- [File shares](/labs/storage-files/README.md)
 - Using storage for static web content
 - Working with table storage
 
