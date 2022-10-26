@@ -1,17 +1,15 @@
+# Lab Solution
 
-Try using a wildcard for all blobs:
+You can download blobs in the hot and cool tiers.
 
-```
-# this will fail:
-az storage blob set-tier --container-name labs --name '*' --tier Cool --account-name labsstorageblobes
-```
-
-Try setting it at the account level:
+Change to the archive tier using the CLI:
 
 ```
-az storage account update --access-tier Cool --name labsstorageblobes -g labs-storage-blob
+az storage blob set-tier --container-name labs --name 'storage-blob/README.md' --tier Archive --account-name <sa-name>
 ```
 
-This does update all the blobs because they were uploaded without specifying the access tier - you'll seel _Cool (inferred)_ in the Portal, because the tier inherits the default setting in the storage account.
+Check that blob in the Portal - now you can't download it because archived blobs are meant for long-term backups which don't need immediate access.
 
-If you upload blobs and set the access tier explicitly, changing the account tier won't affect them - you'll need to iterate over them and set the tiers in a loop.
+You need to _rehydrate_ the blob to the cool or hot tier before it can be downloaded.
+
+> The Portal shows you whether a blob can be downloaded - and it tells you that rehydrating can take hours :)

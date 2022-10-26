@@ -53,7 +53,7 @@ The SKU parameter includes performance and redundancy settings, e.g:
 - `Standard_GRS` is standard performance (spinning HDDs) with geo redundancy
 
 ```
-az storage account create -g labs-storage  -l westeurope --sku Standard_ZRS -n <sa-name> labsstoragees
+az storage account create -g labs-storage  -l westeurope --sku Standard_ZRS -n <sa-name>
 ```
 
 </details><br/>
@@ -163,7 +163,7 @@ ___
 
 ## Cleanup
 
-Delete the lab RG **but don't delete the labs-vmss-win RG where you copied the image** (we'll use that in the next lab):
+Delete the lab RG:
 
 ```
 az group delete -y -n labs-storage --no-wait

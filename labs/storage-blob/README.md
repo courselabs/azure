@@ -1,138 +1,193 @@
 # Blob Storage
 
-Storage - flat structur (mimic directory in object names)
+You can use blob storage as your own personal Dropbox alternative, but it's also a powerful storage backend for applications. If you have a scenario where users can upload files, it's better to store them in blob storage than in a relational database. You can even store JSON files in blobs as a cheap way to manage reference data in your app.
+
+In this lab we'll cover some of the more advanced features of blobs, like access tokens and storage tiers.
 
 ## Reference
 
+- [SAS tokens]()
+
 - [Blob storage access tiers](https://docs.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview)
+
+- [`az storage container` commands]()
+
+- [`az storage blob` commands]()
 
 ## Managing Blob Storage with the CLI
 
-az group create -n labs-storage-blob  -l westeurope --tags courselabs=azure
+We explored blob storage using the Portal in [Storage Account lab](/labs/storage/README.md). Now we'll see the CLI tooling for blobs.
 
-az storage account create -g labs-storage-blob  -l westeurope --sku Standard_LRS -n labsstorageblobes
+📋 Create a Resource Group called `labs-storage-blob` and a Storage Account with standard locally redundant storage.
 
-az storage container create -n labs  -g labs-storage-blob --account-name labsstorageblobes
+<details>
+  <summary>Not sure how?</summary>
 
-az storage blob upload-batch -d labs -s ./labs --dryrun -o table --account-name labsstorageblobes
+Remember the SA name can only be lowercase letters and numbers:
 
-- restrict it just to the markdown docs
+```
+az group create -n labs-storage-blob --tags courselabs=azure -l westeurope 
 
-az storage blob upload-batch -d labs -s ./labs --dryrun -o table --pattern '*.md' --account-name labsstorageblobes
+az storage account create -g labs-storage-blob  -l westeurope --sku Standard_LRS -n <sa-name>
+```
 
-az storage blob upload-batch -d labs -s ./labs --pattern '*.md' --account-name labsstorageblobes
+</details><br/>
 
+Create a blob container where we can upload some files:
 
-> Output shows generated eTag and Last Modified dates - for HTTP caching
+```
+az storage container create -n labs  -g labs-storage-blob --account-name <sa-name>
+```
 
+The CLI has the `upload-batch` command which you can use to upload files to blob storage in bulk. It has a useful `dryrun` flag which tells you what it would do without actually doing it:
 
-Check the exercises files are there:
+```
+# see what would happen if you uploaded the whole labs folder:
+az storage blob upload-batch -d labs -s ./labs --dryrun -o table --account-name <sa-name>
+```
 
-az storage blob directory list -c labs -d 'storage-blob' -o table --account-name labsstorageblobes
+> The output tells you the target URL and file type for each blob it would upload.
 
+Does the batch upload preserve the file paths?
 
-> Preview; az cli has modular extensions; also deprecated :)
+📋 Use the same command with an additional parameter so only the markdown files (`*.md`) get uploaded. Use a dry-run first and then do the actual upload.
 
-az storage blob show --container-name labs --name 'storage-blob/README.md' -o table --account-name labsstorageblobes
+<details>
+  <summary>Not sure how?</summary>
 
-- case sensitive
+The `pattern` parameter lets you filter the files to upload:
 
-az storage blob show --container-name labs --name 'storage-blob/readme.md' -o table --account-name labsstorageblobes
+```
+az storage blob upload-batch -d labs -s ./labs --dryrun -o table --pattern '*.md' --account-name <sa-name>
+```
 
-> BlobNotFound
+And without the `dry-run` flag to upload:
 
-## Shared Access Tokens
+```
+az storage blob upload-batch -d labs -s ./labs --pattern '*.md' --account-name <sa-name>
+```
+
+</details><br/>
+
+> Output shows each blob URL, generated eTag and Last Modified dates - those are used for HTTP caching
+
+Check the exercises files are there with a directory list - this will print out the files in the `storage-blob` directory in the `labs` container:
+
+```
+az storage blob directory list -c labs -d 'storage-blob' -o table --account-name <sa-name>
+```
+
+> This is a deprecated command - the CLI evolves so you need to check if any commands get removed when you upgrade to a new version
+
+📋 Use the `storage blob show` command to print information about the readme file in the `storage-labs` folder.
+
+<details>
+  <summary>Not sure how?</summary>
+
+Blob file names are case-sensitive:
+
+```
+az storage blob show --container-name labs --name 'storage-blob/README.md' -o table --account-name <sa-name>
+```
+
+If you try `storage-blob/readme.md` instead then you'll get an `ErrorCode:BlobNotFound` response.
+
+</details><br/>
+
+The output only shows the file metadata, not the content.
+
+## Shared Access Tokens & Policies
+
+All blobs have a public URL which you can use if you do want to download the content. The URL is a standard patter: `https://<sa-name>.blob.core.windows.net/<container>/<blob-name>.
 
 Try to download the README doc:
 
-# fixed pattern for blob URL: https://<account-name>.blob.core.windows.net/<container>/<blob-name>
-
-curl -o download.md https://labsstorageblobes.blob.core.windows.net/labs/storage-blob/README.md
+```
+curl -o download.md https://<sa-name>.blob.core.windows.net/labs/storage-blob/README.md
 
 cat download.md
+```
 
-> Does not exist - container not enabled for public blobs
+> The output is an XML error string - the container is not enabled for public blobs
 
-Open the README.md blob in the Portal; click the ellipsis and _Generate SAS_. Create a SAS key for read-only access to the blob, which is valid for 1 hour.
+You can give someone access to the blob without making it public by creating a _Shared Access Signature_ (SAS token), which authorizes read access to the blob.
 
-Copy the blob SAS URL, it will look like this:
+Open the `storage-blob/README.md` blob in the Portal; click the ellipsis and select _Generate SAS_. Create a SAS key for read-only access to the blob, which is valid for 1 hour.
 
-_https://labsstorageblobes.blob.core.windows.net/labs/storage/README.md?sp=r&st=2022-08-09T13:35:54Z&se=2022-08-09T14:35:54Z&spr=https&sv=2021-06-08&sr=b&sig=3HH6hghHJSwxkmXIglyUdgZC9C1jCQk%2BaZ%2BhIVdUpQE%3D`
+Copy the blob SAS URL you see in the Portal, it will look like this:
+
+_https://labsstorageblobes.blob.core.windows.net/labs/storage-blob/README.md?sp=r&st=2022-10-26T20:17:20Z&se=2022-10-26T21:17:20Z&spr=https&sv=2021-06-08&sr=b&sig=3b1TVwRMsgNHC%2BKE0tkR1VcqD0897%2BfbBJKfppfJ3B8%3D_
 
 Use curl to download the file using the SAS URL:
 
-curl -o download2.md 'https://labsstorageblobes.blob.core.windows.net/labs/storage/README.md?sp=r&st=2022-08-09T13:35:54Z&se=2022-08-09T14:35:54Z&spr=https&sv=2021-06-08&sr=b&sig=3HH6hghHJSwxkmXIglyUdgZC9C1jCQk%2BaZ%2BhIVdUpQE%3D'
+```
+curl -o download2.md '<blob-url-with-sas-token>'
 
 cat download2.md
+```
 
-Can safely share - after expiry date, no access. But simple SAS cannot be revoked.
+You'll see the contents this time. 
 
-Can manage SAS better with a [Shared Access Policy]():
+You can safely share that SAS token - after the expiry date, it's of no use and the blob won't be accessible. no access. But simple SAS token cannot be revoked, it can be used until it expires.
 
-Create a read-only shared access policy:
+If you want better control for sharing blobs, you can manage SAS tokens with a [stored access policy](https://learn.microsoft.com/en-us/rest/api/storageservices/define-stored-access-policy):
 
-az storage container policy create --help 
+```
+# create a read-only policy:
 
-az storage container policy create -n labs-reader --container-name labs --permissions r --account-name labsstorageblobes
+az storage container policy create -n labs-reader --container-name labs --permissions r --account-name <sa-name>
+```
 
-Now create a SAS token for the blob, backed by the access policy. Expiry date needs to be in the format _YYYY-MM-DDTHH:MMZ_ e.g. _2022-08-10T11:44Z_
+Now create a SAS token for the blob, backed by the access policy. Expiry date needs to be in the format _YYYY-MM-DDTHH:MMZ_ e.g. _2022-10-30T01:00Z_
 
 ```
 az storage blob generate-sas --help
 
-# powershell
-$expiry=$(Get-Date -Date (Get-Date).AddHours(1) -UFormat +%Y-%m-%dT%H:%MZ)
-
-# zsh (use -d on Bash)
-expiry=$(date -u -v+1H '+%Y-%m-%dT%H:%MZ')
-
-az storage blob generate-sas -n 'storage-blob/README.md' --container-name labs --policy-name labs-reader --full-uri --expiry $expiry --account-name labsstorageblobes 
+# you'll get an error if your date is in the past, or the format is not valid:
+az storage blob generate-sas -n 'storage-blob/README.md' --container-name labs --policy-name labs-reader --full-uri --expiry '2022-10-30T01:00Z' --account-name <sa-name> 
 ```
 
-Verify you can download the file:
+Verify you can download the file using the new SAS token:
 
 ```
-curl -o download3.md "https://labsstorageblobes.blob.core.windows.net/labs/storage-blob/README.md?se=2022-08-09T16%3A14Z&sv=2021-04-10&si=labs-reader&sr=b&sig=DT9nobaYNI4zMGV1YVQ2GvZlbZQDpA2C/5OOgm4ErlU%3D"
+curl -o download3.md "<blob-uri-with-sas-token>"
 
 cat download3.md
 ```
 
-> Correct content
+You'll see the correct content - the tojen is within the expiry date, and the policy allows read access.
 
 Now remove the policy:
 
+```
+az storage container policy delete -n labs-reader --container-name labs --account-name <sa-name>
+```
 
-az storage container policy delete -n labs-reader --container-name labs --account-name labsstorageblobes
-
-And try the download again:
+And try the download again **using the same URI and token as before**:
 
 ```
-curl -o download4.md "https://labsstorageblobes.blob.core.windows.net/labs/storage-blob/README.md?se=2022-08-09T16%3A14Z&sv=2021-04-10&si=labs-reader&sr=b&sig=DT9nobaYNI4zMGV1YVQ2GvZlbZQDpA2C/5OOgm4ErlU%3D"
+curl -o download4.md "<blob-uri-with-sas-token>"
 
 cat download4.md
 ```
 
-> Not authenticated - SAS not valid without policy; 
+> Now you'll see an XML authentication failure message - the SAS token is not valid without the policy
 
-can also edit policy permissions and generate SAS at different levels
-
-## Access Tiers
-
-Hot - immediate access, good perf, highest cost; cool - immediate, lower perf & cost; archive - cheapest but offline, needs to be restored to hot or cool before available.
-
-az storage blob set-tier --container-name labs --name 'storage-blob/README.md' --tier Cool --account-name labsstorageblobes
-
-
-> Check blob in the Portal - now Cool, can still download (Portal you have Azure auth, not a public download)
-
-NOw archive the blob:
-
-az storage blob set-tier --container-name labs --name 'storage-blob/README.md' --tier Archive --account-name labsstorageblobes
-
-- Check again in the Portal - now you can't download because the blob is archived
-
+Stored access policies let you revoke access, so even if the SAS token is known, it can't be used.
 
 ## Lab
 
-Hierarchy of SA to container to blob. Set all the blobs in the labs container to the cool access tier.
+Blob storage doesn't usually need high performance, and Azure has _access tiers_ to let you get the best mix of performance and storage cost. _Hot_ access is faster but expensive; _cool_ is cheaper but slower and _archive_ is cheapest.
 
+Change the readme for this lab to the archive tier and try to download it. What do you need to do to gain access to archived blobs? 
+> Stuck? Try [hints](hints.md) or check the [solution](solution.md).
+
+___
+
+## Cleanup
+
+Delete the lab RG:
+
+```
+az group delete -y -n labs-storage-blob --no-wait
+```
