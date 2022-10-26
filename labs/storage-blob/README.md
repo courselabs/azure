@@ -6,13 +6,13 @@ In this lab we'll cover some of the more advanced features of blobs, like access
 
 ## Reference
 
-- [SAS tokens]()
+- [SAS tokens](https://learn.microsoft.com/en-us/azure/cognitive-services/translator/document-translation/create-sas-tokens?tabs=Containers)
 
 - [Blob storage access tiers](https://docs.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview)
 
-- [`az storage container` commands]()
+- [`az storage container` commands](https://learn.microsoft.com/en-us/cli/azure/storage/container?view=azure-cli-latest)
 
-- [`az storage blob` commands]()
+- [`az storage blob` commands](https://learn.microsoft.com/en-us/cli/azure/storage/blob?view=azure-cli-latest)
 
 ## Managing Blob Storage with the CLI
 
