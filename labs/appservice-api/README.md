@@ -170,5 +170,5 @@ ___
 Delete the RG to clean up:
 
 ```
-az group delete -y -n labs-appservice-api
+az group delete -y -n labs-appservice-api --no-wait
 ```
