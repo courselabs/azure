@@ -156,13 +156,13 @@ We need to create the table first and get the connection details before we can r
 Create the new table:
 
 ```
-az storage table create -n FulfilmentLogs --account-name labsstoragetablees
+az storage table create -n FulfilmentLogs --account-name <sa-name>
 ```
 
 Print the connection string for the SA:
 
 ```
-az storage account show-connection-string -g labs-storage-table -n labsstoragetablees
+az storage account show-connection-string -g labs-storage-table -n <sa-name>
 ```
 
 </details><br/>
@@ -204,5 +204,5 @@ ___
 Delete the RG to clean up:
 
 ```
-az group delete -y -n labs-appservice-api --no-wait
+az group delete -y -n labs-storage-table --no-wait
 ```

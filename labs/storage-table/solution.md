@@ -16,7 +16,7 @@ Yo'll need a  SAS token for the new table:
 ```
 $expiry=$(Get-Date -Date (Get-Date).AddHours(1) -UFormat +%Y-%m-%dT%H:%MZ)
 
-az storage table generate-sas -n FulfilmentLogs --permissions r --expiry $expiry -o tsv --account-name labsstoragetablees
+az storage table generate-sas -n FulfilmentLogs --permissions r --expiry $expiry -o tsv --account-name <sa-name>
 ```
 
 You'll us a filter with the same query as in the Portal `Level eq 'Error'` - but because it goes into the URL you need to [encode it](https://www.w3schools.com/html/html_urlencode.asp); so the actual query string in the URL will be:
