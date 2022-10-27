@@ -78,7 +78,7 @@ You can also print a summary of the deployment logs from the CLI:
 az webapp log deployment show -g labs-appservice-api -n <api-dns-name>
 ```
 
-Find the full DNS name and browse to the App Serivce at https://<api-fqdn>/swagger and you'll see the API documentation for the random number generator (this uses [Swagger](https://swagger.io) which is a standard tool for documenting REST APIs).
+Find the full DNS name and browse to the App Serivce at `https://<api-fqdn>/swagger` and you'll see the API documentation for the random number generator (this uses [Swagger](https://swagger.io) which is a standard tool for documenting REST APIs).
 
 You can navigate the Swagger docs to call the `rng` service, which returns a random number. You can also do that on the command line with curl:
 

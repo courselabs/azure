@@ -28,7 +28,7 @@ Confim by clicking _Create fork_:
 
 > When that completes you'll have your own copy of the course labs in GitHub under your own username.
 
-Add your fork as a new remote, which means you can make changes and push them to your own copy of the repo. Copy the URL for your fork from the GitHub page (the default URL will be https://github.com/<github-username>/azure). Use that for your remote:
+Add your fork as a new remote, which means you can make changes and push them to your own copy of the repo. Copy the URL for your fork from the GitHub page (the default URL will be `https://github.com/<github-username>/azure`). Use that for your remote:
 
 ```
 git remote add fork <github-fork-url>
@@ -56,7 +56,7 @@ az staticwebapp create --help
 There's a nice option to login interactively with GitHub, so you don't need to create an access token:
 
 ```
-az staticwebapp create  -g labs-appservice-static --branch main --app-location "/labs/appservice-static/html" --login-with-github -n labsappservicestatices --source <github-fork-url>
+az staticwebapp create  -g labs-appservice-static --branch main --app-location '/labs/appservice-static/html' --login-with-github -n labsappservicestatices --source <github-fork-url>
 ```
 
 </details><br/>
@@ -124,7 +124,7 @@ Open the RG again in the Portal - you'll see the new App Service Plan and App Se
 Use curl to check how the content is delivered:
 
 ```
-curl -IL <url>
+curl.exe -IL <url>
 ```
 
 > You'll see the web server is IIS so this must be a Window server. It actually uses ASP.NET - which is the default for static web sites using App Service
@@ -190,5 +190,5 @@ ___
 Delete the RG to clean up:
 
 ```
-az group delete -y -n labs-appservice
+az group delete -y -n labs-appservice-static --no-wait
 ```
