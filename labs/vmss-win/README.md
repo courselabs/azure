@@ -85,7 +85,7 @@ Open the LB in the portal:
 
 - select _Backend pools_ and confirm the VMSS instances are all there & running
 - select _Health probes_ - this is how the LB checks that resources in the backend pool are ready to receive traffic; no probes so far
-- select _Load balangcing rules_ - none, which is why the app doesn't work, the LB receives requests but has no rules to forward on to the backend
+- select _Load balancing rules_ - none, which is why the app doesn't work, the LB receives requests but has no rules to forward on to the backend
 
 📋 Add a rule to listen on the frontend PIP and route to the VMSS backend pool, using port 80.
 
@@ -128,7 +128,7 @@ az vmss scale -g labs-vmss-win -n vmss-app01 --new-capacity 5
 
 </details><br/>
 
-Check in the portal - you'll see new instances listed in VMSS blade, and they will automatically get added to the LB backed pool too. When they are healthy, they'll become valid targets for the LB.
+Check in the portal - you'll see new instances listed in VMSS blade, and they will automatically get added to the LB backend pool too. When they are healthy, they'll become valid targets for the LB.
 
 > They'll be creating for a few minutes; Windows VMs are not as fast to commission as Linux
 
@@ -152,7 +152,7 @@ We're using manual scale, you can also set autoscale. The only metric you can sc
 - select _Scale based on a metric_
 - set minimum 2, max 3, default 2
 - add a rule to scale out - increase by one instance if avg cpu > 10%
-- add a rule to scale in - decrease by two instances if avg cpu > 8%
+- add a rule to scale in - decrease by one instance if avg cpu < 8%
 - use a 2 minute timescales to see changes quickly
 
 </details><br/>

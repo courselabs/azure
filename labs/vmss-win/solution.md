@@ -3,6 +3,7 @@
 From the _Instances_ blade in the Portal you can choose an instance to open, and from the VM instance page you have the _Connect_ option:
 
 - choose _RDP_
+- **ignore any errors you see listed** - the connection will work fine with the current setup
 - select the _Load balancer public IP address_
 - download the RDP file, open it in your client and connect with admin credentials
 

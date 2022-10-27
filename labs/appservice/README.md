@@ -116,7 +116,7 @@ az webapp deployment list-publishing-credentials --query scmUri -g labs-appservi
 
 </details><br/>
 
-> The Git credentials are embedded in URL, which is a security nightmare. There are [alternative options](https://docs.microsoft.com/en-us/azure/app-service/deploy-configure-credentials?tabs=cli) but this will do for the lab
+> The Git credentials are embedded in the URL, which is a security nightmare. There are [alternative options](https://docs.microsoft.com/en-us/azure/app-service/deploy-configure-credentials?tabs=cli) but this will do for the lab
 
 You can add the web app SCM as a remote to your Git repo, with the output from the credentials command:
 
