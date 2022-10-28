@@ -41,7 +41,7 @@ az cosmosdb table create --name FulfilmentLogs -g labs-cosmos-table --account-na
 
 Same app we used in Table Storage lab
 
-- [appsettings.json](src/fulfilment-processor/appsettings.json) - configuration to use Table Storage with Serilog;
+- [appsettings.json](/src/fulfilment-processor/appsettings.json) - configuration to use Table Storage with Serilog;
 
 Print the connection strings for the account:
 

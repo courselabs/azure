@@ -43,7 +43,7 @@ az group create -n labs-cosmos --tags courselabs=azure -l westeurope
 
 az cosmosdb create --help
 
-az cosmosdb create -g labs-cosmos --enable-public-network --kind GlobalDocumentDB -n labs-cosmos-es # <unique-dns-name>
+az cosmosdb create -g labs-cosmos --enable-public-network --kind GlobalDocumentDB -n <cosmos-db-name>
 ```
 
 Open the new resource in the Portal - this is just a CosmosDB _account_, a grouping mechanism for databases. On the resource page there's a _Quick start_ wizard.
@@ -53,7 +53,7 @@ Create a database using the SQL API:
 ```
 az cosmosdb sql database create --help
 
-az cosmosdb sql database create --name AssetsDb -g labs-cosmos --account-name labs-cosmos-es
+az cosmosdb sql database create --name AssetsDb -g labs-cosmos --account-name <cosmos-db-name>
 ```
 
 > Check in the Portal - databases under a Comos DB account don't show as separate resources (like apps in an app service plan)
@@ -63,7 +63,7 @@ Open the _Data Explorer_ for the account and you can see the new database; it's 
 You can also get the connection string from the CLI:
 
 ```
-az cosmosdb keys list --type connection-strings -g labs-cosmos -n labs-cosmos-es
+az cosmosdb keys list --type connection-strings -g labs-cosmos -n <cosmos-db-name>
 ```
 
 📋 Add a query to the CLI command and change the output format, so all you see is the value for the _Primary SQL Connection String_.
@@ -74,14 +74,14 @@ az cosmosdb keys list --type connection-strings -g labs-cosmos -n labs-cosmos-es
 The query for this needs to select the connectStrings field which contains an array, then search the array for the object where the description field matches the input. Then you can select the connectionString field from the object, and use TSV format to print it without any JSON markers:
 
 ```
-az cosmosdb keys list --type connection-strings -g labs-cosmos  --query "connectionStrings[?description==``Primary SQL Connection String``].connectionString" -o tsv -n labs-cosmos-es
+az cosmosdb keys list --type connection-strings -g labs-cosmos  --query "connectionStrings[?description==``Primary SQL Connection String``].connectionString" -o tsv -n <cosmos-db-name>
 ```
 
 </details><br/>
 
 > This is the sort of task you need to do when you're scripting, so you can get the values you need to inject into app configuration
 
-## Deploy an app using Cosmos DB with Entity Framework
+## Run an app using Cosmos DB with Entity Framework
 
 CosmosDB scales so well because of the way it partitions data, spreading it around multiple storage locations. Those locations can all be read from and written to at the same time, and CosmosDB can increase capacity just by adding more partitions. 
 
@@ -93,10 +93,11 @@ We have a simple .NET application which can use CosmosDB for storage. It is buil
 - [AssetContext.cs](/src/asset-manager/Sql/AssetContext.cs) - the EF context object, which provides access to the entity objects
 - [Dependencies.cs](/src/asset-manager/Dependencies.cs) - manages the different storage options the app can use, in Sql mode it uses CosmosDB
 
-Run the app locally (you'll need the [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download), using environment variables to set the database type and connection string:
+Run the app locally (you'll need the [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download), using parameters to set the database type and connection string:
 
 ```
-dotnet run --project src/asset-manager --Database:Api=Sql --ConnectionStrings:AssetsDb='AccountEndpoint=https://labs-cosmos-es.documents.azure.com:443/;AccountKey=UL0sHpdMPazvLHE5sk8QEwPJgBVGykm3hVeMUgvqrWaNHkwG1uAH94rktQ2zb19PDTaOlDSG0NsU0o92jMHT9Q==;'
+# be sure to quote the connection string:
+dotnet run --project src/asset-manager --Database:Api=Sql --ConnectionStrings:AssetsDb='<cosmos-connection-string>'
 ```
 
 Browse to the app at http://localhost:5208 - you'll see a set of reference data items with random IDs:

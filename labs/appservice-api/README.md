@@ -115,7 +115,7 @@ Add a new _Application setting_ to override the default URL for the API:
 
 Click _Save_ to update the configuration - you'll see a warning that the app will restart, to make sure it picks up the new configuration settings. 
 
-Browse to the web app again and click the _Go!_ button - now you should get a random number from the API shown in the web page. (If you're a .NET developer you can see the default API URL in the [config file](src/rng/Numbers.Web/appsettings.json). How does the new setting from the App Service get read by the app?).
+Browse to the web app again and click the _Go!_ button - now you should get a random number from the API shown in the web page. (If you're a .NET developer you can see the default API URL in the [config file](/src/rng/Numbers.Web/appsettings.json). How does the new setting from the App Service get read by the app?).
 
 ## Scale the App Service Plan
 
