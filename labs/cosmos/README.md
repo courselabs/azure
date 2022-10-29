@@ -17,8 +17,6 @@ You'll see it referred to as "NoSQL" in the Portal, but the CLI and documentatio
 
 - [Cosmos DB overview](https://docs.microsoft.com/en-gb/azure/cosmos-db/introduction)
 
-- [Consistency levels explained](https://docs.microsoft.com/en-gb/azure/cosmos-db/consistency-levels?toc=%2Fazure%2Fcosmos-db%2Fsql%2Ftoc.json#guarantees-associated-with-consistency-levels)
-
 - [Microsoft Learn: Explore Cosmos DB](https://docs.microsoft.com/en-us/learn/modules/explore-azure-cosmos-db/)
 
 - [`az cosmosdb` commands](https://docs.microsoft.com/en-us/cli/azure/cosmosdb?view=azure-cli-latest)
