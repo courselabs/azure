@@ -59,24 +59,23 @@ _Storage Accounts_
 - [Storage Accounts](/labs/storage/README.md)
 - [Blob storage](/labs/storage-blob/README.md)
 - [File shares](/labs/storage-files/README.md)
-- Using storage for static web content
-- Working with table storage
+- [Using storage for static web content](/labs/storage-static/README.md)
+- [Working with table storage](labs/storage-table/README.md)
 
 _Cosmos DB_
 
-- New Cosmos DB, explore API types, throughput & redundancy
-- Create and manage Cosmos SQL DB, use with Entity Framework consumer app
-- Create and manage Mongo DB type, use with simple consumer app
-- Indexes and performance for Mongo Cosmos DB
-- Working with data using Data Explorer notebooks 
+- [Cosmos DB](/labs/cosmos/README.md)
+- [Cosmos DB with the Mongo API](/labs/cosmos-mongo/README.md)
+- [Cosmos DB with the Table API](/labs/cosmos-table/README.md)
+- [Cosmos DB performance and billing](/labs/cosmos-perf/README.md)
 
 _KeyVault and Virtual Networks_
 
 - [KeyVault](/labs/keyvault/README.md)
-- [Networking](/labs/vnet/README.md)
-- Create Keyvault in VNet, use to store credentials for SQL
-- Understand options for accessing KeyVault
-- Deploy app service app in VNet, using KeyVault to fetch SQL creds
+- [Virtual Networks](/labs/vnet/README.md)
+- [Securing KeyVault Access](labs/keyvault-access/README.md)
+- [Securing VNet Access](/labs/vnet-access/README.md)
+- [Securing apps with KeyVault and VNet](/labs/vnet-apps/README.md)
 
 _Events and Messages_
 
