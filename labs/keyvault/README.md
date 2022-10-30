@@ -133,5 +133,5 @@ ___
 You can delete the RG for this lab to remove all the resources:
 
 ```
-az group delete -y -n labs-keyvault
+az group delete -y --no-wait -n labs-keyvault
 ```
