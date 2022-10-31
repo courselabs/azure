@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # *** replace these with your actual SA name and key:
-ACCOUNT_NAME='<sa-name>'
+ACCOUNT_NAME='adrianstorage01'
 ACCOUNT_KEY='<sa-key>'
 # ***
 
