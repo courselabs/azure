@@ -1,46 +1,64 @@
 # Cosmos DB - Mongo API
 
+The native driver for CosmosDB needs a custom client library in your code, but the other drivers use standard APIs. [MongoDB]() is a popular open-source no-SQL database, and you can create a CosmosDB instance which uses the Mongo driver. That's perfect for moving existing apps to Azure - you don't need to change any code, the app still sees a Mongo database, but you get all the scale and consistent management of Cosmos.
+
+In this lab we'll create a CosmosDB database with the Mongo driver and use it with a simple .NET application.
+
 ## Reference
 
-- [`az cosmosdb mongodb` commands](https://docs.microsoft.com/en-us/cli/azure/cosmosdb/mongodb?view=azure-cli-latest)
+- [CosmosDB for Mongo overview](https://learn.microsoft.com/en-us/azure/cosmos-db/mongodb/introduction)
 
 - [MongoDB C# driver documentation](https://mongodb.github.io/mongo-csharp-driver/2.17/getting_started/)
 
+- [`az cosmosdb mongodb` commands](https://docs.microsoft.com/en-us/cli/azure/cosmosdb/mongodb?view=azure-cli-latest)
+
 ## Create a Cosmos DB Mongo database
 
-Portal - create "cosmos"; choose the Mongo API:
+Create a new Cosmos DB resource in the Portal - choose the Mongo API. Explore the options:
 
-- mongo API version
-- same capacity/provisioning options
+- you can select the Mongo API version
+- same capacity/provisioning options as the SQL driver
 - same geo-redundancy, networking & backup policy
+
+Under the hood your Cosmos DB storage engine is the same whichever API you choose. The main features of the service are the same for all APIs, the choice is about how you want to applications to connect.
 
 Create a Cosmos DB account with the CLI:
 
 ```
-az group create -n labs-cosmos-mongo -l westeurope --tags courselabs=azure
+az group create -n labs-cosmos-mongo --tags courselabs=azure -l westeurope
 
-az cosmosdb create --help
-
-az cosmosdb create -g labs-cosmos-mongo --enable-public-network --kind MongoDB --server-version 4.2 -n labs-cosmos-mongo-es2 # <unique-dns-name>
+az cosmosdb create -g labs-cosmos-mongo --enable-public-network --kind MongoDB --server-version 4.2 -n <cosmos-db-name> 
 ```
 
-> Takes longer to create than SQL API
+> The `Kind` is set at the account level - either DocumentDB or MongoDG. All the databases in the account need to use the same kind
 
-Open in portal - different options, no PowerBI integration; adds _Data migration_ and _Connection string_ left nav options
+You might find this takes longer to create than a Cosmos Account for the SQL API. When it's done, open the CosmosDB Account in portal. There are different options from a document DB account:
 
-Create a database using the Mongo API:
+- there is no PowerBI integration
+- there are new _Data migration_, _Connection string_ and _Collection_ left nav options
+
+📋 Create a database in the account called `AssetsDb` using the `cosmosdb mongodb database create` command.
+
+<details>
+  <summary>Not sure how?</summary>
 
 ```
 az cosmosdb mongodb database create --help
-
-az cosmosdb mongodb database create --name AssetsDb -g labs-cosmos-mongo --account-name labs-cosmos-mongo-es2
 ```
+
+As a minimum you need to set the name, account name and RG:
+
+```
+az cosmosdb mongodb database create --name AssetsDb -g labs-cosmos-mongo --account-name <cosmos-db-name>
+```
+
+</details><br/>
 
 ## Connect to the database with Mongo Shell
 
-Open _Data explorer_ in the Portal - you'll see the new AssetsDb database listed. Expand it and there are no collections - the database is empty.
+Open _Data explorer_ in the Portal - you'll see the new AssetsDb database listed. Expand it and there are no collections, it's a new empty database.
 
-There's a new menu option _Open Mongo shell_ which starts a command-line interface to connect to the database. Run these commands to explore the database:
+There's a new menu option _Open Mongo shell_ which starts a command-line interface to connect to the database. Select that option and in the terminal run these commands to explore the database:
 
 ```
 show dbs
@@ -52,13 +70,15 @@ show collections
 db.help()
 ```
 
-Create a collection:
+The NoSQL API uses a customized version of SQL to work with data in the Portal, but the Mongo commands are standard for any Mongo database.
+
+Data in Mongo is stored as documents in collections (broadly similar to rows in tables for a SQL database). Create a collection:
 
 ```
 db.createCollection('Students')
 ```
 
-> Response is JSON
+> The response is JSON - the native data format for Mongo
 
 Insert some data:
 
@@ -68,62 +88,107 @@ db.Students.help()
 db.Students.insertOne({ "OrganizationId": "aed1895", "StudentId" : "aed1895", "FullName": "a b c", "CountryCode": 123 })
 ```
 
-> Response includes generated object ID
+> The JSON response includes the object ID which the database generated
 
-You can insert multiples, and documents don't need to have the same schema:
+You can insert multiple documents with one command, and documents don't need to have the same schema:
 
 ```
 db.Students.insertMany([{ "OrganizationId": "org1", "StudentId" : "1023", "FirstName": "x", "LastName": "y", "Role": "z" },  {"OrganizationId": "org1", "StudentId" : "1040", "FirstName": "a", "LastName": "b", "Role": "c" }])
 ```
 
-Query the data:
+📋 Query the data using the `find` method on the collection. Can you find the students in organization `org1`, but only include the first and last name in the results?
+
+<details>
+  <summary>Not sure how?</summary>
+
+Print the help text:
+
+```
+db.Students.find().help()
+```
+
+It's all there, but it's not as helpful as the Azure CLI help text.
+
+Show all the documents:
 
 ```
 db.Students.find().pretty()
+```
 
+Query by a property - your query is expressed as a JSON object:
+
+```
 db.Students.find( {"OrganizationId" : "org1"} )
-
-db.Students.find( {"OrganizationId" : "org1"}, { FirstName:1, LastName:1 } )
 ```
 
-
-## Deploy an app using Cosmos DB with Mongo driver
-
-Get the primary connection string:
+And project properties in the response - use 1 to include the field and 0 to exclude it:
 
 ```
-az cosmosdb keys list --type connection-strings -g labs-cosmos-mongo -n labs-cosmos-mongo-es2
+db.Students.find( {"OrganizationId" : "org1"}, { _id:0, FirstName:1, LastName:1 } )
 ```
 
-- [EntityBase.cs](src/asset-manager/Model/Spec/EntityBase.cs) - base class with ID options
-- [MongoAssetService.cs](src/asset-manager/Services/MongoAssetService.cs) - Mongo data access
-- [Dependencies.cs](src/asset-manager/Dependencies.cs) - dependency injection
+</details><br/>
 
-Now configure & deploy the app:
+The MongoDB syntax takes some getting used to - but it is very consistent. The same functions and formats you can use in the shell are there in client libraries for your code too.
 
+## Run an app using Cosmos DB with Mongo
 
-**Make sure there is a semi-colon before the AccountKey field in the connection string**
+Documents in Mongo map directly to objects in code, so you don't need an ORM layer to convert your app's representation to the database representation. The Mongo client libraries effectively fetch JSON from the database and [deserialize]() it into objects.
 
-```
-cd src/asset-manager
+Your object classes do need to include some information for Mongo:
 
-az webapp up --sku S1 -g labs-cosmos-mongo --plan labs-cosmos-mongo-app-plan --os-type Linux  --runtime dotnetcore:6.0 -n labs-cosmos-mongo-app-es # dns name 
+- [EntityBase.cs](/src/asset-manager/Model/Spec/EntityBase.cs) - this is the object base class, it uses annotations from the Mongo client library, to specify which property is the object ID
+- [MongoAssetService.cs](/src/asset-manager/Services/MongoAssetService.cs) - manages data access, loading documents from collections and inserting the reference data
+- [Dependencies.cs](/src/asset-manager/Dependencies.cs) - manages the different storage options for the app can use, Mongo is supported using the standard client library, nothing CosmosDB-specific 
 
-az webapp config appsettings set -g labs-cosmos-mongo -n labs-cosmos-mongo-app-es --settings Database__Api='Mongo' ConnectionStrings__AssetsDb='mongodb://labs-cosmos-mongo-es2:lTVKWfGyj3YInQWY79O98tjYmzv9MUiyFv6Th6IMLihYFHcwSpKheZAl1jK64ckz9xgGQdJegh1h4n2SA3htdQ==@labs-cosmos-mongo-es2.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@labs-cosmos-mongo-es2@'
-```
+📋 Print the _Primary MongoDB Connection String_ from the list of keys for the Cosmos DB.
 
-Browse to the app; it looks the same as the SQL version, except the IDs are Mongo ObjectId format rather than the GUIDs which the SQL API used.
+<details>
+  <summary>Not sure how?</summary>
 
-
-## Explore the data
-
-Check the data in the explorer to verify the new collections are there, and the data is stored:
+The key list is at the database account level. It's the same command for all API types, but the names of the keys is different from the SQL API:
 
 ```
-db.getCollectionNames()
-
-db.Locations.find().pretty()
+az cosmosdb keys list --type connection-strings -g labs-cosmos-mongo  --query "connectionStrings[?description==``Primary MongoDB Connection String``].connectionString" -o tsv -n <cosmos-db-name>
 ```
 
-> You'll see a strange base64 representation of the GUID id field, which is an empty string for these documents
+</details><br/>
 
+> The connection string starts with `mongodb://<cosmos-db-name>` - it contains authentication details so it needs to be treated as secure data
+
+Run the app locally (you'll need the [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download), using parameters to set the database type and connection string:
+
+```
+# be sure to quote the connection string:
+dotnet run --project src/asset-manager --Database:Api=Mongo --ConnectionStrings:AssetsDb='<cosmos-connection-string>'
+```
+
+Browse to the app at http://localhost:5208. When it runs it will create some collections in Mongo and save some documents. It's the same application we used in the [Cosmos lab](), but with Mongo the object IDs are in a different format (is there a pattern to the IDs?).
+
+
+
+## Lab
+
+Use the Mongo shell (or the [Mongo VS Code]() extension) to find all the location documents. How is the data structure different from Cosmos SQL API? Try to insert a new location:
+
+```
+{
+    "AddressLine1": "1 Parliament Place",
+    "Country": "Singapore",
+    "PostalCode": "178880"
+}
+```
+
+Can you save it in the database, so it appears in the app when you refresh?
+
+> Stuck? Try [hints](hints.md) or check the [solution](solution.md).
+
+___
+
+## Cleanup
+
+Delete the RG and the database and all the data will be deleted too:
+
+```
+az group delete -y --no-wait -n labs-cosmos-mongo
+```

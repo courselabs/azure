@@ -12,7 +12,6 @@ In this lab we'll take an existing database backup file and deploy it to a new d
 
 - [`az sql db` commands](https://docs.microsoft.com/en-us/cli/azure/sql/db?view=azure-cli-latest)
 
-
 ## Create a SQL Server 
 
 Start by creating a SQL Server we can use for a new database. We'll be using the same parameters a few times, so start by storing some variables.

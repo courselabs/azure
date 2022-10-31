@@ -1,6 +1,8 @@
 # Virtual Networks
 
-Virtual Networks are private to Azure - services can communicate with each other in a Virtual Network (vnet) without being accessible on the public Internet. Vnets are a core component in deploying secure solutions in Azure, and you should aim to use them in all your applications. You create the vnet first and deploy other services into it. You can't typically move resources between vnets, so you need to plan your networking up front.
+Virtual Networks are private to Azure - services can communicate with each other in a Virtual Network (vnet) without being accessible on the public Internet. 
+
+Vnets are a core component in deploying secure solutions in Azure, and you should aim to use them in all your application, provided the services you're using support them. You create the vnet first and deploy other services into it. You can't typically move resources between vnets, so you need to plan your networking up front.
 
 ## Reference
 
@@ -83,12 +85,12 @@ az network vnet subnet create -g labs-vnet --vnet-name vnet1 -n backend --addres
 
 ## Create a Virtual Machine in the VNet
 
-We haven't covered Virtual Machines - there's usually a better way of running apps in Azure than having to manage a VM. But they're easy to work with and we can use them to check the networking in the vnet.
+We covered Virtual Machines in the [VM lab](/labs/vm/README.md) - they're an IaaS approach and there's usually a better way of running apps in Azure. But they're easy to work with and we can use them to check the networking in the vnet.
 
 Create a Linux VM running Ubuntu Server:
 
 ```
-az vm create -g labs-vnet -n vm01 --image UbuntuLTS --vnet-name vnet1 --subnet frontend
+az vm create -g labs-vnet -n vm01 --image UbuntuLTS --vnet-name vnet1 --subnet frontend --generate-ssh-keys
 ```
 
 This command takes care of setting up [SSH](https://en.wikipedia.org/wiki/Secure_Shell) so you can log into the remote machine. The output shows you the public IP address you'll use to connect.

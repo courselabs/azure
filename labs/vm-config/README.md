@@ -167,5 +167,5 @@ ___
 Delete the RG with this command and that will remove all the resources:
 
 ```
-az group delete -y -n labs-vm-config
+az group delete -y --no-wait -n labs-vm-config
 ```
