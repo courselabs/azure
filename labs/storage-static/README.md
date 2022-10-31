@@ -10,6 +10,8 @@ In this lab we'll see how to host a website on blob storage, and scale it with M
 
 - [What is a CDN?](https://learn.microsoft.com/en-us/azure/cdn/cdn-overview)
 
+- [Microsoft CDN point-of-presence locations](https://learn.microsoft.com/en-us/azure/cdn/cdn-pop-locations?toc=%2Fazure%2Ffrontdoor%2FTOC.json)
+
 - [Microsoft Learn: Deploy your Babylon.js project to the public web](https://docs.microsoft.com/en-us/learn/modules/create-voice-activated-webxr-app-with-babylonjs/9-exercise-deploy-babylonjs-project-to-public-web?pivots=vr) - part of a larger module, this exercise covers static web hosting
 
 
@@ -90,7 +92,7 @@ Change the Storage Account to use _read-only globally redundant storage_ (RA-GRS
 az storage account update -g labs-storage-static --sku Standard_RAGRS -n <sa-name>
 ```
 
-In the output you'll see the secondary location and a list of secondary endpoints, inclusing one for the static website. You can access the site from the secondary too, and the storage cost is lower with RA than full GRS:
+In the output you'll see the secondary location and a list of secondary endpoints, including one for the static website. You can access the site from the secondary too, and the storage cost is lower with RA than full GRS:
 
 ```
 curl -v https://<secondary-web-endpoint>/
@@ -99,6 +101,14 @@ curl -v https://<secondary-web-endpoint>/
 > You'll probably get an error - it takes a while for data to be synchronized to the secondary region
 
 Open the Storage Account in the Portal and check the _Redundancy_ tab, and you can see the status of the replication.
+
+It can take a long time for the sync to complete in geo-replication. You can check the status by querying the last sync time:
+
+```
+az storage account show -g labs-storage-static --expand geoReplicationStats --query geoReplicationStats.lastSyncTime -o tsv -n <sa-name>
+```
+
+> You'll see the message _Last sync time is unavailable_ if the account is still syncing
 
 You could set up your DNS provider with both endpoints, so if one was unavailable then the website would get served from the other region. An alternative is to use CDN.
 
@@ -114,7 +124,7 @@ az cdn profile create --sku Standard_Microsoft -g labs-storage-static -n labs-st
 az cdn endpoint create  -g labs-storage-static --profile-name labs-storage-static --origin <static-website-domain> --origin-host-header <static-website-domain> -n <cdn-domain>
 ```
 
-Check the status in the Portal. Browse to https://<cdn-domain>.azureedge.net. You may see an error page saying it takes a while for the CDN to be ready - the data is being replicated across the network at this point.
+Check the status in the Portal. Browse to `https://<cdn-domain>.azureedge.net`. You may see an error page saying it takes a while for the CDN to be ready - the data is being replicated across the network at this point.
 
 Keep refreshing. When you can see your site, that means CDN is populated and the data is being served from somewhere close to you.
 
@@ -132,8 +142,8 @@ az storage blob upload-batch -d '$web' -s labs/storage-static/web2 --overwrite  
 Check your various URLs:
 
 - you should see the content straight away at the original static website URL
-- the secondary endpoint should be updated almost as quickly - **assuming the original sync has completed**
-- the CDN will take the longest to refresh, so it will probably show the old content for a few minutes
+- the secondary endpoint could be updated almost as quickly - **assuming the original sync has completed**
+- the CDN can take the longest to refresh, so it might show the old content for a few minutes
 
 ## Lab
 

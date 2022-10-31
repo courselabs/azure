@@ -1,6 +1,8 @@
 # Cosmos DB - Mongo API
 
-The native driver for CosmosDB needs a custom client library in your code, but the other drivers use standard APIs. [MongoDB]() is a popular open-source no-SQL database, and you can create a CosmosDB instance which uses the Mongo driver. That's perfect for moving existing apps to Azure - you don't need to change any code, the app still sees a Mongo database, but you get all the scale and consistent management of Cosmos.
+The native driver for CosmosDB needs a custom client library in your code, but the other drivers use standard APIs. 
+
+[MongoDB](https://www.mongodb.com/) is a popular open-source no-SQL database, and you can create a CosmosDB instance which uses the Mongo driver. That's perfect for moving existing apps to Azure - you don't need to change any code, the app still sees a Mongo database, but you get all the scale and consistent management of Cosmos.
 
 In this lab we'll create a CosmosDB database with the Mongo driver and use it with a simple .NET application.
 
@@ -30,12 +32,12 @@ az group create -n labs-cosmos-mongo --tags courselabs=azure -l westeurope
 az cosmosdb create -g labs-cosmos-mongo --enable-public-network --kind MongoDB --server-version 4.2 -n <cosmos-db-name> 
 ```
 
-> The `Kind` is set at the account level - either DocumentDB or MongoDG. All the databases in the account need to use the same kind
+> The `Kind` is set at the account level - either DocumentDB or MongoDB. All the databases in the account need to use the same kind, and the same API
 
 You might find this takes longer to create than a Cosmos Account for the SQL API. When it's done, open the CosmosDB Account in portal. There are different options from a document DB account:
 
 - there is no PowerBI integration
-- there are new _Data migration_, _Connection string_ and _Collection_ left nav options
+- there are new _Data migration_, _Connection string_ and _Collection_ (instead of _Containers_) left nav options
 
 📋 Create a database in the account called `AssetsDb` using the `cosmosdb mongodb database create` command.
 
@@ -58,7 +60,7 @@ az cosmosdb mongodb database create --name AssetsDb -g labs-cosmos-mongo --accou
 
 Open _Data explorer_ in the Portal - you'll see the new AssetsDb database listed. Expand it and there are no collections, it's a new empty database.
 
-There's a new menu option _Open Mongo shell_ which starts a command-line interface to connect to the database. Select that option and in the terminal run these commands to explore the database:
+There's a new menu option _Open Mongo shell_ which starts a command-line interface ([mongosh](https://www.mongodb.com/docs/mongodb-shell/)) to connect to the database. Select that option and in the terminal run these commands to explore the database:
 
 ```
 show dbs
@@ -72,7 +74,7 @@ db.help()
 
 The NoSQL API uses a customized version of SQL to work with data in the Portal, but the Mongo commands are standard for any Mongo database.
 
-Data in Mongo is stored as documents in collections (broadly similar to rows in tables for a SQL database). Create a collection:
+Data in Mongo is stored as documents in collections (conceptually similar to rows in tables for a SQL database). Create a collection:
 
 ```
 db.createCollection('Students')
@@ -133,7 +135,7 @@ The MongoDB syntax takes some getting used to - but it is very consistent. The s
 
 ## Run an app using Cosmos DB with Mongo
 
-Documents in Mongo map directly to objects in code, so you don't need an ORM layer to convert your app's representation to the database representation. The Mongo client libraries effectively fetch JSON from the database and [deserialize]() it into objects.
+Documents in Mongo map directly to objects in code, so you don't need an ORM layer to convert your app's representation to the database representation. The Mongo client libraries effectively fetch JSON from the database and [deserialize](https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/how-to?pivots=dotnet-6-0) it into objects.
 
 Your object classes do need to include some information for Mongo:
 
@@ -156,10 +158,10 @@ az cosmosdb keys list --type connection-strings -g labs-cosmos-mongo  --query "c
 
 > The connection string starts with `mongodb://<cosmos-db-name>` - it contains authentication details so it needs to be treated as secure data
 
-Run the app locally (you'll need the [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download), using parameters to set the database type and connection string:
+Run the app locally (you'll need the [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download)), using parameters to set the database type and connection string:
 
 ```
-# be sure to quote the connection string:
+# be sure to 'quote' the connection string:
 dotnet run --project src/asset-manager --Database:Api=Mongo --ConnectionStrings:AssetsDb='<cosmos-connection-string>'
 ```
 

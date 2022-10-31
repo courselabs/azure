@@ -16,7 +16,7 @@ Cost can be a deterrent for using Cosmos, but if you plan appropriately then it 
 
 ## Create a CosmosDB Container with Fixed Performance
 
-Resource Units per second (RU/s) define the level of performance of your CosmosDB. Other factors affect cost too - like the amount of replication and the multiple-writes feature - but RU consumption is the primary cost factor.
+Request Units per second (RU/s) define the level of performance of your CosmosDB. Other factors affect cost too - like the amount of replication and the multiple-writes feature - but RU consumption is the primary cost factor.
 
 Create a new Cosmos DB account:
 

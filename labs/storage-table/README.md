@@ -2,7 +2,7 @@
 
 Table storage is a simple, scalable database which you can host in an Azure Storage Account. It takes a no-SQL approach, so you need to use the dedicated libraries in your code to read and write data. It's an older part of the storage stack in Azure, but it was around before alternatives like Mongo and so you'll see it in early Azure solutions. CosmosDB is a better option but it has compatbility with table storage so there is a migration path.
 
-In this lab we'll use table storage in a simple app and see how data is stored and accessed.be any structure
+In this lab we'll use table storage in a simple app and see how data is stored and accessed.
 
 ## Reference
 
@@ -148,7 +148,7 @@ We'll run a simple .NET application which uses a logging library called [Serilog
 
 We need to create the table first and get the connection details before we can run the app.
 
-📋 Generate a new table called _FulfilmentLogs_ in your Storage Account, and print the connection string for apps to authenticate. 
+📋 Create a new table called _FulfilmentLogs_ in your Storage Account, and print the connection string for apps to authenticate. 
 
 <details>
   <summary>Not sure how?</summary>

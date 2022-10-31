@@ -98,7 +98,7 @@ The output only shows the file metadata, not the content.
 
 ## Shared Access Tokens & Policies
 
-All blobs have a public URL which you can use if you do want to download the content. The URL is a standard patter: `https://<sa-name>.blob.core.windows.net/<container>/<blob-name>.
+All blobs have a public URL which you can use if you do want to download the content. The URL is a standard pattern: `https://<sa-name>.blob.core.windows.net/<container>/<blob-name>`.
 
 Try to download the README doc:
 
@@ -128,7 +128,7 @@ cat download2.md
 
 You'll see the contents this time. 
 
-You can safely share that SAS token - after the expiry date, it's of no use and the blob won't be accessible. no access. But simple SAS token cannot be revoked, it can be used until it expires.
+You can safely share that SAS token - after the expiry date, it's of no use and the blob won't be accessible. But a simple SAS token cannot be revoked, it can be used until it expires.
 
 If you want better control for sharing blobs, you can manage SAS tokens with a [stored access policy](https://learn.microsoft.com/en-us/rest/api/storageservices/define-stored-access-policy):
 
@@ -143,7 +143,8 @@ Now create a SAS token for the blob, backed by the access policy. Expiry date ne
 ```
 az storage blob generate-sas --help
 
-# you'll get an error if your date is in the past, or the format is not valid:
+# you'll get an error if your date the format is not valid, but not if the date is in the past:
+
 az storage blob generate-sas -n 'storage-blob/README.md' --container-name labs --policy-name labs-reader --full-uri --expiry '2022-10-30T01:00Z' --account-name <sa-name> 
 ```
 
@@ -155,7 +156,7 @@ curl -o download3.md "<blob-uri-with-sas-token>"
 cat download3.md
 ```
 
-You'll see the correct content - the tojen is within the expiry date, and the policy allows read access.
+You'll see the correct content - the token is within the expiry date, and the policy allows read access.
 
 Now remove the policy:
 

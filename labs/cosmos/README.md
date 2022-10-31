@@ -128,7 +128,7 @@ Add a new location using Data Explorer:
 - `Discriminator` is an ORM mechanism for identifying the object type
 - `Id` is an object property, `id` is the item identifier (which includes the discriminator)
 
-Refresh the browser with your Asset Manager website. It might take a while to reload -i s the new location shown?
+Refresh the browser with your Asset Manager website. It might take a while to reload - is the new location shown?
 
 What happens if you insert a new item without any ID columns?
 
