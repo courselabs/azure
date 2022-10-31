@@ -102,7 +102,7 @@ This script is for a Linux VM - it will need to be updated with your details:
 When you've edited the script, create a VM using cloud-init to run the script and mount the share:
 
 ```
-az vm create -g labs-storage-files -n vm01 --image UbuntuLTS --custom-data labs/storage-files/cloud-init/mount-share.sh
+az vm create -g labs-storage-files -n vm01 --image UbuntuLTS --custom-data @labs/storage-files/cloud-init/mount-share.sh
 ```
 
 Connect to the VM and check you can read and edit the file:

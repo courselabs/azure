@@ -171,7 +171,7 @@ ___
 Remember you need to delete the Resource Groups, not the deployment:
 
 ```
-az group group delete -n labs-arm-bicep
+az group delete -y --no-wait -n labs-arm-bicep
 
-az group group delete -n labs-arm-bicep-lab
+az group delete -y --no-wait -n labs-arm-bicep-lab
 ```

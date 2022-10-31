@@ -35,7 +35,9 @@ What we really want is:
 - a test environment with a small database and a single app instance
 - a *separate* production environment with a larger database and multiple app instances
 
-Both environments need to have fully automated deployments. **You should be able to bring the application up from nothing by running a single command.**
+Both environments need to have fully automated deployments. 
+
+**You should be able to bring the application up from nothing by running a single command.**
 
 You can choose which Azure services to use and how to model the deployments.
 

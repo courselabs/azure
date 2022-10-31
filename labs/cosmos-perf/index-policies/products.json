@@ -3,7 +3,7 @@
     "automatic": true,
     "includedPaths": [
         {
-            "path": "/refDataType/?"
+            "path": "/productId/?"
         }
     ],
     "excludedPaths": [
