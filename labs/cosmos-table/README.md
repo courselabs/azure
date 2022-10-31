@@ -36,8 +36,8 @@ az cosmosdb create -g labs-cosmos-table --enable-public-network --kind GlobalDoc
 
 Open the new database in the Portal. There are some different options from the other flavours of Cosmos:
 
-- instead of _Collections_ or _Containers_ there is an _Integrations_ section
-- there you can add an Azure Function which will be triggered when data changes
+- there are no _Collections_ or _Containers_ - the Table API just has one level in the structure: Account -> Table(s)
+- the _Integrations_ sectionwhere you can add an Azure Function which will be triggered when data changes
 
 📋 Create a database called `FulfilmentLogs` using the Table API
 
