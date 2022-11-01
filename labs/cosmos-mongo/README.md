@@ -143,7 +143,7 @@ Your object classes do need to include some information for Mongo:
 - [MongoAssetService.cs](/src/asset-manager/Services/MongoAssetService.cs) - manages data access, loading documents from collections and inserting the reference data
 - [Dependencies.cs](/src/asset-manager/Dependencies.cs) - manages the different storage options for the app can use, Mongo is supported using the standard client library, nothing CosmosDB-specific 
 
-📋 Print the _Primary MongoDB Connection String_ from the list of keys for the Cosmos DB.
+📋 Print the _Primary MongoDB Connection String_ from the list of keys for the Cosmos DB Account.
 
 <details>
   <summary>Not sure how?</summary>

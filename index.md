@@ -79,11 +79,11 @@ _KeyVault and Virtual Networks_
 
 _Events and Messages_
 
-- New Service Bus, explore tiers & access
-- Create Service Bus, use pub-sub with simple consumer apps
-- New Event Hubs, explore throughput & access
-- Create Event Hubs, publish and conume with partitions
-- Using Redis - messaging and caching
+- [Service Bus Queues](/labs/servicebus/README.md)
+- [Service Bus Topics](/labs/servicebus-pubsub/README.md)
+- [Event Hubs](/labs/eventhubs/README.md)
+- [Eveng Hubs partitioned consumer](/labs/eventhubs-consumers/README.md)
+- [Azure Cache for Redis](/labs/redis/README.md)
 
 _Project_
 
