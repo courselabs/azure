@@ -82,8 +82,8 @@ _Events and Messages_
 - [Service Bus Queues](/labs/servicebus/README.md)
 - [Service Bus Topics](/labs/servicebus-pubsub/README.md)
 - [Event Hubs](/labs/eventhubs/README.md)
-- Create Event Hubs, publish and conume with partitions
-- Using Redis - messaging and caching
+- [Eveng Hubs partitioned consumer](/labs/eventhubs-consumers/README.md)
+- [Azure Cache for Redis](/labs/redis/README.md)
 
 _Project_
 
