@@ -79,7 +79,7 @@ _KeyVault and Virtual Networks_
 
 _Events and Messages_
 
-- New Service Bus, explore tiers & access
+- [Service Bus](/labs/servicebus/README.md)
 - Create Service Bus, use pub-sub with simple consumer apps
 - New Event Hubs, explore throughput & access
 - Create Event Hubs, publish and conume with partitions
