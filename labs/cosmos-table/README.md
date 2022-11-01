@@ -1,6 +1,6 @@
 # Cosmos DB - Table API
 
-The Cosmos DB Table API is a straight replacment for Azure Table Storage. It offers an easy migration paths for older apps built with Table Storage. You can use Cosmose Table API without changing those apps, and move to the modern storage option with the scale and capabilities of Cosmos.
+The Cosmos DB Table API is a straight replacment for Azure Table Storage. It offers an easy migration paths for older apps built with Table Storage. You can use Cosmos Table API without changing those apps, and move to the modern storage option with the scale and capabilities of Cosmos.
 
 In this lab we'll explore the Table API, then run an application which writes to Table Storage and switch it to using CosmosDB with just a config change.
 

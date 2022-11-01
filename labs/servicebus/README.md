@@ -71,7 +71,7 @@ We have a simple app which subscribes to the queue using the Service Bus client 
 
 - [subscriber/Program.cs](/src/servicebus/subscriber/Program.cs) - subscribes to the queue and prints the contents of every message it receives, then it acknowledges the message has been processed
 
-Run the app locally (you'll need the [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download), using a parameter to set the connection string:
+Run the app locally (you'll need the [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download)), using a parameter to set the connection string:
 
 ```
 # get the connection string for your queue:

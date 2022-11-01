@@ -181,5 +181,5 @@ ___
 Delete the RG and the database and all the data will be deleted too:
 
 ```
-az group delete -y --no-wait -n labs-cosmos-mongo
+az group delete -y --no-wait -n labs-cosmos-perf
 ```

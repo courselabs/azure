@@ -1,6 +1,8 @@
 # Azure Key Vault
 
-Key Vault is a specialized storage service - it's for storing small pieces of sensitive data. You use it for user credentials, API keys, certificates and any other application configuration which shouldn't be visible in plain text. Key Vault data is encrypted at rest, you can set permissions for who can read values, and you can block access to the whole Key Vault so it's only available when you need to read the data.
+Key Vault is a specialized storage service - it's for storing small pieces of sensitive data. You use it for user credentials, API keys, certificates and any other application configuration which shouldn't be visible in plain text. 
+
+Key Vault data is encrypted at rest, you can set permissions for who can read values, and you can block access to the whole Key Vault so it's only available when you need to read the data.
 
 ## Reference
 
