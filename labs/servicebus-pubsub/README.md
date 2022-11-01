@@ -220,5 +220,5 @@ ___
 Delete the lab RG:
 
 ```
-az group delete -y --no-wait -n labs-servicebus 
+az group delete -y --no-wait -n labs-servicebus-pubsub
 ```
