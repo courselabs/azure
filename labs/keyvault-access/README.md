@@ -41,7 +41,7 @@ You created the account so you have all permissions. Open the Key Vault in the P
 
 You can add a new access policy and select the permissions you need, then you need to select a _principal_ to grant the permissions to.
 
-Enter my email and you'll see no results found. The list of principals you can use is limited to your own Azure AD account, an my identity is in a different AD account.
+Enter my email and you'll see no results found. The list of principals you can use is limited to your own Azure Active Directory (AD) account and my identity is in a different AD account.
 
 If you wanted to give me access, you'd need to add me as an external ID in your Azure Active Directory.
 
@@ -106,7 +106,7 @@ az keyvault network-rule add -g labs-keyvault-access --vnet-name vnet1 --subnet 
 
 Any Azure resources which need access to a subnet have to have a [service endpoint](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-service-endpoints-overview) set up, but this only needs to be done once for each service type that's going to use the subnet.
 
-> Open your VNet in the Portal. In the _Service Endpoints_ an _Subnets_ tabs you'll see KeyVault listed.
+> Open your VNet in the Portal. Select the subnet in the _Subnets_ tab and you 'll see KeyVault listed in the _Service Endpoints_.
 
 Try and print the secret value from your local machine again. Your machine is not in the VNet - do you get an access error?
 

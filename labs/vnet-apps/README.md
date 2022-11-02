@@ -78,7 +78,7 @@ az keyvault update --default-action 'Deny' -g labs-vnet-apps -n <kv-name>
 az keyvault network-rule list -g labs-vnet-apps --name <kv-name>
 ```
 
-Check you can read the secret with the CLI or the Portal again. It may take a few minutes for the rules to take effect, but now the secret should be blocked outside of the VNet.
+Check if you can read the secret with the CLI or the Portal again. It may take a few minutes for the rules to take effect, but now the secret should be blocked outside of the VNet.
 
 ## Create Web App using VNet, KeyVault and Blob Storage
 
