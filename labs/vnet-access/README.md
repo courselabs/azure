@@ -60,7 +60,7 @@ Open the NSG in the Portal - there are default rules applied to all new NSGs:
 
 Also check the location - if you didn't set the locations in the commands, your VNet and NSG may be in different regions.
 
-** If your NSG is in a different region from your VNet then they can't be associated. You'll need to create a new NSG in the same region as the VNet*:
+**If your NSG is in a different region from your VNet then they can't be associated. You'll need to create a new NSG in the same region as the VNet**:
 
 ```  
 az network nsg delete -g labs-vnet-access -n nsg01
@@ -103,7 +103,7 @@ Create a basic Linux VM - we'll use password authentication this time instead of
 
 ```
 # be sure to use the same location as the VNet:
-az vm create -g labs-vnet-access -n ubuntu01 --image UbuntuLTS --vnet-name vnet1 --subnet subnet1 --nsg nsg01 --admin-username labs --admin-password <strong-password> -l <region>
+az vm create -g labs-vnet-access -n ubuntu01 --image UbuntuLTS --vnet-name vnet1 --subnet subnet1 --admin-username labs --admin-password <strong-password> -l <region>
 ```
 
 Check the VM in the Portal - you'll see the NSG listed in the _Networking_ tab even though we didn't explicitly set in when we created the VM.

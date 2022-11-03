@@ -25,11 +25,11 @@ az eventhubs namespace create --min-tls 1.2 --capacity 2 --sku Standard -g labs-
 We'll also need a Storage Account and some blob containers which the consumers will use to store their progress. We'll have two different sets of processing, one needs a container to store the offsets and the other will store a copy of all events:
 
 ```
-az storage account create --sku Standard_ZRS -g labs-eventhubs-consumers -l westeurope -n <eh-name>
+az storage account create --sku Standard_ZRS -g labs-eventhubs-consumers -l westeurope -n <sa-name>
 
-az storage container create -n checkpoints  -g labs-eventhubs-consumers --account-name <eh-name>
+az storage container create -n checkpoints  -g labs-eventhubs-consumers --account-name <sa-name>
 
-az storage container create -n devicelogs  -g labs-eventhubs-consumers --account-name <eh-name>
+az storage container create -n devicelogs  -g labs-eventhubs-consumers --account-name <sa-name>
 ```
 
 > There's no direct link between the Event Hub and the Storage Account - they are only brought together in the consumer code.
@@ -115,7 +115,7 @@ You can run single processor and it will read from all the partitions:
 az eventhubs namespace authorization-rule keys list -n RootManageSharedAccessKey --query primaryConnectionString -o tsv -g labs-eventhubs-consumers --namespace-name <eh-name>
 
 # print the connection string for the Storage account:
-az storage account show-connection-string --query connectionString -o tsv -g labs-eventhubs-consumers -n <eh-name>
+az storage account show-connection-string --query connectionString -o tsv -g labs-eventhubs-consumers -n <sa-name>
 
 # run the processor:
 dotnet run --project ./src/eventhubs/processor -cs '<event-hub-connection-string>' -scs '<storage-account-connection-string>'
@@ -139,7 +139,7 @@ But we should be able to guarantee that every event will get processed and no ev
 
 ## Lab
 
-This library is all about processing at scale. Open two more terminal windows and run a processor in each - so you have three running in total. Then run the producer to create some more event batches. Do all the consumers do some processing? Explore the Storage Account to see how they share the work. 
+This library is all about processing at scale. Open two more terminal windows and run another processor in each - so you have three running in total. Then run the producer to create some more event batches. Do all the consumers do some processing? Explore the Storage Account to see how they share the work. 
 
 Try stopping a processor midway through a batch. What happens to the rest of the events in that processor's partition? And what if you start a consumer with a different consumer group (using the `-g` parameter) - which events does it pick up?
 
