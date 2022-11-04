@@ -95,9 +95,9 @@ _Docker and Azure Container Instances_
 
 - [Docker 101](/labs/docker/README.md)
 - [Docker images and Azure Container Registry](/labs/acr/README.md)
-- Running containers with ACI
-- Multi-container apps with Compose
-- Compose integration with ACI
+- [Azure Container Instances](/labs/aci/README.md)
+- [Distributed apps with Docker Compose](/labs/docker-compose/README.md)
+- [Distributed apps with ACI](labs/aci-compose/README.md)
 
 _Kubernetes_
 
