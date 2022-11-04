@@ -12,6 +12,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 
 ENV Database__Api="BlobStorage" \
     KeyVault__Enabled="false" \
+    LockFile__Enabled="true" \
+    LockFile__Path="/app/lockfiles" \
     ConnectionStrings__AssetsDb="TODO"
 
 ENTRYPOINT ["dotnet", "/app/asset-manager.dll"]

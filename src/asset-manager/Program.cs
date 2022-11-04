@@ -1,5 +1,7 @@
 using AssetManager;
 using Azure.Identity;
+using System.IO;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,19 @@ if (builder.Configuration.GetValue<bool>("KeyVault:Enabled"))
     builder.Configuration.AddAzureKeyVault(
         new Uri($"https://{keyVaultName}.vault.azure.net/"),
         new DefaultAzureCredential());
+}
+
+if (builder.Configuration.GetValue<bool>("LockFile:Enabled"))
+{
+    var lockFilePath = builder.Configuration["LockFile:Path"];
+    Directory.CreateDirectory(lockFilePath);
+
+    var hostName = Dns.GetHostName();
+    var lockFileName = Path.Combine(lockFilePath, $"{hostName}.lock");
+    Console.WriteLine($"Writing lockfile: {lockFileName}");
+
+    var contents = $"Lock: {Guid.NewGuid()} at: {DateTime.UtcNow}{Environment.NewLine}";
+    File.AppendAllText(lockFileName, contents);
 }
 
 builder.Services.AddRazorPages();
