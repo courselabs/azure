@@ -87,14 +87,14 @@ _Events and Messages_
 
 _Project_
 
-- Project 2_
+- Project 2: Distributed App](/projects/distributed/README.md)
 
 ## Compute and Containers
 
 _Docker and Azure Container Instances_
 
-- Containers, networking & compute environment
-- Building images
+- [Docker 101](/labs/docker/README.md)
+- [Docker images and Azure Container Registry](/labs/acr/README.md)
 - Running containers with ACI
 - Multi-container apps with Compose
 - Compose integration with ACI
