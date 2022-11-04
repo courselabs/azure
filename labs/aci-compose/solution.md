@@ -1,9 +1,24 @@
+# Lab Solution
 
+The YAML file contains the ACI name, so if you redeploy it - nothing happens :) There are no updates to the named instance, so it gets left as-is.
 
-We covered this in the [VNet lab](/labs/vnet/README.md) - any private IP address range will do:
+You can try overriding the name in the CLI:
 
 ```
-az network vnet create -g labs-aci-compose -n appnet --address-prefix "10.10.0.0/16" -l eastus
-
-az network vnet subnet create -g labs-aci-compose --vnet-name appnet -n aci --address-prefix "10.10.1.0/24"
+# this will fail:
+az container create -g labs-aci-compose -n assetmanager2 --file labs/aci-compose/assetmanager-aci.yaml
 ```
+
+That doesn't work, so you need to create a copy of the YAML with a new name (or no name) and deploy that:
+
+- [lab/assetmanager2-aci.yaml](/labs/aci-compose/lab/assetmanager2-aci.yaml) - same spec except for the name
+
+You need to **edit that file** and add your connection details, then you can deploy:
+
+```
+az container create -g labs-aci-compose -n assetmanager2 --file labs/aci-compose/lab/assetmanager2-aci.yaml
+```
+
+Browse to the IP address for the new instance - it's the same app. Open the Azure Files share and you'll see a new lockfile, each instance writes its own.
+
+Separate IP addresses isn't much help unless your DNS service supports load-balancing between them. Alternatively you could add a DNS name to each and create a Traffic Manager profile to distribute the load.

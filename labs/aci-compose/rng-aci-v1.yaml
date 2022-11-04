@@ -1,4 +1,4 @@
-apiVersion: 2019-12-01
+apiVersion: '2019-12-01'
 type: Microsoft.ContainerInstance/containerGroups
 location: eastus
 properties:

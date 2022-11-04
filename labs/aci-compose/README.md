@@ -2,7 +2,7 @@
 
 ACI is the simplest container platform on Azure. You can run single containers, or you can run multiple containers in a group to host a distributed application. There are different options for modelling the applications - you can use Azure's YAML spec with the Azure CLI, or the Docker Compose spec with the Docker CLI.
 
-In this lab we'll see both 
+In this lab we'll use both options and see how ACI integrates with other Azure services.
 
 ## Reference
 
@@ -24,14 +24,14 @@ Start by creating a Resource Group for the lab:
 az group create -n labs-aci-compose --tags courselabs=azure -l eastus
 ```
 
-The YAML model for ACI is a custom format which looks a bit like Bicep and a bit like Compose, but isn't actually either:
+The YAML model for ACI is a custom format which looks a bit like Bicep and a bit like Compose but isn't either:
 
 - [rng-aci-v1.yaml](/labs/aci-compose/rng-aci-v1.yaml) - defines a _container group_ with two containers for the random number API and website images we've used before
 
 There are some specific details we need to include in this model:
 
 - container sizes (CPU & memory) are required, so the ACI can provision compute
-- a group of containers share the same network space, so the environment variables configure communication on `localhost`
+- a group of containers share the same network space, so the environment variables configure communication via `localhost`
 - any public services need to have ports specified at the IP address level and the container level
 
 You can pass this model to the Azure CLI when you create an ACI resource, and that will run all the containers in the model.
@@ -55,7 +55,7 @@ az container create -g labs-aci-compose -n rng-app --file labs/aci-compose/rng-a
 
 </details><br/>
 
-Open the ACI resource in the Portal. Under _Containers_ you should see the API and web containers both running. You can see the properties and logs for each container, and even connect to a shell session inside the container if you need to debug.
+Open the ACI resource in the Portal. Under _Containers_ you should see the API and web containers both running. You can see the properties and logs for each container, and even connect to a shell session inside a container if you need to debug.
 
 The YAML spec didn't include a DNS name, but you'll see there's a public IP address we can use to try the app. 
 
@@ -76,7 +76,7 @@ Use the same container create command with the instance name and the updated spe
 az container create -g labs-aci-compose -n rng-app --file labs/aci-compose/rng-aci-v2.yaml
 ```
 
-You'll see `Running...` for a long time. The command recreates the containers and waits for the new ones to come online.
+You'll see the output `Running...` for a while. The command recreates the containers and waits for the new ones to come online.
 
 </details><br/>
 
@@ -135,7 +135,7 @@ docker ps
 
 Browse to the new deployment and check the app is working. Open the container list in the Portal - you'll see there are three even though we only define two in the model. What might the additional container be doing?
 
-## ACI containers and shared storage
+## ACI containers and Storage Accounts
 
 Create Storage Account:
 
@@ -154,22 +154,52 @@ Use it to run a container locally with Blob Storage as the database:
 ```
 # be careful with the 'quotes' - they start at the key and end at the value:
 docker run --name local -d -p 8013:80 -e 'ConnectionStrings__AssetsDb=<connection-string>' courselabs/asset-manager:22.11
-
-docker logs -f local
 ```
 
 Browse to http://localhost:8013 and you'll see some data on the screen. Open your Blob Storage container in the Portal and there's the raw data, uploaded from your local container.
 
+The container also writes a file to local storage - this doesn't really do anything, but it uses the container name as the filename:
 
->> NEXT
+```
+# list the contents of the folder in the container:
+docker exec local ls /app/lockfiles
+```
 
+An ACI container can access Blob Storage using the same code, and you can also mount an Azure Files share in ACI. The share appears as part of the container filesystem, but when the app writes data there it's actually stored in the share.
 
+📋 Create a file share called `assetmanager` in your Azure Storage Account and print the Storage Account key.
+
+<details>
+  <summary>Not sure how?</summary>
+
+We did this in the [Azure Files lab](/labs/storage-files/README.md):
+
+```
+# create the share:
+az storage share create -n assetmanager --account-name <sa-name>
+
+# print the key:
+az storage account keys list -g labs-aci-compose --query "[0].value" -o tsv --account-name <sa-name>
+```
+
+</details><br/>
+
+**Edit the file** [assetmanager-aci.yaml](labs/aci-compose/assetmanager-aci.yaml):
+
+- replace `<sa-name>` and `<sa-key>` with your own Storage Account name and key
+- replace `<connection-string>` with your Storage Account connection string
+
+Then deploy a new ACI group to run the Asset Manager container using Blob Storage and Files:
+
+```
+az container create -g labs-aci-compose --file labs/aci-compose/assetmanager-aci.yaml
+```
+
+Browse to the app when it's running. Can you find the lock file in your Storage Account?
 
 ## Lab
 
-inside a vnet, no public access - no IP and not available for LB
-
-vnet - deploy the pre-reqs for aci-vnet , use redis - only accessible internally to other vnet users; check cli with ssh
+ACI is meant to be a quick and easy solution for running containers in the cloud. It's reliable because it will restart containers if they fail, but it doesn't have a feature to let you scale horizontally. Run another copy of the Asset Manager app in ACI. Do they both write to the same file share? How would you load-balance traffic between them?
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
