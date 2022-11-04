@@ -101,13 +101,14 @@ _Docker and Azure Container Instances_
 
 _Kubernetes_
 
-- Clusters, nodes & Kubectl
-- YAML specs, Pods, Services and Deployments
-- App configuration with ConfigMaps and Secrets
-- Storage with PersistentVolumes
-- Securing access with RBAC
+- [Nodes](labs/kubernetes/nodes/README.md)
+- [Pods](labs/kubernetes/pods/README.md)
+- [Services](labs/kubernetes/services/README.md)
+- [Deployments](labs/kubernetes/deployments/README.md)
+- [ConfigMaps](labs/kubernetes/configmaps/README.md)
+- [PersistentVolumes](labs/kubernetes/persistentvolumes/README.md)
 
-Day 3:
+_Intermediate Kubernetes_
 
 - Routing traffic with Ingress
 - Securing traffic with Cert-manager
