@@ -114,8 +114,8 @@ _Intermediate Kubernetes_
 - [AKS PersistentVolumes](/labs/aks-persistentvolumes/README.md)
 - [Ingress](/labs/kubernetes/ingress/README.md)
 - [AKS with Application Gateway Ingress Controller](/labs/aks-ingress/README.md)
-- hpa
-- nodepools
+- [Container Probes](/labs/kubernetes/containerprobes/README.md)
+- hpa & nodepools
 
 _AKS Integration_
 
