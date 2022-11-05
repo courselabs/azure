@@ -119,12 +119,11 @@ _Intermediate Kubernetes_
 
 _AKS Integration_
 
+- [Secrets](/labs/kubernetes/secrets/README.md)
+- keyvault
 - hpa & nodepools
-- New AKS cluster, explore sizing, node pools & add-ons
-- Create cluster with AppGW ingress & ACR integration
-- Explore storage classes - Disk & Files
-- Enable KeyVault add-on for sensitive config
-- Scale & upgrade existing cluster
+- windows
+- integrated apps
 
 _Project_
 
