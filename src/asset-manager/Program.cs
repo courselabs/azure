@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddJsonFile("secrets/connectionstrings.json", optional: true, reloadOnChange: true);
 
 if (builder.Configuration.GetValue<bool>("KeyVault:Enabled"))
 {
