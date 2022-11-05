@@ -115,10 +115,11 @@ _Intermediate Kubernetes_
 - [Ingress](/labs/kubernetes/ingress/README.md)
 - [AKS with Application Gateway Ingress Controller](/labs/aks-ingress/README.md)
 - [Container Probes](/labs/kubernetes/containerprobes/README.md)
-- hpa & nodepools
+- [Troubleshooting](/labs/kubernetes/troubleshooting/README.md)
 
 _AKS Integration_
 
+- hpa & nodepools
 - New AKS cluster, explore sizing, node pools & add-ons
 - Create cluster with AppGW ingress & ACR integration
 - Explore storage classes - Disk & Files
