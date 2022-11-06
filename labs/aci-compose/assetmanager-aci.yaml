@@ -5,7 +5,7 @@ properties:
   containers:
   - name: app
     properties:
-      image: courselabs/asset-manager:22.11-linux-amd64
+      image: courselabs/asset-manager:22.11
       environmentVariables:
       - name: ConnectionStrings__AssetsDb
         value: <connection-string>     
