@@ -87,7 +87,7 @@ _Events and Messages_
 
 _Project_
 
-- Project 2: Distributed App](/projects/distributed/README.md)
+- [Project 2: Distributed App](/projects/distributed/README.md)
 
 ## Compute and Containers
 
@@ -119,15 +119,15 @@ _Intermediate Kubernetes_
 
 _AKS Integration_
 
+- [Namespaces](/labs/kubernetes/namespaces/README.md)
 - [Secrets](/labs/kubernetes/secrets/README.md)
-- keyvault
-- hpa & nodepools
-- windows
-- integrated apps
+- [AKS with KeyVault secrets](/labs/aks-keyvault/README.md)
+- [Helm](/labs/kubernetes/helm/README.md)
+- [Securing AKS apps with KeyVault and VNet](/labs/aks-apps/README.md)
 
 _Project_
 
-- Project 3
+- Project 3: Containerized App
 
 ## Serverless and App Management
 
