@@ -1,8 +1,14 @@
-# Compose Apps on Azure Container Instances
+# Distributed Apps on Azure Container Instances
 
-Portability of Docker Compose spec with a PaaS container service.
+ACI is the simplest container platform on Azure. You can run single containers, or you can run multiple containers in a group to host a distributed application. There are different options for modelling the applications - you can use Azure's YAML spec with the Azure CLI, or the Docker Compose spec with the Docker CLI.
+
+In this lab we'll use both options and see how ACI integrates with other Azure services.
 
 ## Reference
+
+- [ACI container groups overview](https://learn.microsoft.com/en-us/azure/container-instances/container-instances-container-groups)
+
+- [ACI YAML specification](https://learn.microsoft.com/en-us/azure/container-instances/container-instances-reference-yaml)
 
 - [Docker ACI integration](https://docs.docker.com/cloud/aci-integration/)
 
@@ -10,132 +16,190 @@ Portability of Docker Compose spec with a PaaS container service.
 
 - [`az container` commands](https://docs.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest)
 
+## Deploy a distributed app with ACI YAML
 
-## Deploy a Compose App to ACI
-
-
-## Use Azure Files for Container Storage
-
+Start by creating a Resource Group for the lab:
 
 ```
 az group create -n labs-aci-compose --tags courselabs=azure -l eastus
 ```
 
-Now you can use the `az container create` command to run ACI instances in the RG.
+The YAML model for ACI is a custom format which looks a bit like Bicep and a bit like Compose but isn't either:
 
-📋 Create a new container called `simple-web` to run the image `courselabs/simple-web:6.0` on Docker Hub. Publish port `80` and include a DNS name in your command so you'll be able to browse to the app running in the container.
+- [rng-aci-v1.yaml](/labs/aci-compose/rng-aci-v1.yaml) - defines a _container group_ with two containers for the random number API and website images we've used before
+
+There are some specific details we need to include in this model:
+
+- container sizes (CPU & memory) are required, so the ACI can provision compute
+- a group of containers share the same network space, so the environment variables configure communication via `localhost`
+- any public services need to have ports specified at the IP address level and the container level
+
+You can pass this model to the Azure CLI when you create an ACI resource, and that will run all the containers in the model.
+
+📋 Deploy the app with a `container create` command and the file in `labs/aci-compose/rng-aci-v1.yaml`.
 
 <details>
   <summary>Not sure how?</summary>
 
-Start with the help:
+Check the help text:
 
 ```
 az container create --help
 ```
 
-You need to use the `image` and `ports` parameters, and pass a unique prefix for the `dns-name-label`, e.g:
+You can supply a `file` parameter and a name:
 
 ```
-az container create -g labs-aci --name simple-web --image courselabs/simple-web:6.0 --ports 80 --dns-name-label <dns-name>
+az container create -g labs-aci-compose -n rng-app --file labs/aci-compose/rng-aci-v1.yaml
 ```
 
 </details><br/>
 
-When the command returns, the new container is running. The output includes an `fqdn` field, which is the full DNS name you can use to browse to your container app.
+Open the ACI resource in the Portal. Under _Containers_ you should see the API and web containers both running. You can see the properties and logs for each container, and even connect to a shell session inside a container if you need to debug.
 
-> Browse to the app. **It may take a couple of minutes to come online**. It's the same container image we built in the [Docker lab](/labs/docker/README.md).
+The YAML spec didn't include a DNS name, but you'll see there's a public IP address we can use to try the app. 
 
-You can configure a lot more details in the `container create` command. How much CPU and RAM does your container have? That can't be changed when the container is running, but you could replace this container with a new one from the same image and specify the compute.
+> Browse to `http://<aci-ip-address>` and click the button - you should see a random number 
 
-Other `az container` commands let you manage your containerized apps. 
+The logs from the API container don't give us much detail, but we can increase the logging level with a change to the model:
 
-📋 Print the application logs from your ACI container.
+- [rng-aci-v2.yaml](/labs/aci-compose/rng-aci-v2.yaml) - adds a new environment variable to each container so we can see more logs
+
+📋 Deploy the updated spec in `labs/aci-compose/rng-aci-v2.yaml`. This is just a configuration change, how does ACI actually implement the update?
 
 <details>
   <summary>Not sure how?</summary>
 
+Use the same container create command with the instance name and the updated spec:
+
 ```
-az container logs -g labs-aci -n simple-web
+az container create -g labs-aci-compose -n rng-app --file labs/aci-compose/rng-aci-v2.yaml
 ```
+
+You'll see the output `Running...` for a while. The command recreates the containers and waits for the new ones to come online.
 
 </details><br/>
 
-You'll see the ASP.NET application logs from the container.
+Check in the _Events_ table for the containers in the Portal and you will see multiple entries for containers _Started_ and entries for _Killing_ the old containers.
 
-## Deploy to ACI from Docker
+You can't change any properties of the compute environment for a running container. If you need to update environment variables, resource requests or ports then the only way to do that is by removing the old container and creating a replacement.
 
-If you use containers a lot, then it's easier to stick with the familiar Docker commands. The `docker` CLI can manage containers on your local machine or on a remote environment. You can create a Docker [context](https://docs.docker.com/engine/context/working-with-contexts/) to [create and manage ACI containers with the standard Docker CLI](https://docs.docker.com/cloud/aci-integration/).
+> That's true for all container runtimes - Docker, ACI and Kubernetes 
 
-The Docker and Azure CLIs don't share credentials, so first you need to login to your Azure subscription from Docker:
+ACI has its own YAML specification so you have access to all the features. If you don't need ACI-specific configuration then you can model your app in a standard Docker Compose file instead and deploy to ACI with the Docker CLI.
+
+## Deploy a Compose App to ACI
+
+The Compose model for the app is much simpler:
+
+- [rng-compose-v1.yml](/labs/aci-compose/rng-compose-v1.yml) - still uses the same container images, but the Compose integration takes care of some of the differences in ACI
+
+We can deploy to ACI using a `docker compose` command, but first we need to set up a Docker Context so our local CLI is configured to talk to Azure (we covered this in the [ACI lab](/labs/aci/README.md)):
 
 ```
 docker login azure
+
+docker context create aci labs-aci-compose --resource-group labs-aci-compose
+
+docker context use labs-aci-compose
 ```
 
-Now you can create a context. A Docker ACI context manages containers in a single Resource Group. The CLI will ask you to select an existing subscription and RG:
+Now when you run `docker` and `compose` commands you're working in the context of ACI in your lab resource group:
 
 ```
-docker context create aci labs-aci
-```
-
-> Choose your subscription and select the `labs-aci` RG.
-
-Switch your context to point the Docker CLI to ACI:
-
-```
-docker context use labs-aci
-```
-
-📋 Use `docker` commands to list all your ACI containers and print the logs.
-
-<details>
-  <summary>Not sure how?</summary>
-
-Not all the Docker commands work with an ACI context, but the most common ones do. Run `ps` to list all running containers:
-
-```
+# this will show the containers you deployed with the az command:
 docker ps
 ```
 
-You'll see your ACI containers listed, including the domain name and published port(s). You can use a container ID to print the logs:
-
-```
-docker logs <container-id>
-```
-
-</details><br/>
-
-[ACI integration container features](https://docs.docker.com/cloud/aci-container-features/) lists all the Docker commands you can use to manage ACI containers. 
-
-📋 Run another instance of the `simple-web` container in ACI, this time using the Docker command line. Publish port `80` to a different domain name.
+📋 Use the `docker compose` command to bring the application up from the file `labs/aci-compose/rng-compose-v1.yml`.
 
 <details>
   <summary>Not sure how?</summary>
 
-This is a mixture of standard Docker parameters like `ports`, and custom  parameters for ACI, like `domainname`:
+It's the usual `up` command - you can specify a project name which becomes the ACI name:
 
 ```
-docker run -d -p 80:80 --domainname <new-aci-domain> courselabs/simple-web:6.0
+docker compose -f labs/aci-compose/rng-compose-v1.yml --project-name rng-app-2 up -d 
 ```
 
 </details><br/>
 
-The output will include a random name which Docker generates. List out your containers and you'll see the new Docker-created instance as well as the original created with `az`:
+> You'll see output about the group being created, then the individual containers are created in parallel.
+
+You can see your new containers in the Portal, or you can use the Docker command to print the details:
 
 ```
-az container list -o table
+# for ACI containers the output includes the IP address:
+docker ps
 ```
 
-You should be able to browse to your new container and see the same application.
+Browse to the new deployment and check the app is working. Open the container list in the Portal - you'll see there are three even though we only define two in the model. What might the additional container be doing?
 
-> The Docker command line is an alternative way to manage containers, but they're still running in ACI in the same way as if you'd created them with the portal or the Azure CLI.
+## ACI containers and Storage Accounts
+
+Create Storage Account:
+
+```
+az storage account create --sku Standard_ZRS -g labs-aci-compose  -l westeurope -n <sa-name>
+```
+
+Get the connection string:
+
+```
+az storage account show-connection-string -g labs-aci-compose --query connectionString -o tsv -n <sa-name>
+```
+
+Use it to run a container locally with Blob Storage as the database:
+
+```
+# be careful with the 'quotes' - they start at the key and end at the value:
+docker run --name local -d -p 8013:80 -e 'ConnectionStrings__AssetsDb=<connection-string>' courselabs/asset-manager:22.11
+```
+
+Browse to http://localhost:8013 and you'll see some data on the screen. Open your Blob Storage container in the Portal and there's the raw data, uploaded from your local container.
+
+The container also writes a file to local storage - this doesn't really do anything, but it uses the container name as the filename:
+
+```
+# list the contents of the folder in the container:
+docker exec local ls /app/lockfiles
+```
+
+An ACI container can access Blob Storage using the same code, and you can also mount an Azure Files share in ACI. The share appears as part of the container filesystem, but when the app writes data there it's actually stored in the share.
+
+📋 Create a file share called `assetmanager` in your Azure Storage Account and print the Storage Account key.
+
+<details>
+  <summary>Not sure how?</summary>
+
+We did this in the [Azure Files lab](/labs/storage-files/README.md):
+
+```
+# create the share:
+az storage share create -n assetmanager --account-name <sa-name>
+
+# print the key:
+az storage account keys list -g labs-aci-compose --query "[0].value" -o tsv --account-name <sa-name>
+```
+
+</details><br/>
+
+**Edit the file** [assetmanager-aci.yaml](labs/aci-compose/assetmanager-aci.yaml):
+
+- replace `<sa-name>` and `<sa-key>` with your own Storage Account name and key
+- replace `<connection-string>` with your Storage Account connection string
+
+Then deploy a new ACI group to run the Asset Manager container using Blob Storage and Files:
+
+```
+az container create -g labs-aci-compose --file labs/aci-compose/assetmanager-aci.yaml
+```
+
+Browse to the app when it's running. Can you find the lock file in your Storage Account?
 
 ## Lab
 
-You can migrate all your .NET apps to containers, but you'll need to use Windows containers for older .NET Framework apps. Docker Desktop on Windows supports Linux and Windows containers (you can switch from the Docker icon in the taskbar), and so does ACI.
-
-The [simple-web image](https://hub.docker.com/r/courselabs/simple-web/tags) has been published with Windows and Linux variants. Run an ACI container from the Windows image version, how does it differ from the Linux version? Then see what happens if you try to run the Linux image which has been compiled for ARM processors instead of Intel/AMD.
+ACI is meant to be a quick and easy solution for running containers in the cloud. It's reliable because it will restart containers if they fail, but it doesn't have a feature to let you scale horizontally. Run another copy of the Asset Manager app in ACI. Do they both write to the same file share? How would you load-balance traffic between them?
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
@@ -146,11 +210,13 @@ ___
 You can delete the RG for this lab to remove all the resources, including the containers you created with the Docker CLI:
 
 ```
-az group delete -y -n labs-aci
+az group delete -y --no-wait -n labs-aci-compose
 ```
 
-Now change your Docker context back to your local Docker Desktop:
+Now change your Docker context back to your local Docker Desktop, and remove the lab context:
 
 ```
 docker context use default
+
+docker context rm labs-aci-compose
 ```

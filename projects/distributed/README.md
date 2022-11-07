@@ -59,7 +59,7 @@ It's also a good idea to run the application locally first, so you get a feel fo
 - a Service Bus queue called `events.todo.newitem`
 - a Table Storage service
 
-> You'll also need the [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download) installed on your machine
+You'll also need the [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download) installed on your machine
 
 Get the connection strings for those services, then run the backend message handler:
 
@@ -72,9 +72,11 @@ dotnet run `
  --Serilog:WriteTo:0:Args:connectionString='<tablestorage-connection-string>'
 ```
 
-You'll see a couple of log entries in the terminal. Then check your Table Storage and you should see a log saying the handler has subscribed to the queue.
+> This runs the message handler, it listens on the queue waiting for messages to process. Next you need to run the website.
 
-Next open a new terminal to run the website:
+You'll only see a couple of configuration log entries in the terminal for the message handler. Then check your Table Storage and you should see a log saying the handler has subscribed to the queue.
+
+Now open a new terminal to run the website:
 
 ```
 cd projects/distributed/src/web

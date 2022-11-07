@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asset-manager
+  labels: 
+    azure.courselabs.co: aks-apps
+    app: asset-manager
+spec:
+  selector:
+    matchLabels:
+      app: asset-manager
+  template:
+    metadata:
+      labels:
+        app: asset-manager
+    spec:
+      containers:
+        - name: app
+          image: courselabs/asset-manager:22.11
+          volumeMounts:
+            - name: keyvault
+              mountPath: "/app/secrets"
+              readOnly: true
+      volumes:
+        - name: keyvault
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: scp-keyvault-01

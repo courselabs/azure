@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: configurable
+  labels: 
+    kubernetes.courselabs.co: secrets
+    app: configurable
+spec:
+  selector:
+    matchLabels:
+      app: configurable
+  template:
+    metadata:
+      labels:
+        app: configurable
+    spec:
+      containers:
+        - name: app
+          image: sixeyed/configurable:21.04
+          volumeMounts:
+            - name: keyvault
+              mountPath: "/app/secrets"
+              readOnly: true
+      volumes:
+        - name: keyvault
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: scp-keyvault-01

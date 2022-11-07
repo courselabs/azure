@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rngapi-np
+  labels: 
+    kubernetes.courselabs.co: containerprobes
+spec:
+  selector:
+    app: rngapi
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 30045
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rngapi-lb
+  labels: 
+    kubernetes.courselabs.co: containerprobes
+spec:
+  selector:
+    app: rngapi
+  ports:
+    - name: http
+      port: 8040
+      targetPort: 80
+  type: LoadBalancer

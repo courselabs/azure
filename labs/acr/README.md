@@ -83,9 +83,10 @@ Your ACR tag and the Docker Hub tag both have the same image ID; tags are like a
 
 You upload images to a registry with the `push` command, but first you need to authenticate.
 
-_Try pushing your image to ACR - this will fail:_
+_Try pushing your image to ACR:_
 
 ```
+# this will fail:
 docker image push <acr-name>.azurecr.io/labs-acr/nginx:alpine-2204
 ```
 
@@ -124,11 +125,13 @@ You can browse the app at http://localhost:8080. It's the standard Nginx app, bu
 
 ## Build and Push a Custom Image
 
-When you build an image you can include the registry domain in the tag. Run this to build the simple ASP.NET web app, including a version number in the image tag:
+When you build an image you can include the registry domain in the tag. Run this to build the simple ASP.NET web app from the [Docker 101 lab](/labs/docker/README.md), including a version number in the image tag:
 
 ```
-docker build -t  <acr-name>.azurecr.io/labs-acr/simple-web:6.0 ./src/simple-web
+docker build -t  <acr-name>.azurecr.io/labs-acr/simple-web:6.0 src/simple-web
 ```
+
+> It will build very quickly if you've built this image before, because Docker does a lot of caching
 
 📋 Create another tag for the same image, this time using `latest` as the version number instead of `6.0`.
 
@@ -176,7 +179,7 @@ ___
 You can delete the RG for this lab to remove all the Azure resources, including your ACR instance and its images:
 
 ```
-az group delete -y -n labs-acr
+az group delete -y --no-wait -n labs-acr
 ```
 
 And run this command to remove all your local Docker containers:

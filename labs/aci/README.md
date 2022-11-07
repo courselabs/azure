@@ -52,7 +52,7 @@ az container create -g labs-aci --name simple-web --image courselabs/simple-web:
 
 When the command returns, the new container is running. The output includes an `fqdn` field, which is the full DNS name you can use to browse to your container app.
 
-> Browse to the app. **It may take a couple of minutes to come online**. It's the same container image we built in the [Docker lab](/labs/docker/README.md).
+> Browse to the app. **It may take a couple of minutes to come online**. It's the same container image we built in the [Docker 101 lab](/labs/docker/README.md).
 
 You can configure a lot more details in the `container create` command. How much CPU and RAM does your container have? That can't be changed when the container is running, but you could replace this container with a new one from the same image and specify the compute.
 
@@ -81,13 +81,15 @@ The Docker and Azure CLIs don't share credentials, so first you need to login to
 docker login azure
 ```
 
+This loads a browser window for you to authenticate - just like the `az login` command.
+
 Now you can create a context. A Docker ACI context manages containers in a single Resource Group. The CLI will ask you to select an existing subscription and RG:
 
 ```
-docker context create aci labs-aci
+docker context create aci labs-aci --resource-group labs-aci
 ```
 
-> Choose your subscription and select the `labs-aci` RG.
+> If your Microsoft account has access to multiple Azure subscriptions you'll be shown a list here. Choose the subscription where you created the `labs-aci` RG.
 
 Switch your context to point the Docker CLI to ACI:
 
@@ -154,11 +156,13 @@ ___
 You can delete the RG for this lab to remove all the resources, including the containers you created with the Docker CLI:
 
 ```
-az group delete -y -n labs-aci
+az group delete -y --no-wait -n labs-aci
 ```
 
-Now change your Docker context back to your local Docker Desktop:
+Now change your Docker context back to your local Docker Desktop, and remove the lab context:
 
 ```
 docker context use default
+
+docker context rm labs-aci
 ```
