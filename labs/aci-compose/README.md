@@ -152,6 +152,9 @@ az storage account show-connection-string -g labs-aci-compose --query connection
 Use it to run a container locally with Blob Storage as the database:
 
 ```
+# switch to the local Docker engine:
+docker context use default
+
 # be careful with the 'quotes' - they start at the key and end at the value:
 docker run --name local -d -p 8013:80 -e 'ConnectionStrings__AssetsDb=<connection-string>' courselabs/asset-manager:22.11
 ```
@@ -184,7 +187,7 @@ az storage account keys list -g labs-aci-compose --query "[0].value" -o tsv --ac
 
 </details><br/>
 
-**Edit the file** [assetmanager-aci.yaml](labs/aci-compose/assetmanager-aci.yaml):
+**Edit the file** [assetmanager-aci.yaml](/labs/aci-compose/assetmanager-aci.yaml):
 
 - replace `<sa-name>` and `<sa-key>` with your own Storage Account name and key
 - replace `<connection-string>` with your Storage Account connection string
