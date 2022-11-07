@@ -4,6 +4,8 @@ triggers invoke the function; bindings for input and output
 
 ## Reference
 
+- [Coding and testing Functions locally](https://learn.microsoft.com/en-us/azure/azure-functions/functions-develop-local)
+
 - [Timer trigger & binding reference](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=in-process&pivots=programming-language-csharp)
 
 - [Functions binding expressions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-expressions-patterns)
