@@ -1,4 +1,4 @@
-## Scheduled Functions
+## Functions: Timer to Blob Storage
 
 triggers invoke the function; bindings for input and output
 
@@ -49,7 +49,7 @@ create file local.settings.json with:
 Start the Azure Storage emulator:
 
 ```
-docker run -d -p 10000:10000 --name azurite mcr.microsoft.com/azure-storage/azurite
+docker run -d -p 10000:10000 -p 10001:10001 --name azurite mcr.microsoft.com/azure-storage/azurite
 ```
 
 Run (maybe change the timer to every 1 minute)
