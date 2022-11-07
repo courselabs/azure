@@ -219,7 +219,7 @@ Deploy the updated spec. What IP address(es) does the Nginx container have? Can 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
 ___
-## Cleanup´
+## Cleanup
 
 Cleanup by removing all containers:
 

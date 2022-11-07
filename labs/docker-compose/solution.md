@@ -20,7 +20,7 @@ docker-compose -f ./labs/docker-compose/rng/lab.yml up -d
 Inspect the new container to show the network details:
 
 ```
-docker inspect rng_nginx_1
+docker inspect rng-nginx-1
 ```
 
 > You'll see it has two IP addresses in the network section at the end of the output. This is one IP from each network - like a machine with two network cards.
@@ -28,7 +28,7 @@ docker inspect rng_nginx_1
 Test connectivity from the Nginx container to the web container:
 
 ```
-docker exec rng_nginx_1 nslookup rng-web
+docker exec rng-nginx-1 nslookup rng-web
 ```
 
 > The new container can resolve IP addresses for the original container.
@@ -37,7 +37,7 @@ docker exec rng_nginx_1 nslookup rng-web
 And from the web container to Nginx:
 
 ```
-docker exec rng_rng-web_1 ping -c3 nginx
+docker exec rng-rng-web-1 ping -c3 nginx
 ```
 
 > The old containers can reach the new one.
