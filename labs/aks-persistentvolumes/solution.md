@@ -15,7 +15,7 @@ spec:
     # ...
 ```
 
-The sample file in [labs/aks-persistentvolumes/lab/pvc-azurefile.yaml](./lab/pvc-azurefile.yaml) does that. The updated [labs/aks-persistentvolumes/lab/deployment.yaml](./lab/deployment.yaml) uses the new PVC.
+The sample file in [lab/pvc-azurefile.yaml](./lab/pvc-azurefile.yaml) does that. The updated [lab/deployment.yaml](./lab/deployment.yaml) uses the new PVC.
 
 Update the deployment:
 

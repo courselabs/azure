@@ -116,7 +116,7 @@ Now everything is ready, we'll deploy a simple app which we can reach using a pu
 This command creates the Kubectl context and sets it as the current one:
 
 ```
-az aks get-credentials -g labs-aks-ingress -n aks04
+az aks get-credentials -g labs-aks-ingress -n aks04 --overwrite
 ```
 
 It's always a good idea to list the nodes, to check you're using the right cluster:
