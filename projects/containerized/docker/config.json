@@ -1,0 +1,17 @@
+{
+    "ConnectionStrings": {
+        "ToDoDb": "Data Source=todo-db;Integrated Security=False;User Id=sa;Password=AzureD3v!!!;MultipleActiveResultSets=True",
+        "Redis": "todo-queue:6379"
+    },
+    "Serilog": {
+        "WriteTo": [
+            {
+                "Name": "AzureTableStorage",
+                "Args": {
+                    "storageTableName": "logs",
+                    "connectionString": "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;TableEndpoint=http://todo-storage:10002/devstoreaccount1;"
+                }
+            }
+        ]
+    }
+}
