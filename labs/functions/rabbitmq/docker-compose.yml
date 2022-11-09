@@ -1,0 +1,13 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.11.2-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"

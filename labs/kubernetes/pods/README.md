@@ -56,7 +56,7 @@ kubectl apply -f labs/kubernetes/pods/specs/whoami-pod.yaml
 Or the path to the YAML file can be a web address:
 
 ```
-kubectl apply -f https://kubernetes.courselabs.co/labs/kubernetes/pods/specs/whoami-pod.yaml
+kubectl apply -f https://raw.githubusercontent.com/courselabs/azure/main/labs/kubernetes/pods/specs/whoami-pod.yaml
 ```
 
 > The output shows you that nothing has changed. Kubernetes works on **desired state** deployment

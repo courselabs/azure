@@ -22,6 +22,9 @@ Or you can query for specific values with a Go template:
 
 ```
 kubectl get node <your-node> -o go-template=$'{{index .metadata.labels "kubernetes.io/arch"}}'
+
+# OR with PowerShell:
+kubectl get node <your-node> -o go-template=$'{{index .metadata.labels `"kubernetes.io/arch`"}}'
 ```
 
 (JSONPath doesn't like the forward slash in the label key)
