@@ -146,8 +146,7 @@ To access the site locally you'll need to add an entry in your [hosts file](http
 
 ```
 # using Powershell - your terminal needs to be running as Admin:
-Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process -Force
-./scripts/add-to-hosts.ps1 whoami.local 127.0.0.1
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process -Force; ./scripts/add-to-hosts.ps1 whoami.local 127.0.0.1
 
 # on macOS or Linux - you'll be asked for your sudo password:
 sudo chmod +x ./scripts/add-to-hosts.sh
