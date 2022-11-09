@@ -138,7 +138,7 @@ For the Ingress object we need to set the DNS name to match the PIP. Run this to
 ```
 az network public-ip show -g labs-aks-ingress -n appgw-pip --query 'dnsSettings.fqdn' -o tsv
 ```
-> **Edit the file** [ingress-aks.yaml](labs/aks-ingress/specs/ingress-aks.yaml), replacing the placeholder <pip-fqdn> with your actual FQDN.
+> **Edit the file** [ingress-aks.yaml](/labs/aks-ingress/specs/ingress-aks.yaml), replacing the placeholder <pip-fqdn> with your actual FQDN.
 
 📋 Create the Ingress object from `labs/aks-ingress/specs/ingress-aks.yaml` and print the details. Browse to the domain name - do you see the app?
 
