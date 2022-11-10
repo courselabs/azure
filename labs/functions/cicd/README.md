@@ -34,7 +34,7 @@ az functionapp create -g labs-functions-cicd  --runtime dotnet --functions-versi
 Function Apps can be deployed for GitHub Actions - the CLI will connect to your GitHub repo, ask for authentication and then create the pipeline:
 
 ```
-az functionapp deployment github-actions add --branch main --build-path 'labs/functions/timer/TimerToBlob' --runtime-version 6 --login-with-github -g labs-functions-cicd --repo '<your-github-fork>' -n <fn-name> 
+az functionapp deployment github-actions add --branch main --build-path 'labs/functions/cicd/ChainedFunctions' --runtime-version 6 --login-with-github -g labs-functions-cicd --repo '<your-github-fork>' -n <fn-name> 
 ```
 
 
@@ -62,7 +62,7 @@ Click opn the green _Start Commit_ button and then commit your changes.
 
 Browse to the _Actions_ view and you'll see your app build and deploy.
 
-Back in the Azure Portal, you will see the `Heartbeat` function listed (this is from the [Scheduled Functions lab](labs/functions/timer/README.md)):
+Back in the Azure Portal, you will see the `Heartbeat` function listed (this is from the [Scheduled Functions lab](/labs/functions/timer/README.md)):
 
 - can you see the code that will run in the Portal?
 - the bindings are listed in the Portal, can you edit the schedule?

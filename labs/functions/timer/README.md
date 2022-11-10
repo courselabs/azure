@@ -16,7 +16,7 @@ triggers invoke the function; bindings for input and output
 
 expolore func cs
 
-- [TimerToBlob/Hearbeat.cs](labs/functions/timer/TimerToBlob/Hearbeat.cs)
+- [TimerToBlob/Hearbeat.cs](/labs/functions/timer/TimerToBlob/Hearbeat.cs)
 
 For reference:
 
