@@ -53,7 +53,7 @@ We don't need anything special in the KeyVault, the default options are fine:
 az keyvault create -g labs-aks-keyvault -n <kv-name>
 ```
 
-Now we need to get the ID for the Managed Identity AKS is using, and allow the ID to use the KeyVault (we covered this in the [KeyVault access lab](labs/keyvault-access/README.md)):
+Now we need to get the ID for the Managed Identity AKS is using, and allow the ID to use the KeyVault (we covered this in the [KeyVault access lab](/labs/keyvault-access/README.md)):
 
 ```
 # print the identity ID:

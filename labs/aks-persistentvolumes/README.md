@@ -129,7 +129,7 @@ A new version of the application model uses the same container image and ConfigM
 
 - [v2/pvc.yaml](./specs/v2/pvc.yaml) - models the PersistentVolumeClaim (PVC)
 
-We covered these details of Kubernetes storage in the [PersistentVolumes lab](labs/kubernetes/persistentvolumes/README.md). As a reminder - _EmptyDir_ is a piece of storage which has the lifecycle of the Pod, so if the Pod needs to restart the container then the data survives. _PersistentVolumeClaim_ is a request for the cluster to provide some storage the Pod can attach to - we don't specify any type of storage here, just the amount we need.
+We covered these details of Kubernetes storage in the [PersistentVolumes lab](/labs/kubernetes/persistentvolumes/README.md). As a reminder - _EmptyDir_ is a piece of storage which has the lifecycle of the Pod, so if the Pod needs to restart the container then the data survives. _PersistentVolumeClaim_ is a request for the cluster to provide some storage the Pod can attach to - we don't specify any type of storage here, just the amount we need.
 
 📋 Deploy the new version of the app on Docker Desktop. Let the Pod run for a while, then delete it. Check the database and cache files in the replacement Pod. Has the data been carried over from the previous Pod?
 
