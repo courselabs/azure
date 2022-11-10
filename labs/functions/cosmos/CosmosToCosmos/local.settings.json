@@ -1,0 +1,9 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+        "CosmosDbConnectionString" : "AccountEndpoint=https://labsrabbitmqes.documents.azure.com:443/;AccountKey=HUpdMRSxZBmtl0sqyaHiOtHuuvS6ZfKCuALv95Xjcba5ERThXFx0ksvoaUgnA5XV4iaDolWHROOmACDbMVqT6g==;",
+        "DatabaseName" : "Test"
+    }
+}
