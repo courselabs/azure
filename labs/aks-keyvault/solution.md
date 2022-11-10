@@ -2,7 +2,7 @@
 
 I have an updated JSON file here:
 
-- [solution/configurable-secret.json](labs/aks-keyvault/solution/configurable-secret.json)
+- [solution/configurable-secret.json](/labs/aks-keyvault/solution/configurable-secret.json)
 
 Use that to set a new version of the KeyVault secret:
 

@@ -114,13 +114,13 @@ kubectl apply -f labs/aks-keyvault/specs/secretProviderClasses/keyVault.yaml
 
 </details><br />
 
-You can check the SCP exists in the cluster, but the details don't tell you much. But it's there and ready to mount volumes from the KeyVault secret.
+You can check the SCP exists in the cluster, but the details don't tell you much. When it's there and ready to mount volumes from the KeyVault secret.
 
 ## Deploy an app using KeyVault volumes
 
 It's back to the good old configurable app, using this spec:
 
-- [configurable/deployment.yaml](labs/aks-keyvault/specs/configurable/deployment.yaml) - uses a CSI volume with the secrets store driver, specifying the KeyVault SCP and mounting it into the container at `/app/secrets`
+- [configurable/deployment.yaml](/labs/aks-keyvault/specs/configurable/deployment.yaml) - uses a CSI volume with the secrets store driver, specifying the KeyVault SCP and mounting it into the container at `/app/secrets`
 
 Run the app - this will create the Deployment and a LoadBalancer Service:
 
