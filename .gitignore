@@ -11,3 +11,4 @@ password.txt
 #local.settings.json
 #instructor.md
 projects/containerized/kubernetes/
+**/.vscode/extensions.json

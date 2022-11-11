@@ -25,7 +25,7 @@ namespace TopicToTableAndQueue
 
             log.LogInformation($"{SUPPLIER_CODE} calculating price for quote ID: {quoteRequest.QuoteId}");
             
-            var itemPrice = _Random.Next(3, 18);
+            var itemPrice = _Random.Next(5, 30);
             var entity = new QuoteResponseEntity
             {
                 SupplierCode = SUPPLIER_CODE,

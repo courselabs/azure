@@ -54,7 +54,7 @@ The app uses Blob Storage, so we'll need to create an account and grab the conne
 az storage account create -g labs-aks-apps --sku Standard_ZRS -l eastus -n <sa-name>
 
 # and container:
-az storage container create -n assetsbb -g labs-aks-apps --account-name <sa-name>
+az storage container create -n assetsdb -g labs-aks-apps --account-name <sa-name>
 
 # print the connection string:
 az storage account show-connection-string -o tsv -g labs-aks-apps --name <sa-name> 
