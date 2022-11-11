@@ -1,24 +1,13 @@
+## Durable Functions: Fan-Out
 
+Invoke multiple activities in parallel; wait for all (or some) to complete and work on the data
 
 ## Reference
 
-- [Durable Functions for Human Interaction](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview?tabs=csharp#human)
+- [Durable Functions for Fan-Out](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview?tabs=csharp#human)
 
 
 ## Pre-req
-
-Set up a Twilio account - for sending SMS messages:
-
-https://www.twilio.com/try-twilio
-
-(You will need to verify with your email address & mobile number, but you won't need to put in credit card details)
-
-Grab the details from your account:
-
-- SID for your Twilio account
-- Auth token for your Twilio account
-
-
 
 # Reference
 
@@ -26,9 +15,9 @@ Grab the details from your account:
 
 func init QuoteEngine --dotnet 
 
-cd 2FA
+cd QuoteEngine
 
-func new --name Authenticate --template "HttpTrigger"
+func new --name QuoteOrchestrator --template "DurableFunctionsOrchestration"
 
 dotnet add package Microsoft.Azure.WebJobs.Extensions.DurableTask --version 2.8.1
 
@@ -51,3 +40,10 @@ Run (maybe change the timer to every 1 minute)
 func start
 ```
 
+Test:
+
+```
+curl http://localhost:7071/api/HttpOrchestratorStart
+```
+"
+Check logs. Curl the URL in `statusQueryGetUri`
