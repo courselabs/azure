@@ -4,9 +4,6 @@ services:
     image: courselabs/todo-list-web:2211
     ports:
       - 8099:80
-    build:
-      context: .
-      dockerfile: docker/web/Dockerfile
     configs:
       - source: appsettings
         target: /app/config/config.json
@@ -17,9 +14,6 @@ services:
 
   todo-list-save-handler:
     image: courselabs/todo-list-save-handler:2211
-    build:
-      context: .
-      dockerfile: docker/save-handler/Dockerfile
     configs:
       - source: appsettings
         target: /app/config/config.json
