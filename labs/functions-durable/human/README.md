@@ -13,6 +13,10 @@ https://www.twilio.com/try-twilio
 
 (You will need to verify with your email address & mobile number, but you won't need to put in credit card details)
 
+And create a phone number (the charge for this will come from your free credits)
+
+> img
+
 Grab the details from your account:
 
 - SID for your Twilio account
