@@ -52,4 +52,4 @@ func azure functionapp publish <function-name-2>
 
 > There's no compilation step this time, as it's a scripted function
 
-This should publishes and runs fine. Check in the Portal - the function defaults to needing auth, and the _Get function URL_ button gets you the key.
+This should publish and runs fine. Check in the Portal - the function defaults to needing auth, and the _Get function URL_ button gets you the key.

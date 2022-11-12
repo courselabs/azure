@@ -20,6 +20,8 @@ func azure functionapp publish $faName
 
 Reqs:
 
+sql
+
 TODO 
 
 ```

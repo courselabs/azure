@@ -4,6 +4,6 @@
         "AzureWebJobsStorage": "UseDevelopmentStorage=true",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet",
         "UploadInputStorageConnectionString": "UseDevelopmentStorage=true",
-        "UploadSqlServerConnectionString": "Data Source=mssqllablbobes.westeurope.azurecontainer.io;Initial Catalog=func;Integrated Security=False;User Id=sa;Password=AzureD3v!!!;MultipleActiveResultSets=True"
+        "UploadSqlServerConnectionString": "Data Source=localhost;Initial Catalog=func;Integrated Security=False;User Id=sa;Password=AzureD3v!!!;MultipleActiveResultSets=True"
     }
 }

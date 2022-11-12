@@ -2,7 +2,7 @@
 
 Functions are a _serverless_ compute platform - you supply the code and you don't need to provision infrastructure or manage scale. Functions get _triggered_ in response to events, which could be a file being uploaded in Blob storage or an incoming HTTP request.
 
-Azure Functions are hosted in a Functions App which is a type of App Service (like Web Apps). Function Apps are part of an App Service Plan but they can use a consumption model, which means infrastructure is only provisioned and paid for while functions are running, there is no cost when there's no activity.
+Azure Functions are hosted in a Functions App which is a type of App Service (like Web Apps). Function Apps are part of an App Service Plan but they can use a _consumption_ model, which means infrastructure is only provisioned and paid for while functions are running, there is no cost when there's no activity.
 
 In this lab we'll get started with a simple function triggered from an HTTP call, and see how to run it locally and in Azure.
 
@@ -24,7 +24,7 @@ Open the Portal and create a new resource. Search for 'function', select _Functi
 - deployment choice is Code or Docker Container
 - for Code you need to choose runtime & OS
 - the consumption plan is serverless, but you can use an always-on plan with Premium
-- a Storage Account is required, this is where the Function app stores logs and other details
+- a Storage Account is required, this is where the Function App stores logs and other details
 
 > Go ahead and create the new Function App, creating a new RG and Storage Account to use
 
@@ -40,7 +40,7 @@ When the function is created, switch to the _Code + Test_ menu. Can you run your
 You can delete the RG for the Portal function when you've finished exploring.
 
 
-## Working with Functions in the Command Line
+## Functions Command Line
 
 The Portal is great for experimenting, but for anything other than a playground we'll want function code in source control. Azure Functions have a custom CLI you use to create projects, run functions on your local machine and deploy to Azure.
 
@@ -63,7 +63,7 @@ Check your installation:
 func --version
 ```
 
-The output should show you're on version 4 (mine is 4.0.4829 but yours doesn't need to be the same).
+The output should show you're on version 4 (mine is 4.0.4829 but yours might be newer).
 
 ## Run Functions locally
 
@@ -79,7 +79,7 @@ cd labs/functions/calendar
 func start
 ```
 
-> You'll see outpu from the .NET build, and then a line saying the function is listening on localhost
+> You'll see output from the .NET build, and then a line saying the function is listening on localhost
 
 Try it:
 
@@ -124,11 +124,11 @@ az functionapp create -g labs-functions-http  --runtime dotnet --functions-versi
 
 </details><br/>
 
-Check in the Portal - you've got an app service plan with no scale up or scale out options, this is the serverless (consumption) plan. Under _Apps_ you can see got the function app:
+Check in the Portal - you've got an app service plan with no scale up or scale out options, this is the serverless (consumption) plan. You can see the function app:
 
-- it has a public URL
-- the OS is Windows, which is the defaults
-- the UX very similar to Web Apps, because they're all App Service features
+- has a public URL
+- uses Windows, which is the default OS
+- has a similar UX to Web Apps, because they're all App Service features
 
 Now you can deploy from the functions CLI direct to Azure:
 
@@ -167,7 +167,7 @@ cp ../update/*.cs .
 func start
 ```
 
-> Now you'll see three HTTP functions
+> Now the new functions are in the project folder, you'll see three HTTP functions listed
 
 The name of the function in the code becomes the URL path to call for an HTTP trigger.
 
@@ -226,7 +226,8 @@ curl https://courselabsazes.azurewebsites.net/api/HttpDay?code=UUGtEqCqMqF-whsqF
 
 The structure of functions is the same as other App Services:
 
-- App Service Plan -> App Service -> App(s)
+- App Service Plan -> App Service(s) -> App(s)
+- App Service Plan -> Function App(s) -> Function(s)
 
 The big difference with functions is that the App Service Plan can be on the consumpion model, so you don't need to have any servers running.
 
