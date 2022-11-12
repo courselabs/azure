@@ -5,7 +5,7 @@ Vars:
 $rg='labs-functions-cosmos'
 $fnsa='labscosmoses'
 $fn='labscosmoses'
-$cosmosAccount='labsrabbitmqes'
+$cosmosAccount='labsfncosmoses'
 ```
 
 Setup:
@@ -34,10 +34,8 @@ az cosmosdb sql database create --name Prod -g $rg  --account-name $cosmosAccoun
 
 $cs=$(az cosmosdb keys list --type connection-strings -g $rg  --query "connectionStrings[?description==``Primary SQL Connection String``].connectionString" -o tsv -n $cosmosAccount)
 
-az functionapp config appsettings set -g $rg -n $fn --settings "CustomerOutputStorageConnectionString=$cs" "InputRabbitMQConnectionString=amqp://user:ZBz23Qp3bToU@20.238.32.203:5672"
+az functionapp config appsettings set -g $rg -n $fn --settings "CosmosDbConnectionString=$cs" 
 ```
-
-az functionapp config appsettings set -g $rg -n $fn --settings  "InputRabbitMQConnectionString=amqp://user:ZBz23Qp3bToU@20.238.32.203:5672"
 
 Deploy:
 
