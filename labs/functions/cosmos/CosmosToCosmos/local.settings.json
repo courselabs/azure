@@ -3,7 +3,7 @@
     "Values": {
         "AzureWebJobsStorage": "UseDevelopmentStorage=true",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-        "CosmosDbConnectionString" : "AccountEndpoint=https://labsfncosmoses.documents.azure.com:443/;AccountKey=8BSqqqGpYTWTuqEHyu6DUNXezVT0khdsqtSIcVDLLPohFQCF3U6znSQYUcU1Zee2o6yJihXPaWckACDbGOvNSQ==;",
+        "CosmosDbConnectionString" : "<cosmos-connection-string>",
         "DatabaseName" : "Test"
     }
 }

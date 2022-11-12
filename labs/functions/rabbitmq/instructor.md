@@ -31,10 +31,8 @@ az storage account create -g $rg  --sku Standard_LRS -l eastus -n $sa
 
 $cs=$(az storage account show-connection-string -o tsv -g $rg  --name $sa)
 
-az functionapp config appsettings set -g $rg -n $fn --settings "CustomerOutputStorageConnectionString=$cs" "InputRabbitMQConnectionString=amqp://user:ZBz23Qp3bToU@20.238.32.203:5672"
+az functionapp config appsettings set -g $rg -n $fn --settings "CustomerOutputStorageConnectionString=$cs" "InputRabbitMQConnectionString=amqp://user:pwd@pi:5672"
 ```
-
-az functionapp config appsettings set -g $rg -n $fn --settings  "InputRabbitMQConnectionString=amqp://user:ZBz23Qp3bToU@20.238.32.203:5672"
 
 Deploy:
 

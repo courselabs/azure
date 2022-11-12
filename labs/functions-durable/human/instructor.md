@@ -1,7 +1,0 @@
-
-## Twilio
-
-SID: ACe973117ed4ad8306e0e956cdd664234d
-
-Auth token: 77184b01f78d8591a0c3d22e2fc770f9
-

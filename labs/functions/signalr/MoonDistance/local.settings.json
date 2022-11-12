@@ -3,6 +3,6 @@
     "Values": {
         "AzureWebJobsStorage": "UseDevelopmentStorage=true",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-        "AzureSignalRConnectionString" : "Endpoint=https://courselabsazes.service.signalr.net;AccessKey=DXMxE4hQF9cd3uUE+dXUuNEMUKfDIt7K2P53mWo8H5w=;Version=1.0;"
+        "AzureSignalRConnectionString" : "<signalr-connection-string>"
     }
 }

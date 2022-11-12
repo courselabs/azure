@@ -3,6 +3,6 @@
     "Values": {
         "AzureWebJobsStorage": "UseDevelopmentStorage=true",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-        "HeartbeatOutputStorageConnectionString": "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=hboutputstoragees;AccountKey=4UOVv3pS6ELEuMsUQKxSfPx9ewNCwf4ibXCepJ2P7DFi6u5xnewAiHOopT0GGiMAUcAaX84LeT50+ASt/B7LJA==;BlobEndpoint=https://hboutputstoragees.blob.core.windows.net/;FileEndpoint=https://hboutputstoragees.file.core.windows.net/;QueueEndpoint=https://hboutputstoragees.queue.core.windows.net/;TableEndpoint=https://hboutputstoragees.table.core.windows.net/"
+        "HeartbeatOutputStorageConnectionString": "<sa-connection-string>"
     }
 }
