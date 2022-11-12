@@ -108,7 +108,7 @@ No messages so far.
 
 We have a simple .NET 6 app which publishes messages to the topic:
 
-- [publisher/Program.cs](/src/servicebus/publisher/Program.cs) - uses exactly the code to send to a queue or a topic, from the sender's point of view it doesn't matter which it is
+- [publisher/Program.cs](/src/servicebus/publisher/Program.cs) - uses exactly the same code to send to a queue or a topic, from the sender's point of view it doesn't matter which it is
 
 Our application will publish to the topic so we need an access policy. Every namespace has a root policy with permission to everything, but we should be careful not to use any more permissions than we need.
 

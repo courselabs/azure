@@ -1,8 +1,8 @@
 # Docker Compose
 
-Docker Compose is a specification for describing apps which run in containers, and a command-line tool which takes those specs and runs them in Docker.
+Docker Compose is a specification for describing distributed apps which run in containers, and a command-line tool which takes those specs and runs them in Docker.
 
-It's a _desired-state_ approach, where you model your apps in YAML and the Compose command line creates or replaces components to get to your desired state.
+It's a _desired-state_ approach with the same idea as [ARM](/labs/arm/README.md) or [Bicep](/labs/arm-bicep/README.md), but you model your apps in YAML. The Compose command creates or updates components to get to the desired state in your model.
 
 ## Reference
 
@@ -22,7 +22,7 @@ docker-compose --help
 docker-compose up --help
 ```
 
-> The latest versions of Docker have the Compose command built-in. The commands are the same, minus the hyphen so `docker-compose` becomes `docker compose`:
+> The latest versions of Docker have the Compose command built-in. The commands are the same, minus the hyphen so `docker-compose` becomes `docker compose`. You can use either.
 
 </details><br/>
 
@@ -31,7 +31,7 @@ docker-compose up --help
 
 Docker can run any kind of app - the container image could be for a lightweight microservice or a legacy monolith. They all work in the same way, but containers are especially well suited to distributed applications, where each component runs in a separate container.
 
-Try running a sample app - this is the web component for a random number generator:
+Try running a sample app - this is the web component for the random number generator we used in the [distributed App Service lab](/labs/appservice-api/README.md):
 
 ```
 docker run -d -p 8088:80 --name rng-web courselabs/rng-web:21.05
@@ -45,12 +45,18 @@ Browse to http://localhost:8088 and try to get a random number. After a few seco
   <summary>Not sure how?</summary>
 
 ```
+# your container should be called rng-web:
 docker logs rng-web
+
+# if you see an error, find the container ID and run the logs command again:
+docker ps
+
+docker logs <id>
 ```
 
 </details><br/>
 
-> The web app is just the front-end, it's trying to find a backend API service at http://numbers-api/rng - but there's no such service running.
+> The web app is just the front-end, it's trying to find a backend REST API service at http://numbers-api/rng - but there's no such service running.
 
 You could start an API container with `docker run`, but you'd need to know the name of the image, the ports to use, and the network setup for the containers to talk to each other.
 
@@ -79,18 +85,22 @@ docker-compose
 
 ```
 # run 'up' to start the app, pointing to the Compose file
-docker-compose -f ./labs/docker-compose/nginx/docker-compose.yml up
+docker-compose -f labs/docker-compose/nginx/docker-compose.yml up
 ```
 
 </details><br/>
 
-> The Nginx container starts in interactive mode; you can browse to http://localhost:8082 to check it's working.
+> The Nginx container starts in interactive mode and you'll see all the logs; you can browse to http://localhost:8082 to check it's working.
 
 Use Ctrl-C / Cmd-C to exit - that stops the container.
 
 ## Multi-container apps in Compose
 
-Compose is more useful with more components. [rng/v1.yml](./rng/v1.yml) defines the two parts of the random number app:
+Compose is more useful with more components:
+
+- [rng/v1.yml](/labs/docker-compose/rng/v1.yml) defines the two parts of the random number app.
+
+There's quite a lot going on in this 20 lines of YAML:
 
 - there are two services, one for the API and one for the web
 - each service defines the image to use and the ports to expose
@@ -179,7 +189,7 @@ The name of a service in the Compose file becomes the DNS name containers can us
 
 We could change the API service in the Compose file, but the web app supports a configuration setting for the API URL:
 
-- [rng/v2.yml](./rng/v2.yml) sets that config value and also increases the logging level for the API.
+- [rng/v2.yml](/labs/docker-compose/rng/v2.yml) sets that config value and also increases the logging level for the API.
 
 Here we'll see the desired-state approach. If you need to change your application, you change the YAML and run `up` again. Compose looks at what's running and what you're asking to run and it makes whatever changes it needs.
 
@@ -209,7 +219,7 @@ Deploy the updated spec. What IP address(es) does the Nginx container have? Can 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
 ___
-## Cleanup´
+## Cleanup
 
 Cleanup by removing all containers:
 

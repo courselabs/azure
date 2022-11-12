@@ -24,7 +24,6 @@ git remote add fork <github-fork-url>
 
 > If you already have a fork which is out of sync, you can just delete it and create another one
 
-- rg, app plan, app svc, deployment --manual-integration
 
 📋 Create a Resource Group and a Linux App Service Plan with 2 workers. You'll need to use a Standard SKU to get the CI/CD features.
 

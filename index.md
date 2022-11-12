@@ -60,7 +60,7 @@ _Storage Accounts_
 - [Blob storage](/labs/storage-blob/README.md)
 - [File shares](/labs/storage-files/README.md)
 - [Using storage for static web content](/labs/storage-static/README.md)
-- [Working with table storage](labs/storage-table/README.md)
+- [Working with table storage](/labs/storage-table/README.md)
 
 _Cosmos DB_
 
@@ -73,7 +73,7 @@ _KeyVault and Virtual Networks_
 
 - [KeyVault](/labs/keyvault/README.md)
 - [Virtual Networks](/labs/vnet/README.md)
-- [Securing KeyVault Access](labs/keyvault-access/README.md)
+- [Securing KeyVault Access](/labs/keyvault-access/README.md)
 - [Securing VNet Access](/labs/vnet-access/README.md)
 - [Securing apps with KeyVault and VNet](/labs/vnet-apps/README.md)
 
@@ -87,51 +87,47 @@ _Events and Messages_
 
 _Project_
 
-- Project 2_
+- [Project 2: Distributed App](/projects/distributed/README.md)
 
 ## Compute and Containers
 
 _Docker and Azure Container Instances_
 
-- Containers, networking & compute environment
-- Building images
-- Running containers with ACI
-- Multi-container apps with Compose
-- Compose integration with ACI
+- [Docker 101](/labs/docker/README.md)
+- [Docker images and Azure Container Registry](/labs/acr/README.md)
+- [Azure Container Instances](/labs/aci/README.md)
+- [Distributed apps with Docker Compose](/labs/docker-compose/README.md)
+- [Distributed apps with ACI](/labs/aci-compose/README.md)
 
 _Kubernetes_
 
-- Clusters, nodes & Kubectl
-- YAML specs, Pods, Services and Deployments
-- App configuration with ConfigMaps and Secrets
-- Storage with PersistentVolumes
-- Securing access with RBAC
+- [Nodes](/labs/kubernetes/nodes/README.md)
+- [Pods](/labs/kubernetes/pods/README.md)
+- [Services](/labs/kubernetes/services/README.md)
+- [Deployments](/labs/kubernetes/deployments/README.md)
+- [ConfigMaps](/labs/kubernetes/configmaps/README.md)
+- [Azure Kubernetes Service](/labs/aks/README.md)
 
-Day 3:
+_Intermediate Kubernetes_
 
-- Routing traffic with Ingress
-- Securing traffic with Cert-manager
-- Monitoring with Prometheus & Grafana
-- Logging with Elasticsearch, Fluentd and Kibana
-- Multi-node clusters and app placement
+- [PersistentVolumes](/labs/kubernetes/persistentvolumes/README.md)
+- [AKS PersistentVolumes](/labs/aks-persistentvolumes/README.md)
+- [Ingress](/labs/kubernetes/ingress/README.md)
+- [AKS with Application Gateway Ingress Controller](/labs/aks-ingress/README.md)
+- [Container Probes](/labs/kubernetes/containerprobes/README.md)
+- [Troubleshooting](/labs/kubernetes/troubleshooting/README.md)
 
-_Azure Kubernetes Service_
+_AKS Integration_
 
-- New AKS cluster, explore sizing, node pools & add-ons
-- Create cluster with AppGW ingress & ACR integration
-- Explore storage classes - Disk & Files
-- Enable KeyVault add-on for sensitive config
-- Scale & upgrade existing cluster
+- [Namespaces](/labs/kubernetes/namespaces/README.md)
+- [Secrets](/labs/kubernetes/secrets/README.md)
+- [AKS with KeyVault secrets](/labs/aks-keyvault/README.md)
+- [Helm](/labs/kubernetes/helm/README.md)
+- [Securing AKS apps with KeyVault and VNet](/labs/aks-apps/README.md)
 
 _Project_
 
-- Project 3
-
-- [ACR Images](/labs/acr/README.md)
-- [Azure Container Instances](/labs/aci/README.md)
-- [Azure Kubernetes Service](/labs/aks/README.md)
-- [Storage and Configuration](/labs/storage/README.md)
-- [Ingress and Application Gateway](/labs/ingress/README.md)
+- Project 3: Containerized App
 
 ## Serverless and App Management
 

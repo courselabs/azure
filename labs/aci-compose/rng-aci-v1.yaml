@@ -1,0 +1,33 @@
+apiVersion: '2019-12-01'
+type: Microsoft.ContainerInstance/containerGroups
+location: eastus
+properties:
+  containers:
+  - name: rng-api
+    properties:
+      image: courselabs/rng-api:21.05
+      environmentVariables:
+      - name: ASPNETCORE_URLS
+        value: http://+:5000
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1
+  - name: rng-web
+    properties:
+      image: courselabs/rng-web:21.05
+      environmentVariables:
+      - name: RngApi__Url
+        value: http://localhost:5000/rng
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1
+      ports:
+      - port: 80
+  osType: Linux
+  ipAddress:
+    type: Public
+    ports:
+    - protocol: tcp
+      port: 80

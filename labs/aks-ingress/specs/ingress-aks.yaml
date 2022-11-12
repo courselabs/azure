@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: whoami
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  rules:
+    # TODO - replace with the DNS name for your own PIP
+    # e.g. labs-aks-ingress-01.eastus.cloudapp.azure.com
+  - host: <pip-fqdn>
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: whoami-internal
+            port: 
+              name: http
+
+ 

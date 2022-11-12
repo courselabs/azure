@@ -32,7 +32,7 @@ az group create -n labs-aks --tags courselabs=azure -l eastus
 
 You use the `az aks create` command to create a new cluster.
 
-📋 Create a cluster called `aks01` with two nodes using the `Standard_D2s_v5` VM size.
+📋 Create a cluster called `aks01` with two nodes using the `Standard_D2s_v5` VM size (or a size that's valid in your chosen region).
 
 <details>
   <summary>Not sure how?</summary>
@@ -67,7 +67,7 @@ az aks --help
 You'll see `get-credentials` which downloads the access details you need to use Kubectl with your AKS cluster:
 
 ```
-az aks get-credentials -g labs-aks -n aks01
+az aks get-credentials -g labs-aks -n aks01 --overwrite-existing 
 ```
 
 </details><br/>
@@ -86,12 +86,11 @@ kubectl get nodes
 
 ## Deploying applications
 
-You can deploy the exact same application model in AKS that we used in Docker Desktop. The YAML specs have been copied to the `labs/aks/specs` folder, and all that's changed is some config settings:
+You can deploy the exact same Kubernetes application models in AKS that we've used in Docker Desktop. The YAML specs in the `labs/aks/specs` folder define an app that runs on any Kubernetes cluster:
 
 - [configmap.yaml](./specs/configmap.yaml) - sets the environment name to be PROD
 - [deployment.yaml](./specs/deployment.yaml) - is identical to the [Kubernetes lab](/labs/kubernetes/README.md)
 - [service.yaml](./specs/service.yaml) - routes external traffic coming in to port 80 to the application Pod
-
 
 📋 Run the app on your AKS cluster - you can deploy all the YAML files in one folder with a single command - then check the Pods and Services.
 
@@ -126,7 +125,7 @@ The IP address is your application's public IP address. Browse to it and you'll 
 
 ## Lab
 
-We have spare capacity in the AKS cluster, so we can run more Pods to serve more users. Investigate how you can change the Deployment spec to run 4 Pods for the web application. You'll need to edit the YAML and apply the changes. When you have multiple Pods running, what happens if you repeatedly refresh the website in your browser?
+We have spare capacity in the AKS cluster, so we can run more Pods to serve more users. Investigate how you can change the Deployment spec to run 4 Pods for the web application. You'll need to edit the YAML and apply the changes. When you have multiple Pods running, what happens if you repeatedly refresh the website in your browser? If you change the environment name from `PROD` in the configuration and redeploy, does the site update straight away?
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
@@ -137,7 +136,7 @@ ___
 You can delete the RG for this lab to remove all the resources. When the AKS cluster gets deleted, it removes the managed `MC_` RG too:
 
 ```
-az group delete -y -n labs-aks
+az group delete -y --no-wait -n labs-aks
 ```
 
 Now change your Kubernetes context back to your local Docker Desktop:

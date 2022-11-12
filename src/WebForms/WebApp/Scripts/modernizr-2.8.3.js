@@ -49,7 +49,8 @@ window.Modernizr = (function( window, document, undefined ) {
 
     /*>>smile*/
     smile = ':)',
-    /*>>smile*/
+    /*
+kubectl apply -f ./labs/aks-persistentvolumes/specs/v2>>smile*/
 
     toString = {}.toString,
 

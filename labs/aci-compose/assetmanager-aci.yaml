@@ -1,0 +1,32 @@
+apiVersion: '2019-12-01'
+location: eastus
+name: assetmanager
+properties:
+  containers:
+  - name: app
+    properties:
+      image: courselabs/asset-manager:22.11
+      environmentVariables:
+      - name: ConnectionStrings__AssetsDb
+        value: <connection-string>     
+      ports:
+      - port: 80
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGB: 1.5
+      volumeMounts:
+      - mountPath: /app/lockfiles
+        name: filesharevolume
+  osType: Linux
+  ipAddress:
+    type: Public
+    ports:
+      - port: 80
+  volumes:
+  - name: filesharevolume
+    azureFile:
+      sharename: assetmanager
+      storageAccountName: <sa-name>
+      storageAccountKey: <sa-key>
+type: Microsoft.ContainerInstance/containerGroups

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: asset-manager-lb
+  labels: 
+    azure.courselabs.co: aks-apps
+    app: asset-manager
+spec:
+  selector:
+    app: asset-manager
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
