@@ -127,28 +127,29 @@ _AKS Integration_
 
 _Project_
 
-- Project 3: Containerized App
+- [Project 3: Containerized App](/projects/conatinerized/README.md)
 
 ## Serverless and App Management
 
-Day 1:
+_Azure Functions_
 
-- New Funcion app, explore runtimes & plans, publish method
-- Create Function running Docker container, with HTTP trigger
-- Update Function with new image in ACR
-- Create Function with code, using blob storage trigger
-- Deploying from VS Code using Deployment Slots
+- [HTTP trigger](/labs/functions/http/README.md)
+- [Timer trigger & blob output](/labs/functions/timer/README.md)
+- [Blob trigger & SQL output](/labs/functions/blob/README.md)
+- [Service Bus trigger & multiple outputs](/labs/functions/servicebus/README.md)
+- [RabbitMQ trigger & blob output](/labs/functions/rabbitmq/README.md)
+- [CosmosDB trigger & output](/labs/functions/cosmos/README.md)
 
-Day 2:
+_Durable Functions_
 
-- Exploring triggers - Cosmos DB, Service Bus, Event Grid
-- Managing and deploying Functions with AZ CLI
-- Exploring bindings - Cosmos DB, Blob Storage, Event Hubs
-- Modelling stateful workflows with Durable Functions
-- Long-running async tasks in Durable Functions
+- [CI/CD for Azure Functions](/labs/functions/cicd/README.md)
+- [Durable functions](/labs/functions-durable/chained/README.md)
+- [Fan-out fan-in pattern](/labs/functions-durable/fan-out/README.md)
+- [Human interaction pattern](/labs/functions-durable/human/README.md)
+- [Azure SignalR Service](/labs/signalr/README.md)
+- [SignalR functions output](/labs/functions/signalr/README.md)
 
-
-Day 3: 
+_API Management_ 
 
 - New APIM, explore tiers, identity and protocols
 - Create APIM with AZ CLI, explore gateway & devloper portal
@@ -157,7 +158,7 @@ Day 3:
 - Using CDN & comparing with APIGW
 
 
-Day 4: 
+_Monitoring_
 
 - Instrumentation in code with App Insights
 - Using Azure Monitor with App Insights and Container Insights
@@ -167,7 +168,8 @@ Day 4:
 
 _Project_
 
-- Project 4
+- Project 4: Serverless API
+
 
 #### Credits
 
