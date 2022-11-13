@@ -9,13 +9,18 @@
 
 ```
 az group create -n labs-apim --tags courselabs=azure -l westus
+
+az apim create --sku-name Developer -g labs-apim -n <apim> --publisher-name <company-name> --publisher-email <real-email-address> --no-wait
 ```
+
+> Developer tier is cheap to run, use for exploration - no SLA so not for test or prod
+
 
 - new 'api management'
 
 - org name for portal & email 
 
-- create in `labs-apim` rg (takes 60+ min? start first tthing then do other labs & come back)
+- create in `labs-apim` rg (can take 60+ min)
 
 - comes with default "echo api"
 
@@ -56,7 +61,8 @@ Configure your API in the Portal such that:
 
 Test each endpoint to validate the policies are working as you expect
 
-```<policies>
+```
+<policies>
     <inbound>
         <base />
         <return-response>
@@ -85,15 +91,13 @@ For the portal:
 
 Add your own company name and UI.
 
-Require an AD account o sign up.
+Allow use of an AD account to sign up.
 
 Enable CORS.
 
 Publish the portal.
 
-For the API:
-
-Require consumers to sign up for a subscription (you can use the default `Starter` product)
+For the API: - add it to a product which require consumers to sign up for a subscription (you can use the default `Starter` product)
 
 ## Sign up as a customer
 
@@ -114,7 +118,7 @@ Can you call the API with curl?
 Test page shows you curl, e.g.
 
 ```
-curl -v -X GET "https://fwefwfw.azure-api.net/numbers/rng" -H "Cache-Control: no-cache" -H "Ocp-Apim-Subscription-Key: 1c54e95364de429c8e780b3865f3e57a"
+curl "https://fwefwfw.azure-api.net/numbers/rng" -H "Ocp-Apim-Subscription-Key: 1c54e95364de429c8e780b3865f3e57a"
 ```
 
 Try repeatedly - should get the same number within 30 seconds and limited to 5 calls per minute
@@ -128,6 +132,3 @@ Too many and you will get:
 ## Lab
 
 Customize email text (notification templates); automate deployment (save to repo & clone); is the original Web APp url still available?
-
-
-Verify that the API requires a token and the  rules above are applied
