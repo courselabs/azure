@@ -14,7 +14,6 @@ In this lab we'll use a durable function which uses an HTTP trigger, and see the
 
 - [Error handling and retries in activity functions](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-error-handling?tabs=csharp)
 
-
 ## HTTP Trigger with Orchestration
 
 The scenario is an improved implementation of the quote engine in the [Service Bus functions lab](/labs/functions/servicebus/README.md). The original function just called some suppliers to quote for an order and stored their responses. This version waits for all the responses and selects the cheapest quote.

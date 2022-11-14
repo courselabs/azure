@@ -27,7 +27,7 @@ public static class SmsVerify
 
         using (var timeoutCts = new CancellationTokenSource())
         {
-            var expiration = context.CurrentUtcDateTime.AddSeconds(120);
+            var expiration = context.CurrentUtcDateTime.AddSeconds(5*60);
             var timeoutTask = context.CreateTimer(expiration, timeoutCts.Token);
 
             var authorized = false;
@@ -39,13 +39,15 @@ public static class SmsVerify
                 {
                     if (challengeResponseTask.Result == challengeCode)
                     {
+                        log.LogInformation($"Authorized! User responded correctly to SmsChallenge for: {phoneNumber}");                    
                         authorized = true;
                         break;
                     }
+                    log.LogInformation($"NOT authorized. User did not respond with correct code to SmsChallenge for: {phoneNumber}");                    
                 }
                 else
                 {
-                    // Timeout expired
+                    log.LogInformation($"NOT authorized. User did not respond to SmsChallenge for: {phoneNumber}");
                     break;
                 }
             }
