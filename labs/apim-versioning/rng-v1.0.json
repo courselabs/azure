@@ -1,0 +1,46 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "RNG API",
+        "version": "1.0"
+    },
+    "paths": {
+        "/healthz": {
+            "get": {
+                "tags": [
+                    "Health"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/reset": {
+            "get": {
+                "tags": [
+                    "Reset"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/rng": {
+            "get": {
+                "tags": [
+                    "Rng"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "components": {}
+}

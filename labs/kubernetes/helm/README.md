@@ -200,7 +200,7 @@ Some teams use Helm to package their own apps - others stick with YAML files and
 
 Projects like [Prometheus](https://prometheus-community.github.io/helm-charts/) and the [Nginx Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/#using-helm) publish packages as Helm charts, which makes it easy for you to install a production-grade release.
 
-Charts are published in repositories, which can be public or private. Start by adding a simple repo:
+Charts are published in _repositories_, which can be public or private. Start by adding a simple repo:
 
 ```
 helm repo ls

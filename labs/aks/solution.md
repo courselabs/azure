@@ -35,7 +35,7 @@ kubectl get pods -o wide
 
 You should see Pods spread across your two nodes.
 
-Browse back to your public IP address - the Service IP address hasn't changed. Refresh without using the browser cache (e.g. Ctrl-F5 on Windows) and you'll see response coming from different Pods. If no try curl:
+Browse back to your public IP address - the Service IP address hasn't changed. Refresh without using the browser cache (e.g. Ctrl-F5 on Windows) and you'll see response coming from different Pods. If not try curl:
 
 ```
 curl <service-ip-address>

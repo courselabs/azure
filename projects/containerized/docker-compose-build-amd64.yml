@@ -1,0 +1,13 @@
+services:
+
+  todo-list-web:
+    image: courselabs/todo-list-web:2211-linux-amd64
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+
+  todo-list-save-handler:
+    image: courselabs/todo-list-save-handler:2211-linux-amd64
+    build:
+      context: .
+      dockerfile: docker/save-handler/Dockerfile

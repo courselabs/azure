@@ -44,8 +44,8 @@ We'll be using a simple app which reads config files and writes to files in vari
 
 The first version we'll use mounts a ConfigMap to load config settings:
 
-- [/labs/aks-persistentvolumes/specs/v1/configmap.yaml](./specs/v1/configmap.yaml) - contains a full appsettings.json file, with logging and application config
-- [/labs/aks-persistentvolumes/specs/v1/deployment.yaml](./specs/v1/deployment.yaml) - models a Pod which loads the ConfigMap as a volume mount, taking the appsettings.json file and loading it into the /app directory
+- [v1/configmap.yaml](./specs/v1/configmap.yaml) - contains a full appsettings.json file, with logging and application config
+- [v1/deployment.yaml](./specs/v1/deployment.yaml) - models a Pod which loads the ConfigMap as a volume mount, taking the appsettings.json file and loading it into the /app directory
 
 > Be sure you're clear what's defined in this model. The ConfigMap stores a JSON file. The Pod loads the ConfigMap as a volume, which makes it usable for the container, and the container actually loads the file as a volume mount.
 
@@ -125,11 +125,11 @@ You'll see that the database file has only got writes from the new Pod - the dat
 
 A new version of the application model uses the same container image and ConfigMap, but it adds two writeable volumes to the Pod spec:
 
-- [/labs/aks-persistentvolumes/specs/v2/deployment.yaml](./specs/v2/deployment.yaml) - mounts the cache directory to an EmptyDir volume and the database directory to a PersistentVolumeClaim volume
+- [v2/deployment.yaml](./specs/v2/deployment.yaml) - mounts the cache directory to an EmptyDir volume and the database directory to a PersistentVolumeClaim volume
 
-- [/labs/aks-persistentvolumes/specs/v2/pvc.yaml](./specs/v2/pvc.yaml) - models the PersistentVolumeClaim (PVC)
+- [v2/pvc.yaml](./specs/v2/pvc.yaml) - models the PersistentVolumeClaim (PVC)
 
-We covered these details of Kubernetes storage in the [PersistentVolumes lab](labs/kubernetes/persistentvolumes/README.md). As a reminder - _EmptyDir_ is a piece of storage which has the lifecycle of the Pod, so if the Pod needs to restart the container then the data survives. _PersistentVolumeClaim_ is a request for the cluster to provide some storage the Pod can attach to - we don't specify any type of storage here, just the amount we need.
+We covered these details of Kubernetes storage in the [PersistentVolumes lab](/labs/kubernetes/persistentvolumes/README.md). As a reminder - _EmptyDir_ is a piece of storage which has the lifecycle of the Pod, so if the Pod needs to restart the container then the data survives. _PersistentVolumeClaim_ is a request for the cluster to provide some storage the Pod can attach to - we don't specify any type of storage here, just the amount we need.
 
 📋 Deploy the new version of the app on Docker Desktop. Let the Pod run for a while, then delete it. Check the database and cache files in the replacement Pod. Has the data been carried over from the previous Pod?
 
@@ -181,7 +181,7 @@ The queue-worker model doesn't use any cluster-specific configuration, so it wil
 Connect your Kubernetes CLI to the new AKS cluster:
 
 ```
-az aks get-credentials -g labs-aks-persistentvolumes -n aks02
+az aks get-credentials -g labs-aks-persistentvolumes -n aks02 --overwrite
 ```
 
 📋 Repeat the same steps on your AKS cluster - deploy the v2 app spec, let the Pod start and then delete it. Check the database file in the replacment Pod to make sure the data is persisted between Pods.

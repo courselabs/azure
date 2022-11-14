@@ -1,0 +1,25 @@
+﻿{
+  "Logging" : {
+    "Enabled": true
+  },
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "ToDoList": "Debug",
+        "Microsoft": "Warning"
+      }
+    },
+    "Enrich": [ "WithMachineName" ],
+    "Using": [ "Serilog.Sinks.AzureTableStorage" ],
+    "WriteTo": [
+      {
+        "Name": "AzureTableStorage",
+        "Args": {
+          "storageTableName": "logs",
+          "connectionString": "<table-storage>"
+        }
+      }
+    ]
+  }
+}

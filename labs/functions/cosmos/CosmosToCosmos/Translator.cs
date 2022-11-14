@@ -35,9 +35,10 @@ namespace CosmosToCosmos
                         log.LogInformation($"Translating message for document ID: {document.Id}");   
                         var translated = new 
                         { 
-                            id = Guid.NewGuid(),
+                            id = Guid.NewGuid().ToString().Substring(0,6),
                             message = "hola",
-                            lang = "es"
+                            lang = "es",
+                            originalId = document.Id
                         };
                         await output.AddAsync(translated);
                         log.LogInformation($"Added translated document ID: {translated.id}");

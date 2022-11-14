@@ -1,0 +1,48 @@
+services:
+
+  todo-list-web:
+    image: courselabs/todo-list-web:2211
+    ports:
+      - 8099:80
+    configs:
+      - source: appsettings
+        target: /app/config/config.json
+    depends_on:
+      - todo-queue
+      - todo-db
+      - todo-storage
+
+  todo-list-save-handler:
+    image: courselabs/todo-list-save-handler:2211
+    configs:
+      - source: appsettings
+        target: /app/config/config.json
+    depends_on:
+      - todo-queue
+      - todo-db
+      - todo-storage
+
+  todo-queue:
+    image: redis:6.2-alpine
+    ports:
+      - 6379:6379
+
+  todo-db:
+    image: mcr.microsoft.com/azure-sql-edge
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+      - MSSQL_SA_PASSWORD=AzureD3v!!!
+    ports:
+      - 1433:1433 
+
+  todo-storage:
+    image: mcr.microsoft.com/azure-storage/azurite
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
+
+configs:
+  appsettings:
+    file: docker/config.json

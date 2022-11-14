@@ -54,13 +54,13 @@ The app uses Blob Storage, so we'll need to create an account and grab the conne
 az storage account create -g labs-aks-apps --sku Standard_ZRS -l eastus -n <sa-name>
 
 # and container:
-az storage container create -n assetsbb -g labs-aks-apps --account-name <sa-name>
+az storage container create -n assetsdb -g labs-aks-apps --account-name <sa-name>
 
 # print the connection string:
 az storage account show-connection-string -o tsv -g labs-aks-apps --name <sa-name> 
 ```
 
-**Edit the file [asset-manager-connectionstrings.json](labs/aks-apps/secrets/asset-manager-connectionstrings.json)** replacing `<sa-connection-string>` with your own connection string.
+**Edit the file [asset-manager-connectionstrings.json](/labs/aks-apps/secrets/asset-manager-connectionstrings.json)** replacing `<sa-connection-string>` with your own connection string.
 
 That key gives complete access to all everything in the Storage Account, so we need to keep it safe. We'll create a KeyVault and upload the connection string file to a secret:
 
