@@ -1,6 +1,20 @@
 
 run emulator
 
+
+local.settings.json
+
+```
+{
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+        "AzureSignalRConnectionString" : "<signalr-connection-string>"
+    }
+}
+```
+
 create a **serverless** signalr service
 
 
@@ -8,6 +22,7 @@ get connection string
 
 
 deploy to func app - use MI & managed connection string
+
 
 ## Deploy to Azure
 
