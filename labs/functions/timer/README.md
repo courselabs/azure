@@ -1,4 +1,4 @@
-## Functions: Timer to Blob Storage
+# Functions: Timer to Blob Storage
 
 The key feature of Azure functions is their _bindings_. Your function code is triggered by an event, and it can receive input or write output to other Azure services using bindings. If you need to read from a CosmosDB or write to a Service Bus queue you can do it without any of the infrastructure code.
 

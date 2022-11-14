@@ -1,4 +1,4 @@
-## Durable Functions: Chained Functions
+# Durable Functions: Chained Functions
 
 You can chain functions together if the output of one function can serve as the trigger to the next - you might write to blob storage in one function and use that in the blob trigger for the next. That lets you model a workflow with multiple steps, but you can't necessarily guarantee the running order and you won't always have an output to use for the next trigger.
 

@@ -1,4 +1,4 @@
-## Durable Functions: Fan-Out
+# Durable Functions: Fan-Out
 
 Durable functions have their state persisted in Azure. The orchestrator can wait for activities to complete, and has the logic to retry failed activities - which is perfect for longer transactions which involve multiple third-party systems.
 
@@ -13,7 +13,6 @@ In this lab we'll use a durable function which uses an HTTP trigger, and see the
 - [HTTP features for durable functions](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-http-features?tabs=csharp)
 
 - [Error handling and retries in activity functions](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-error-handling?tabs=csharp)
-
 
 ## HTTP Trigger with Orchestration
 
