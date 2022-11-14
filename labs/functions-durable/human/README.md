@@ -1,4 +1,4 @@
-## Durable Functions: Human Interaction
+# Durable Functions: Human Interaction
 
 An advantage of durable functions is that they can wait for an extended period of time for an activity to complete, and if that activity contains sensitive data it's not stored outside of the function so it's much harder for attackers to get to it. This is perfect for human interaction, where a workflow executes up to a point and then stops, waiting for human input. This lets you build a fully automated workflow but with a human approval step.
 

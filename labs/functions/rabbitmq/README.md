@@ -1,4 +1,4 @@
-## Functions: RabbitMQ to Blob Storage
+# Functions: RabbitMQ to Blob Storage
 
 Azure functions have support for some services which are not native to Azure, for scenarios where applications have an infrastructure dependency which can't be migrated to Azure. [RabbitMQ](https://www.rabbitmq.com) is one example - it's a very popular open-source message queue which can be used with functions even though there is no managed RabbitMQ service in Azure.
 

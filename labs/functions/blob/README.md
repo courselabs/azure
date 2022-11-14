@@ -1,4 +1,4 @@
-## Functions: Blob Storage to SQL Server
+# Functions: Blob Storage to SQL Server
 
 Functions are very good as integration components - gluing together systems which don't have any way of being connected directly. _Data-level integration_ is one option where a function is triggered when one system writes data, it reads that data and adapts or enriched it before writing it to another system.
 

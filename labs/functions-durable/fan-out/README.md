@@ -1,4 +1,4 @@
-## Durable Functions: Fan-Out
+# Durable Functions: Fan-Out
 
 Durable functions have their state persisted in Azure. The orchestrator can wait for activities to complete, and has the logic to retry failed activities - which is perfect for longer transactions which involve multiple third-party systems.
 
