@@ -13,7 +13,7 @@ namespace TimerToBlob
         [FunctionName("Heartbeat")]
         [StorageAccount("HeartbeatOutputStorageConnectionString")]
         public void Run(
-            [TimerTrigger("0 */5 * * * *")]TimerInfo myTimer,         
+            [TimerTrigger("0 */3 * * * *")]TimerInfo myTimer,         
             [Blob("heartbeat/{DateTime}.json", FileAccess.Write)] out string blobOutput, 
             ILogger log)
         {

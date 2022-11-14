@@ -1,36 +1,54 @@
 ## Durable Functions: Chained Functions
 
-ordered processing, sequential rather than event driven
+You can chain functions together if the output of one function can serve as the trigger to the next - you might write to blob storage in one function and use that in the blob trigger for the next. That lets you model a workflow with multiple steps, but you can't necessarily guarantee the running order and you won't always have an output to use for the next trigger.
+
+Azure has _durable functions_ for long-running scenarios like this, where state needs to be shared between steps in the workflow. They're deployed as standard Azure Functions, but the trigger starts an _orchestrator_ where the actual code is. The orchestrator code calls all the other activities, managing inputs and outputs without any more triggers.
+
+In this lab we'll use a durable function for a workflow with several activities which need to run in sequence. 
 
 ## Reference
 
-- Durable Functions
+- [Durable functions overview](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview?tabs=csharp)
+
+- [Orchestrations - the coded workflow for a durable function](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-orchestrations?tabs=csharp)
+
+- [Activity functions - the individual steps of the workflow](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-types-features-overview#activity-functions)
 
 ## Timer Trigger with Orchestration
 
-- timer 
-- orchestrator
+The scenario is an alternative implementation of the chained function in the [functions CI/CD lab](/labs/functions/cicd/README.md). The logic is the same, but instead of multiple functions triggering each other we just have one durable function. The code is in the `DurableChained` folder:
 
-actvities called by orc:
+- [DurableChained/TimedOrchestratorStart.cs)](/labs/functions-durable/chained/DurableChained/TimedOrchestratorStart.cs) - uses a timer trigger and has a `DurableClient` decorator; it uses that object to start the orchestrator, passing it a dummy application status object
 
-- writeblob
-- notify
-- writelog
+- [DurableChained/ChainedOrchestrator.cs](functions-durable/chained/DurableChained/ChainedOrchestrator.cs) - this is the orchestrator for all the other activities; it runs three in sequence, using the output from the first as input to the other two
 
+You can see how data is exchanged in a durable function - the trigger can pass an object to the orchestrator, and the orchestrator can pass and receive objects from the actitivities.
+
+These are the activities called by the orchestrator, they use an `ActivityTrigger` so they can only be activated within a durable function:
+
+- [Activities/WriteBlob.cs](/labs/functions-durable/chained/DurableChained/Activities/WriteBlob.cs) - stores the activity status object in a blob; creates the binding in code so we can specify the blob name dynamically
+
+- [Activities/NotifySubscribers.cs](/labs/functions-durable/chained/DurableChained/Activities/NotifySubscribers.cs) - uses a Service Bus binding to write a message to a queue
+ 
+- [Activities/WriteLog.cs](/labs/functions-durable/chained/DurableChained/Activities/WriteLog.cs) - uses a Table binding to write an entity to Table Storage
+
+The activity logic is pretty much the same as an ordinary function, but they are controlled by the orchestrator.
 
 ## Test the function locally
 
-Queue & topics must exist
+There's no Service Bus emulator, so you'll need to create in Azure:
 
- 
-Start the Azure Storage emulator:
+- a Service Bus Namespace
+- with a Queue called `HeartbeatCreated`
+- and make a note of the connection string
+
+Run Docker Desktop and start the Azure Storage emulator:
 
 ```
 docker run -d -p 10000:10000 -p 10001:10001 -p 10002:10002 --name azurite mcr.microsoft.com/azure-storage/azurite
 ```
 
-create file local.settings.json with SB connection string:
-
+Now create the local configuration file at `labs/functions-durable/chained/DurableChained/local.settings.json` and add your connection settings:
 
 ```
 {
@@ -38,38 +56,37 @@ create file local.settings.json with SB connection string:
     "Values": {
         "AzureWebJobsStorage": "UseDevelopmentStorage=true",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-        "TableInputStorageConnectionString": "UseDevelopmentStorage=true",
-        "UploadSqlServerConnectionString": "Data Source=<sql-container-dns-name>;Initial Catalog=func;Integrated Security=False;User Id=sa;Password=AzureD3v!!!;MultipleActiveResultSets=True"
+        "StorageConnectionString": "UseDevelopmentStorage=true",
+        "ServiceBusConnectionString" : "<sb-connection-string>"
     }
 }
 ```
 
-Run
+Run the function locally:
 
 ```
 func start
 ```
 
-In Portal, send a message to the Topic:
+This uses the timed trigger, so within a few minutes you should see the orchestrator being started.
+
+> The function should produce a lot of output, in it you'll see lines like this:
 
 ```
-{
-    "QuoteId" : "42bf48b5-8531-48b3-82e0-91af19df6351", 
-    "ProductCode": "PR-123",
-    "Quantity" : 19
-}
+[2022-11-14T02:24:00.053Z] Executing 'TimedOrchestratorStart' (Reason='Timer fired at 2022-11-14T02:24:00.0336490+00:00', Id=56d226b5-ba43-46dc-8adf-713b23dd7b45)
+[2022-11-14T02:24:00.061Z] Starting orchestration for: save-handler; at: 14/11/2022 02:24:00 (UTC)
+...
+[2022-11-14T02:24:00.246Z] Executing 'WriteBlob' (Reason='(null)', Id=557d0579-ea38-41c6-8fd5-f3bb8d4ece42)
+[2022-11-14T02:24:00.356Z] Created blob: heartbeat/20221114022400
+...
+[2022-11-14T02:24:00.405Z] Executing 'NotifySubscribers' (Reason='(null)', Id=664c8c69-3f8b-4487-9f5d-7daa3d89865c)
+[2022-11-14T02:24:00.845Z] Published heartbeat message
+...
+[2022-11-14T02:24:00.972Z] Orchestrator completed.
+[2022-11-14T02:24:00.973Z] Executed 'ChainedOrchestrator' (Succeeded, Id=54945bb0-80a0-4dbb-9a30-3025404142b2, Duration=1ms)
 ```
 
-> Should see output in function:
-
-```
-[2022-11-07T21:56:55.436Z] Supplier1 saved quote response for ID: 20bf48b5-8531-48b3-82e0-91af19df6351
-[2022-11-07T21:56:55.436Z] Supplier2 saved quote response for ID: 20bf48b5-8531-48b3-82e0-91af19df6351
-[2022-11-07T21:56:55.505Z] Executed 'Supplier1Quote' (Succeeded, Id=58895544-27e9-4a52-99a2-7cf0ff3596c9, Duration=117ms)
-[2022-11-07T21:56:55.505Z] Executed 'Supplier2Quote' (Succeeded, Id=31a6f011-0cdf-4941-90d8-92e42031c8f7, Duration=117ms)
-```
-
-Check in table storage:
+Check in table storage - you should see a table named `heartbeats` (or use Storage Explorer):
 
 ```
 
@@ -77,43 +94,48 @@ az storage table list --connection-string "DefaultEndpointsProtocol=http;Account
 
 ```
 
-> Should see quotes
+Open the Service Bus Queue in the Portal and navigate to _Service Bus Explorer_. In the Explorer click _Peek from start_ and you should see messages with body content like this:
 
-Check in SB queue - should see responses from both
+```
+{
+    "BlobName": "heartbeat/20221114022400"
+}
+```
+
+When it's looking good, you can deploy to Azure.
 
 ## Deploy to Azure
 
-Setup:
+Here's the basic setup for your Function App:
 
 ```
-az group create -n labs-functions-servicebus --tags courselabs=azure -l eastus
+az group create -n labs-functions-durable-chained --tags courselabs=azure -l eastus
 
-az storage account create -g labs-functions-servicebus --sku Standard_LRS -l eastus -n <sa-name>
+az storage account create -g labs-functions-durable-chained --sku Standard_LRS -l eastus -n <sa-name>
 
-az functionapp create -g labs-functions-servicebus  --runtime dotnet --functions-version 4 --consumption-plan-location eastus --storage-account <sa-name> -n <function-name> 
+az functionapp create -g labs-functions-durable-chained  --runtime dotnet --functions-version 4 --consumption-plan-location eastus --storage-account <sa-name> -n <function-name> 
 ```
 
-Pre-reqs:
+For the dependencies you will need:
 
-- a service bus namespace with topic `QuoteRequestTopic` and two subscriptions `Supplier1Subscription` & `Supplier2Subscription`
-- connection string `ServiceBusInputConnectionString`
-
-- a service bus queue with name `QuoteStoredQueue`
-- connection string `ServiceBusOutputConnectionString`
+- a Service Bus Namespace (you can use your existing one) 
+- a Service Bus Queue with the name `HeartbeatCreated`
+- the connection string for the Service Bus stored in the app setting  `ServiceBusConnectionString`
 
 - a storage account for output
-- the connection string for the SA set as appsetting `OutputTableStorageConnectionString`
+- the connection string for the Storage Account set in appsetting `StorageConnectionString`
 
 ```
 func azure functionapp publish <function-name>
 ```
 
+Check the _Functions_ list in the Portal - do all the functions get shown, or just the ones with external triggers (like the timer trigger)?
+
 ## Lab
 
-You'd want to test this at scale. How could you use a Function to do that?
+Functions can be set to _Disabled_ in the Portal, which means the trigger won't fire. You could stop this whole workflow by disabling the timer trigger, but can you disable one of the activity triggers? What would happen if you could?
 
-> Stuck? Try [hints](hints.md) or check the [solution](solution.md).
-
+> Stuck? Try [suggestions](suggestions.md) 
 ___
 
 ## Cleanup
@@ -127,5 +149,5 @@ docker rm -f azurite
 Delete the lab RG:
 
 ```
-az group delete -y --no-wait -n labs-functions-servicebus
+az group delete -y --no-wait -n labs-functions-durable-chained
 ```

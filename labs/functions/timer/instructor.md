@@ -13,7 +13,7 @@ az group create -n labs-functions-timer --tags courselabs=azure -l eastus
 
 az storage account create -g labs-functions-timer --sku Standard_LRS -l eastus -n $faName
 
-az functionapp create -g labs-functions-timer  --runtime dotnet --functions-version 4 --consumption-plan-location eastus --storage-account $saName -n $faName
+az functionapp create -g labs-functions-timer  --runtime dotnet --functions-version 4 --consumption-plan-location eastus --storage-account $faName -n $faName
 
 func azure functionapp publish $faName
 ```

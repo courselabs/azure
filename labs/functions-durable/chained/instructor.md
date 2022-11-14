@@ -24,7 +24,7 @@ table storage
 ```
 az storage account create -g $rg --sku Standard_LRS -l westeurope -n $sa
 
-az storage table create -n quotes --account-name $sa
+## az storage table create -n quotes --account-name $sa
 ```
 
 
@@ -39,7 +39,7 @@ $sbConnectionString=$(az servicebus namespace authorization-rule keys list -n Ro
 
 $saConnectionString=$(az storage account show-connection-string -o tsv -g $rg --name $sa)
 
-az functionapp config appsettings set -g $rg -n $fn --settings "ServiceBusInputConnectionString=$sbConnectionString" "ServiceBusOutputConnectionString=$sbConnectionString" "OutputTableStorageConnectionString=$saConnectionString"
+az functionapp config appsettings set -g $rg -n $fn --settings "ServiceBusConnectionString=$sbConnectionString" "StorageConnectionString=$saConnectionString"
 
 func azure functionapp publish $fn
 ```

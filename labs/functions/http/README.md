@@ -74,7 +74,7 @@ There is a .NET function library with an HTTP trigger in the `calendar` folder:
 You can use the `func` CLI to run the function locally:
 
 ```
-cd labs/functions/calendar
+cd labs/functions/http/calendar
 
 func start
 ```
@@ -141,7 +141,7 @@ func azure functionapp publish <function-name>
 The output includes the public URL for the function. This one uses anonymous authorization, so you can test it with:
 
 ```
-curl <public-url>/HttpTime
+curl <public-url>/api/HttpTime
 ```
 
 Check the storage account in the Portal. You'll see blob containers are locked, but file storage is available to view. This is the root filesystem for the app; can you find the application logs?
@@ -195,9 +195,9 @@ func azure functionapp publish <function-name>
 Try some of the functions when they're deployed:
 
 ```
-curl <public-url>/HttpTime
+curl <public-url>/api/HttpTime
 
-curl <public-url>/HttpDate
+curl <public-url>/api/HttpDate
 ```
 
 Check in the Portal - you still have one Function App in the Plan. Open it and you can see the individual _Functions_. Open one and check the menu options - _Integration_ shows you the triggers, inputs and outputs; _Monitor_ shows you the recent runs and results, click one to see the logs.
@@ -205,7 +205,7 @@ Check in the Portal - you still have one Function App in the Plan. Open it and y
 Try the other new function:
 
 ```
-curl -i <public-url>/HttpDay
+curl -i <public-url>/api/HttpDay
 ```
 
 > Youll get a _Not authorized_ error because this function requires authentication
