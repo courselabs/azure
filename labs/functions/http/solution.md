@@ -41,7 +41,7 @@ func azure functionapp publish <function-name>
 Remember the hosting plan in the consumption model plan is just a placeholder, with no servers and no cost. You can create a new Function App in the same region and it will use the same plan:
 
 ```
-az functionapp create -g labs-functions  --runtime powershell --functions-version 4 --consumption-plan-location eastus --storage-account <sa-name> -n <function-name-2> 
+az functionapp create -g labs-functions-http  --runtime powershell --functions-version 4 --consumption-plan-location eastus --storage-account <sa-name> -n <function-name-2> 
 ```
 
 Now you can publish:

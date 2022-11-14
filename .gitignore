@@ -8,7 +8,8 @@ download*.*
 *.pfx
 password.txt
 **/todo-list.db*
-#local.settings.json
-#instructor.md
+local.settings.json
+instructor.md
 projects/containerized/kubernetes/
 **/.vscode/extensions.json
+labs/functions/http/lab/
