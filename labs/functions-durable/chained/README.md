@@ -20,7 +20,7 @@ The scenario is an alternative implementation of the chained function in the [fu
 
 - [DurableChained/TimedOrchestratorStart.cs)](/labs/functions-durable/chained/DurableChained/TimedOrchestratorStart.cs) - uses a timer trigger and has a `DurableClient` decorator; it uses that object to start the orchestrator, passing it a dummy application status object
 
-- [DurableChained/ChainedOrchestrator.cs](functions-durable/chained/DurableChained/ChainedOrchestrator.cs) - this is the orchestrator for all the other activities; it runs three in sequence, using the output from the first as input to the other two
+- [DurableChained/ChainedOrchestrator.cs](/labs/functions-durable/chained/DurableChained/ChainedOrchestrator.cs) - this is the orchestrator for all the other activities; it runs three in sequence, using the output from the first as input to the other two
 
 You can see how data is exchanged in a durable function - the trigger can pass an object to the orchestrator, and the orchestrator can pass and receive objects from the actitivities.
 
@@ -45,7 +45,7 @@ There's no Service Bus emulator, so you'll need to create in Azure:
 Run Docker Desktop and start the Azure Storage emulator:
 
 ```
-docker run -d -p 10000:10000 -p 10001:10001 -p 10002:10002 --name azurite mcr.microsoft.com/azure-storage/azurite
+docker run -d -p 10000-10002:10000-10002 --name azurite mcr.microsoft.com/azure-storage/azurite
 ```
 
 Now create the local configuration file at `labs/functions-durable/chained/DurableChained/local.settings.json` and add your connection settings:

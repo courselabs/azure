@@ -3,13 +3,13 @@ core:
 
 ```
 $rg='labs-functions-servicebus'
-$sb='lbfnsbes22112'
+$sb='lbfnsbes221122'
 $topic='QuoteRequestTopic'
-$sa='lbfnsbes22112'
-$fn='lbfnsbes22112'
-$fnSa='salbfnsbes22112'
+$sa='lbfnsbes221122'
+$fn='lbfnsbes221122'
+$fnSa='salbfnsbes221122'
 
-az group create -n $rg--tags courselabs=azure -l westeurope
+az group create -n $rg --tags courselabs=azure -l westeurope
 ```
 
 serice bus:

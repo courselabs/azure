@@ -3,8 +3,8 @@
     "Values": {
         "AzureWebJobsStorage": "UseDevelopmentStorage=true",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-        "ServiceBusInputConnectionString" : "<sb-connection-string>",
-        "ServiceBusOutputConnectionString" : "<sb-connection-string>",
+        "ServiceBusInputConnectionString" : "Endpoint=sb://lbfnsbes221122.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SkdGxOWqMe1rgXqD4Qvg3p9elwKpfj4NDS4/nzRXHvI=",
+        "ServiceBusOutputConnectionString" : "Endpoint=sb://lbfnsbes221122.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SkdGxOWqMe1rgXqD4Qvg3p9elwKpfj4NDS4/nzRXHvI=",
         "OutputTableStorageConnectionString": "UseDevelopmentStorage=true"
     }
 }

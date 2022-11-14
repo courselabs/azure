@@ -12,3 +12,4 @@ password.txt
 #instructor.md
 projects/containerized/kubernetes/
 **/.vscode/extensions.json
+labs/functions/http/lab/
