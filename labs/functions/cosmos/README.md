@@ -1,4 +1,4 @@
-## Functions: CosmosDB to CosmosDB
+# Functions: CosmosDB to CosmosDB
 
 CosmosDB can be used as a trigger and an output for Azure Functions. The trigger is for created and edited documents, but the potential scale of CosmosDB means each call to the function could have multiple documents, so the logic needs to allow for that. In some cases you want to use the same database collection for input and output, but that also needs careful thinking about.
 

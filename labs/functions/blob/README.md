@@ -1,4 +1,4 @@
-## Functions: Blob Storage to SQL Server
+# Functions: Blob Storage to SQL Server
 
 Functions are very good as integration components - gluing together systems which don't have any way of being connected directly. _Data-level integration_ is one option where a function is triggered when one system writes data, it reads that data and adapts or enriched it before writing it to another system.
 
@@ -89,7 +89,7 @@ Create the configuration file `labs/functions/blob/BlobToSql/local.settings.json
         "AzureWebJobsStorage": "UseDevelopmentStorage=true",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet",
         "UploadInputStorageConnectionString": "UseDevelopmentStorage=true",
-        "UploadSqlServerConnectionString": "Data Source=localhost:1433;Initial Catalog=func;Integrated Security=False;User Id=sa;Password=AzureD3v!!!;MultipleActiveResultSets=True"
+        "UploadSqlServerConnectionString": "Data Source=localhost;Initial Catalog=func;Integrated Security=False;User Id=sa;Password=AzureD3v!!!;MultipleActiveResultSets=True"
     }
 }
 ```
@@ -151,6 +151,7 @@ Now you'll need the pre-reqs for the function:
 
 - a SQL Azure instance with the database scheme deployed as above (you can use the database explorer in the Portal for that)
 - the connection string for SQL set as appsetting `UploadSqlServerConnectionString`
+- the Function App will need network access to SQL Server
 
 When you have those running you can deploy the function:
 

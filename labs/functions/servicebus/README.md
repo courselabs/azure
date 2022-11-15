@@ -1,4 +1,4 @@
-## Functions: Service Bus to Multiple Outputs
+# Functions: Service Bus to Multiple Outputs
 
 Functions and messaging go together very nicely when you build apps using asynchronous event publishing. Your main app might push messages to a Service Bus topic and that can trigger a function which adds a new feature.
 
@@ -82,6 +82,8 @@ And create the file `labs/functions/servicebus/TopicToTableAndQueue/local.settin
 You can run the function locally when you have all the dependencies:
 
 ```
+cd labs/functions/servicebus/TopicToTableAndQueue
+
 func start
 ```
 

@@ -1,4 +1,4 @@
-## Functions: Timer to Blob Storage
+# Functions: Timer to Blob Storage
 
 The key feature of Azure functions is their _bindings_. Your function code is triggered by an event, and it can receive input or write output to other Azure services using bindings. If you need to read from a CosmosDB or write to a Service Bus queue you can do it without any of the infrastructure code.
 
@@ -18,7 +18,7 @@ In this lab we'll use a timer trigger for a function which writes output to blob
 
 The function code is in the `TimerToBlob` directory:
 
-- [TimerToBlob/Hearbeat.cs](/labs/functions/timer/TimerToBlob/Hearbeat.cs) - executes every 5 minutes and writes a JSON file to Blob Storage
+- [TimerToBlob/Hearbeat.cs](/labs/functions/timer/TimerToBlob/Heartbeat.cs) - executes every 5 minutes and writes a JSON file to Blob Storage
 
 This is standard C# code with all the functions features enlisted with attributes:
 
@@ -72,10 +72,10 @@ This sets the storage connection strings to use the local Azure storage emulator
 **Make sure you have Docker Desktop running** and start the storage emulator:
 
 ```
-docker run -d -p 10000:10000 -p 10001:10001 --name azurite mcr.microsoft.com/azure-storage/azurite
+docker run -d -p 10000-10002:10000-10002 --name azurite mcr.microsoft.com/azure-storage/azurite
 ```
 
-Now you can run the function locally (you may want to change the trigger to run more frequently - e.g. every two minutes is `0 */5 * * * *`)
+Now you can run the function locally (you may want to change the trigger to run more frequently - e.g. every two minutes is `0 */2 * * * *`)
 
 ```
 cd labs/functions/timer/TimerToBlob
