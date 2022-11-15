@@ -1,9 +1,10 @@
+# API Managment: Mocking new APIs
 
+New APIs are often designed with a three-way discussion between the API architect, the data owner and the API consumer. That approach ensures you have an API which adheres to best practices and provides the consumer with the information they need from data you know is available.
 
-# API Managment: Mocking for new APIs with
+The period between design and delivery could be long, so it's a good idea to publish a _mock_. This is a real API service which has all the operations agreed in the design, but returns dummy data. Teams can program against the mock until the real API is available.
 
-3-way design with data owner, consumer and API team; deploy draft API ASAP to allow dev and iterate on design
-
+In this lab we'll use API management to design an API, publish mock responses, and test that it adheres to the agreed specification.
 
 ## Reference
 
@@ -11,12 +12,13 @@
 
 ## Create a new API
 
-IN your existing API Management service, create a new API:
+You should have an existing API Management service from the [API Management lab](/labs/apim/README.md). Browse to it in the Portal and create a new API:
 
-- manually defined HTTP
-- any name and URL - use the APIM URL suffix `newapi`
+- select _manually defined HTTP API_
+- enter any name and URL 
+- use the APIM URL suffix `newapi`
 
-Use _Definitions_ to define object types.
+Open the _Definitions_ tab - this is where you define the types of object the API works with.
 
 Create a definition called _Student_ from this sample JSON:
 
@@ -48,7 +50,7 @@ And another definition called _StudentDetail_ from this sample JSON:
 }
 ```
 
-And an array definition called _StudentArray_  using this **payload**:
+And lastly an array definition called _StudentArray_  using this **payload**:
 
 ```
 {
@@ -59,38 +61,38 @@ And an array definition called _StudentArray_  using this **payload**:
 }
 ```
 
-The API will let you manage students, using this definition and the student ID.
+The API will let you manage students, using these resources definitions.
 
 ## Add mocked operations
 
 Add operations to the API design to list students, create a student, get the details for a student and delete a student.
 
 - _List Students_ 
-    - GET from the url /students
-    - returns 200 OK response
+    - GET from the url `/students`
+    - returns `200 OK` response
         - with an `application/json` representation of the `StudentArray` definition
 
 - _Create Student_
-    - POST from the url /students
+    - POST to the url `/students`
     - with a request payload
         - an `application/json` representation of the `StudentDetail` definition
-    - returns 201 Created response
+    - returns `201 Created` response
         - with an `application/json` representation of the `StudentDetail` definition
         
 - _Get Student_ 
-    - GET from the url /students/{studentId}
+    - GET from the url `/students/{studentId}`
     - with `studentId` as a template parameter
-    - returns 200 OK response
+    - returns `200 OK` response
         - with an `application/json` representation of the `StudentDetail` definition
-    - returns 404 Not found response
+    - returns `404 Not found` response
         - with no payload
 
 - _Delete Student_ 
-    - DELETE from the url /students/{studentId}
+    - DELETE to the url `/students/{studentId}`
     - with `studentId` as a template parameter
-    - returns 204 No Content response
+    - returns `204 No Content` response
         - with no payload
-    - returns 404 Not found response
+    - returns `404 Not found` response
         - with no payload
 
 For each operation:
@@ -105,23 +107,51 @@ For each operation:
 
 Add the new API to the _Unlimited_ product, and create a subscription for the product.
 
-Test your API with curl using the subscription key - you should get the mocked responses
+Test your API with curl using the subscription key - you should get the mocked responses for each operation:
 
 ```
-# e.g.
+# this should return a student array:
 curl "https://<apim-name>.azure-api.net/newapi/students" -H "Ocp-Apim-Subscription-Key: <subscription-key>"
+
+# this should return a student detail:
+curl "https://<apim-name>.azure-api.net/newapi/students/1234" -H "Ocp-Apim-Subscription-Key: <subscription-key>"
 ```
+
+curl is the litmus test for REST APIs - if you can navigate them from the command line, then consumers will definitely be able to work with them in code.
 
 ## Consume & Test with Postman
 
-Install Postman
+curl isn't very user-friendly though. A great (free) tool for working with REST APIs is Postman:
 
-Import collection labs/apim-mock/students.postman_collection.json
+- [install Postman](https://www.postman.com/downloads/) *or*
+- try [Postman online](https://web.postman.co/home)
 
-OPen variables page and set URL & API key in _Current_:
+Postman is about the most popular tool for working with REST APIs. You can set up all the requests you want to make and parameterize any variables, so it's very flexible.
 
-Save and try all the operations - they should all give the expected response code and response.
+There's a Postman _collection_ in this repo which has the consumer's expectation of the API you've just mocked out. You should be able to import that in Postman, point it to your mock and make all of the operation calls:
+
+- import the collection file `labs/apim-mock/students.postman_collection.json`
+- open the collection and navigate to the _Variables_ tab:
+
+![Postman collection variables](/img/postman-collection-variables.png)
+
+Set the values for the mock API you created in APIM:
+
+- `baseUrl` is the full URL e.g. `https://myapim.azure-api.net/newapi`
+- `apiKey` is the subscription key - the same one you used with curl 
+
+Click _Save_ and try all the operations - they should all give the expected response code and response. If not you'll need to check your API design in APIM.
 
 ## Lab
 
-How can you share the API spec with a third party?
+This API spec was manually put together in the APIM designer. That's easy to do but not easy to share. How could you distribute the API spec to consumers?
+
+
+> Stuck? Try [suggestions](suggestions.md) 
+___
+
+## Cleanup
+
+**Don't clean up yet!** 
+
+One APIM instance can host multiple APIs and we'll use the same resource in the next few labs, rather than deleting it and waiting another hour to create a replacement.

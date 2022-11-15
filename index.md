@@ -149,14 +149,13 @@ _Durable Functions_
 - [Azure SignalR Service](/labs/signalr/README.md)
 - [SignalR functions output](/labs/functions/signalr/README.md)
 
-_API Management_ 
+_API Management & Web Application Firewall_ 
 
-- New APIM, explore tiers, identity and protocols
-- Create APIM with AZ CLI, explore gateway & devloper portal
-- APIGW functionality - SSL, authentication, caching, compression
-- Using policies for control flow & data transform
-- Using CDN & comparing with APIGW
-
+- [API Management](/labs/apim/README.md)
+- [Mocking APIs](/labs/apim-mock/README.md)
+- [Securing APIs with policies](/labs/apim-policies/README.md)
+- [Versioning APIs for breaking changes](/labs/apim-versioning/README.md)
+- [Application Gateway & WAF](/labs/appgw/README.md)
 
 _Monitoring_
 

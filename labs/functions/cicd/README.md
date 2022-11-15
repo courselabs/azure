@@ -107,7 +107,7 @@ cp labs/functions/cicd/update/*.cs labs/functions/cicd/ChainedFunctions/
 
 # commit and push the changes:
 git add labs/functions/cicd/ChainedFunctions/*
-git commt -m 'New functions'
+git commit -m 'New functions'
 git push labs-funcions-cicd main
 ```
 

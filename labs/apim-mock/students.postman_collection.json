@@ -101,7 +101,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/student/:studentId",
+							"raw": "{{baseUrl}}/students/:studentId",
 							"host": [
 								"{{baseUrl}}"
 							],
