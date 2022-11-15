@@ -149,13 +149,17 @@ _Durable Functions_
 - [Azure SignalR Service](/labs/signalr/README.md)
 - [SignalR functions output](/labs/functions/signalr/README.md)
 
-_API Management & Web Application Firewall_ 
+_API Management_ 
 
 - [API Management](/labs/apim/README.md)
 - [Mocking APIs](/labs/apim-mock/README.md)
 - [Securing APIs with policies](/labs/apim-policies/README.md)
 - [Versioning APIs for breaking changes](/labs/apim-versioning/README.md)
+
+_Web Application Firewall & CDN_
+
 - [Application Gateway & WAF](/labs/appgw/README.md)
+- [Front Door & WAF](/labs/frontdoor/README.md)
 
 _Monitoring_
 
