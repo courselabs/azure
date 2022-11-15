@@ -120,3 +120,13 @@ curl -v "https://<apim-name>.azure-api.net/swapi/people/14" -H "Ocp-Apim-Subscri
 ## Lab
 
 The response from SWAPI is pretty good REST. There are URLs linking the entity to other entities, e.g. `people/3` has a _species_ field which refers you to `species/2`. Can you follow those links from your own APIM wrapper for SWAPI? Is that a good or a bad thing?
+
+
+> Stuck? Try [suggestions](suggestions.md) 
+___
+
+## Cleanup
+
+**Don't clean up yet!** 
+
+One APIM instance can host multiple APIs and we'll use the same resource in the next lab, rather than deleting it and waiting another hour to create a replacement.

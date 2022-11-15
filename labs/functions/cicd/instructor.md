@@ -26,7 +26,7 @@ table storage
 ```
 az storage account create -g $rg --sku Standard_LRS -l westeurope -n $sa
 
-az storage table create -n quotes --account-name $sa
+az storage table create -n heartbeats --account-name $sa
 ```
 
 
