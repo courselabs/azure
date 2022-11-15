@@ -45,7 +45,7 @@ Upload the spec from the repo in `labs/apim-versioning/rng-v1.0.json`
 
 When your web app is running, set the URL for the app as the Web Service URL in the API (e.g. `https://myrngapi.azurewebsites.net`).
 
-Test the `rng` operation in the APIM designer. Note that the HTTP request specifies the API version 1.0 in the header - **this will be a requirment for consumers**. Versioned APIs need to know which version you're calling.
+Test the `rng` operation in the APIM designer. Note that the HTTP request specifies the API version 1.0 in the header - **this will be a requirement for consumers**. Versioned APIs need to know which version you're calling.
 
 ## Add a revision to version 1.1
 
@@ -76,9 +76,9 @@ Open the _Revisions_ tab of the RNG API. There is one existing revision; click _
 Now you can set the range of the random number you want, using `min` and `max` parameters in the query string!
 ```
 
-Note in API view above the _Design_ tab it now says _REVISION 2_.
+Note that in the API view above the _Design_ tab it now says _REVISION 2_.
 
-Open the _Settings_ tab and change the Web service URL to your staging slot URL. End users never see this URL, so it doesn't matter that it has an odd name.
+Open the _Settings_ tab and change the Web service URL to your deployment slot URL. Now revision 1 is pointing to the _Production_ slot and revision 2 is pointing to the _blue_ slot. End users never see this URL, so it doesn't matter that it has an odd name.  
 
 In the _Design_ tab, open the rng operation and edit the _Frontend_ to add two query parameters:
 
@@ -98,7 +98,7 @@ Test with curl and you can add the min and max parameters to the original URL. I
 
 ## Publish version 2.0 of the API
 
-The optional parameters are not ideal because we can't validate them properly. v1.0 clients never expected to have a 400 response so we can't add that into a revision because it could break their code.
+The optional parameters are not ideal because we can't validate them properly. v1.0 clients never expected they might get a 400 response so we can't add that into a revision because it could break their code.
 
 To clean up the API with proper validation and an updated spec, we need a new version.
 
@@ -130,7 +130,7 @@ We can have both versions live, and continue to support 1.1 and 2.0 with revisio
 Is this really a blue-green deployment? App Service deployment slots can be swapped which does give you the blue-green experience, but is that possible with APIM in front?
 
 
-> Stuck? Try [suggestions](suggestions.md) 
+> Stuck? Try my [suggestions](suggestions.md).
 ___
 
 ## Cleanup
