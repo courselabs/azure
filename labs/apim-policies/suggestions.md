@@ -1,4 +1,5 @@
+# Lab Suggestions
 
-no - only published operations are listened on
+No, APIM only listens on published operations. If you send in a request which is not known to APIM it doesn't get forwarded on to the backend, the client gets a 404 Not found response.
 
-no openapi schema for swapi, would need to build own
+That might seem like a bad thing, because it's not at all flexible - you need to explicitly model every operation. Actually that's a good thing :) APIs are meant to have a fixed contract, you should be able to fetch the specification and be confident it describes everything the API can do.
