@@ -9,10 +9,11 @@ namespace ChainedFunctions
 {
     public class UploadLog
     {
-        [FunctionName("WriteLog")]        
+        [FunctionName("WriteLog")]  
+        [StorageAccount("StorageConnectionString")]      
         public async Task Run(
             [BlobTrigger("heartbeat/{name}")] Stream uploadedBlob,
-            [Table("heartbeats", Connection="StorageConnectionString")] IAsyncCollector<HeartbeatLogEntity> entities,                          
+            [Table("heartbeats")] IAsyncCollector<HeartbeatLogEntity> entities,                          
             string name, ILogger log)
         {
             log.LogInformation($"New heartbeat blob uploaded:{name}");
