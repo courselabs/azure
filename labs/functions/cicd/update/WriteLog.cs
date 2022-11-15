@@ -17,13 +17,13 @@ namespace ChainedFunctions
         {
             log.LogInformation($"New heartbeat blob uploaded:{name}");
 
-            var log = new HeartbeatLogEntity
+            var entity = new HeartbeatLogEntity
             {
-                PartitionKey = Guid.NewGuid().ToString()>Substring(0,1),
+                PartitionKey = Guid.NewGuid().ToString().Substring(0,1),
                 RowKey = Guid.NewGuid().ToString(),
                 BlobName = name
             };
-            await entities.AddAsync(log);
+            await entities.AddAsync(entity);
             
             log.LogInformation("Recorded heartbeat in Table Storage");
         }
