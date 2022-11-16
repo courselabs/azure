@@ -159,15 +159,12 @@ _API Management_
 _Web Application Firewall & CDN_
 
 - [Application Gateway & WAF](/labs/appgw/README.md)
-- [Front Door & WAF](/labs/frontdoor/README.md)
+- [Front Door with CDN & WAF](/labs/frontdoor/README.md)
 
 _Monitoring_
 
-- Instrumentation in code with App Insights
-- Using Azure Monitor with App Insights and Container Insights
-- Distributed tracing & Application Map
-- Centralized log collection & Log Analytics
-- Configuring alerts and notifications
+- [Monitoring with Application Insights](/labs/applicationinsights/README.md)
+- [Querying logs and metrics with Log Analytics](/labs/loganalytics/README.md)
 
 _Project_
 

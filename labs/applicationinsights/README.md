@@ -162,7 +162,7 @@ Try the app now, get a few numbers and see what you get in app insights:
 📋 In your browser open developer tools and look at the network flow when you refresh the page. What extra traffic is there now that `APPINSIGHTS_JAVASCRIPT_ENABLED` is set?
 
 <details>
-  <summary>Not sure ?</summary>
+  <summary>Not sure?</summary>
 
 Client-side library makes a `track` call with a payload like this:
 
@@ -247,6 +247,7 @@ Azure Functions also has automatic instrumentation. If you create Functions Apps
 
 
 ## Cleanup 
+
 
 We can delete the Resource Group where the apps are running:
 
