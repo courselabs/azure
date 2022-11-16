@@ -12,5 +12,8 @@ FROM mcr.microsoft.com/dotnet/runtime:6.0-alpine
 
 ENTRYPOINT ["dotnet", "/app/fulfilment-processor-ai.dll"]
 
+ENV APPLICATIONINSIGHTS_ROLE_NAME="FulfilmentProcessor" \
+    Fulfilment_FailureFactor="0.1"
+
 WORKDIR /app
 COPY --from=builder /out/ .
