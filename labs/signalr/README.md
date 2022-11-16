@@ -155,7 +155,7 @@ Now create a role assignment for the App Service's Managed Identity ID, giving i
 
 ```
 # get the app service principal ID:
-az webapp identity show --query principalId -o tsv -g labs-signalr -n 
+az webapp identity show --query principalId -o tsv -g labs-signalr -n <app-name>
 
 # create the role assignment:
 az role assignment create  --role 'SignalR App Server' --assignee-object-id <principalId> --scope "<signalr-id>"
