@@ -37,15 +37,20 @@ We'll use a different resource group for the apps:
 az group create -n labs-appinsights-apps  -l eastus --tags courselabs=azure
 ```
 
+Three containers with v1.0 app:
 
 ```
-az container create -g labs-appinsights-apps  --image courselabs/fulfilment-processor:appinsights-22.11 --no-wait --name fp1 --secure-environment-variables "ApplicationInsights__ConnectionString=<appinsights-connection-string>"
+az container create -g labs-appinsights-apps  --image courselabs/fulfilment-processor:appinsights-1.0 --no-wait --name fp1 --secure-environment-variables "ApplicationInsights__ConnectionString=<appinsights-connection-string>"
 
-az container create -g labs-appinsights-apps  --image courselabs/fulfilment-processor:appinsights-22.11 --no-wait --name fp2 --secure-environment-variables "ApplicationInsights__ConnectionString=<appinsights-connection-string>"
+az container create -g labs-appinsights-apps  --image courselabs/fulfilment-processor:appinsights-1.0 --no-wait --name fp2 --secure-environment-variables "ApplicationInsights__ConnectionString=<appinsights-connection-string>"
 
-az container create -g labs-appinsights-apps  --image courselabs/fulfilment-processor:appinsights-22.11 --no-wait --name fp3 --secure-environment-variables "ApplicationInsights__ConnectionString=<appinsights-connection-string>"
+az container create -g labs-appinsights-apps  --image courselabs/fulfilment-processor:appinsights-1.0 --no-wait --name fp3 --secure-environment-variables "ApplicationInsights__ConnectionString=<appinsights-connection-string>"
+```
 
-az container create -g labs-appinsights-apps  --image courselabs/fulfilment-processor:appinsights-22.11 --no-wait --name fp4 --secure-environment-variables "ApplicationInsights__ConnectionString=<appinsights-connection-string>"
+And one with v1.2:
+
+```
+az container create -g labs-appinsights-apps  --image courselabs/fulfilment-processor:appinsights-1.2 --no-wait --name fp4 --secure-environment-variables "ApplicationInsights__ConnectionString=<appinsights-connection-string>"
 ```
 
 Open the _Live metrics_ view in application insights. How is this app looking?

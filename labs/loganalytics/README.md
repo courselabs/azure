@@ -27,6 +27,10 @@ Traces are the actual log entries written by the application.
 AppTraces
 | limit 100
 
+AppMetrics
+| order by TimeGenerated desc 
+| limit 10
+
 AppTraces
 | distinct SeverityLevel
 
