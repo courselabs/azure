@@ -1,0 +1,64 @@
+[
+    {
+        "time": "2022-11-16T15:10:51.770Z",
+        "iKey": "f5a9b948-cdf7-4763-8b27-da83fcd7d1c5",
+        "name": "Microsoft.ApplicationInsights.f5a9b948cdf747638b27da83fcd7d1c5.Pageview",
+        "tags": {
+            "ai.user.id": "QX+GXnwjWg5rTvOHCLqk+F",
+            "ai.session.id": "gF1hYn5gDg2IkjRq83Vz0w",
+            "ai.device.id": "browser",
+            "ai.device.type": "Browser",
+            "ai.operation.name": "/",
+            "ai.operation.id": "8fae7b0c2b0b4501ae8c09b3d390e0fe",
+            "ai.internal.sdkVersion": "javascript:2.8.9",
+            "ai.internal.snippet": "4",
+            "ai.internal.sdkSrc": "cdn2"
+        },
+        "data": {
+            "baseType": "PageviewData",
+            "baseData": {
+                "ver": 2,
+                "name": "Courselabs - Numbers.Web",
+                "url": "https://clabsazes2211163.azurewebsites.net/",
+                "duration": "00:00:00.253",
+                "properties": {
+                    "refUri": "https://sandbox-8-2.reactblade.portal.azure.net/"
+                },
+                "measurements": {},
+                "id": "8fae7b0c2b0b4501ae8c09b3d390e0fe"
+            }
+        }
+    },
+    {
+        "time": "2022-11-16T15:10:51.771Z",
+        "iKey": "f5a9b948-cdf7-4763-8b27-da83fcd7d1c5",
+        "name": "Microsoft.ApplicationInsights.f5a9b948cdf747638b27da83fcd7d1c5.PageviewPerformance",
+        "tags": {
+            "ai.user.id": "QX+GXnwjWg5rTvOHCLqk+F",
+            "ai.session.id": "gF1hYn5gDg2IkjRq83Vz0w",
+            "ai.device.id": "browser",
+            "ai.device.type": "Browser",
+            "ai.operation.name": "/",
+            "ai.operation.id": "8fae7b0c2b0b4501ae8c09b3d390e0fe",
+            "ai.internal.sdkVersion": "javascript:2.8.9"
+        },
+        "data": {
+            "baseType": "PageviewPerformanceData",
+            "baseData": {
+                "ver": 2,
+                "name": "Courselabs - Numbers.Web",
+                "url": "https://clabsazes2211163.azurewebsites.net/",
+                "duration": "00:00:00.253",
+                "perfTotal": "00:00:00.253",
+                "networkConnect": "00:00:00.000",
+                "sentRequest": "00:00:00.189",
+                "receivedResponse": "00:00:00.001",
+                "domProcessing": "00:00:00.063",
+                "properties": {},
+                "measurements": {
+                    "duration": 253.30000000004657
+                }
+            }
+        }
+    }
+]
