@@ -15,5 +15,8 @@ public class RoleNameInitializer : ITelemetryInitializer
     void ITelemetryInitializer.Initialize(ITelemetry telemetry)
     {
         telemetry.Context.Cloud.RoleName = _roleName;
+        telemetry.Context.Component.Version = typeof(RoleNameInitializer).Assembly.GetName().Version.ToString();
+
+        Console.WriteLine($"** Initializer set RoleName: {telemetry.Context.Cloud.RoleName}; Version: {telemetry.Context.Component.Version}");
     }
 }
