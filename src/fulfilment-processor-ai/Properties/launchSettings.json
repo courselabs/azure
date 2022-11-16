@@ -1,0 +1,11 @@
+﻿{
+  "profiles": {
+    "fulfilment_processor_ai": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
