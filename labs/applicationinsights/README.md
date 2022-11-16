@@ -1,67 +1,105 @@
 # Application Insights
 
-Consumption model for metrics, log tracing and dependency visualization
+Application Insights is a monitoring tool which combines ingestion of log and metric data, with a UI to search and explore the data. You can add Application Insights support to any app by using the client library, and PaaS platforms (including Web Apps and Function Apps) support automatic instrumentation, so they can send key data to App Insights without any code changes.
+
+Applications send data to App Insights as the central collector, and each Application Insights _app_ is linked to a [Log Analytics]() service which does the actual data storage. This is a flexible approach which means you can troubleshoot in App Insights, build complex queries in Log Analytics and surface Key Performance Indicators (KPIs) in Azure [Dashboards](), all from the same set of data.
+
+In this lab we'll run a few apps, see how to integrate them with Application Insights, and explore the UI for monitoring application health.
+
+
+## Reference
+
+- [Application Insights overview]()
+
+- [Integrating Application Insights with App Service apps]()
+
+- [Application Insights SDKs]()
+
+- [`az monitor app-insights` commands]()
 
 ## Create Application Insights
 
-portal new "application insights"
+Create a new resouce in the Portal, search for "application insights" and create. For the new resource you can configure:
 
-- usual dns name, region
-- mode is classic or workspace
+- the usual resource name and region options
+- there is no public DNS for app insights, so the name does not have to be globally unique
+- choice of mode - _Classic_ or _Workspace_
 
-Workspace refers to Log Analytics, which is the latest operations tool for storing and analysing data - . We'll create the workspace and then app insights in the cli:
+There's not much else. The mode is a choice between an older architecture where App Insights owned the data storage, and the latest approach where the data is stored in a Log Analytics Workspace.
+
+Log Analytics is the better approach, because you can store data from several sources in one place and query across them all.
+
+We'll create the Workspace and App Insights in the cli:
 
 ```
 az group create -n labs-appinsights  -l eastus --tags courselabs=azure
 
-az monitor log-analytics workspace create -g labs-appinsights -n labsloganalytics 
+az monitor log-analytics workspace create -g labs-appinsights -n labsloganalytics -l eastus
 
-az monitor app-insights component create --app labs --location eastus --kind web -g labs-appinsights --workspace labsloganalytics
+az monitor app-insights component create --app labs --kind web -g labs-appinsights --workspace labsloganalytics -l eastus
 ```
 
-Open in Portal
+Browse to the new Application Insights in the Portal. There are lots of interesting-sounding features:
 
-Get the connection string:
+- Application Map
+- Live Metrics
+- Failures
+
+These won't show anything yet, because we don't have any apps sending data to App Insights. We'll do that next.
+
+## Deploy App with Custom App Insights
+
+In the source folder `src/fulfilment-processor-ai` there is an application which uses the App Insights SDK to send logs and metrics data to AppInsights. There's explicit code in there to record the events we care about. [Worker.cs](/src/fulfilment-processor-ai/Worker.cs) has code like this:
+
+- `_telemetry.StartOperation` - records that an _operation_ has started; this is a unit of work with a processing duration
+- `_telemetry.TrackEvent` - records that an _event_ has happened, with properties to identify the event type and other custom data
+- `_telemetry.TrackDependency` - records that a _dependency_ has been called, with the duration of the call and the success or failure status
+
+Those are all custom App Insights functions. There is also a lot of logging in the app, using the standard .NET logging framework, which App Insights can also collect.
+
+To connect the app to App Insights you'll need the connection string:
 
 ```
 az monitor app-insights component show --app labs -g labs-appinsights --query connectionString -o tsv
 ```
 
-## Deploy App with Custom App Insights 
-
-Create some ACI containers running an app which sends monitoring data to app insights.
-
-We'll use a different resource group for the apps:
+A Docker image for the app is available on Docker Hub. Create some ACI containers configured with your App Insights connection string:
 
 ```
-az group create -n labs-appinsights-apps  -l eastus --tags courselabs=azure
-```
+# we'll use a new resource group for the apps:
 
-Three containers with v1.0 app:
+az group create -n labs-appinsights-apps --tags courselabs=azure -l eastus
 
-```
+# start 3 containers running v1.0 of the app:
+
 az container create -g labs-appinsights-apps  --image courselabs/fulfilment-processor:appinsights-1.0 --no-wait --name fp1 --secure-environment-variables "ApplicationInsights__ConnectionString=<appinsights-connection-string>"
 
 az container create -g labs-appinsights-apps  --image courselabs/fulfilment-processor:appinsights-1.0 --no-wait --name fp2 --secure-environment-variables "ApplicationInsights__ConnectionString=<appinsights-connection-string>"
 
 az container create -g labs-appinsights-apps  --image courselabs/fulfilment-processor:appinsights-1.0 --no-wait --name fp3 --secure-environment-variables "ApplicationInsights__ConnectionString=<appinsights-connection-string>"
-```
 
-And one with v1.2:
+# and 1 container running v1.2:
 
-```
 az container create -g labs-appinsights-apps  --image courselabs/fulfilment-processor:appinsights-1.2 --no-wait --name fp4 --secure-environment-variables "ApplicationInsights__ConnectionString=<appinsights-connection-string>"
 ```
 
-Open the _Live metrics_ view in application insights. How is this app looking?
+> Those containers will all start and be publishing to App Insights within a few minutes
 
-What can you find out about this app's dependencies from the _Application map_ view?
+Back to Application Insights in the Portal:
 
-Can you see the average time to process a batch from the _Performance_ view? Does that reflect the typical processing time or are there outliers skewing the average?
+- open the _Live metrics_ view in application insights. How is this app looking?
+
+- what can you find out about this app's dependencies from the _Application map_ view?
+
+- an you see the average time to process a batch from the _Performance_ view? 
+
+This is all powerful stuff, but for a backend app like this we need to write the custom code to capture the metrics we care about. For standard apps running in PaaS, App Insights can do that for us.
 
 ## Add Application Insight to a web app
 
-RNG app built without app insights sdk; but PaaS services can enlist:
+The Random Number Generator is a .NET web app with a backend API. There is some logging in the codebase but no integration with App Insights. If we run those components in App Service we can instrument them without changing the apps.
+
+Start by deploying the website into a new App Service:
 
 ```
 cd src/rng/Numbers.Web
@@ -69,17 +107,19 @@ cd src/rng/Numbers.Web
 az webapp up -g labs-appinsights-apps --plan rng-plan-01 --os-type Linux --runtime dotnetcore:6.0 -l westus -n <web-name>
 ```
 
-Open your Web App in the Portal when it's ready, to _Application Insights_ and click _Turn on APplication Insights_:
+You can browse to the app and see the home page, but there won't be any metrics collected by App Insights yet.
+
+Open your Web App in the Portal, browse to _Application Insights_ and click _Turn on Application Insights_:
 
 - choose _Select existing resource_ and choose the Application Insights instance from this lab
-- under _Instrument your applcation_ select _.NET Core_ as the runtime
+- under _Instrument your application_ select _.NET Core_ as the runtime
 - click _Apply_
 
+Browse and refresh a few times. Now metrics are being sent to App Insights - Azure knows this is a web application, so it can record information about HTTP requests and responses, and it knows it's .NET so it will collect the application logs. 
 
-Browse and refresh; try the button - fails
+Try to get a random number from the app - **it will fail** because the API isn't running yet. That failure will get recorded in App Insights too.
 
-
-Back in App insights - _Failures_ view; filter by Role=<web-name> and you should see the failed dependency. Click the failure and the _End-to-end transaction details page loads_. Explore these features:
+Back in Application Insights head to the _Failures_ view; filter by Role=<web-name> and you should see the failed dependency. Click the failure and the _End-to-end transaction details page loads_. Explore these features:
 
 - _Show what happened before and after_
 - _Show timeline for this user_
@@ -88,8 +128,11 @@ Can you drill down into the error log from these views?
 
 > To fix the app we need to run the API as well and set the API URL in configuration
 
+That's a REST API so we can get auto-instrumentaion with App Insights for that component too.
 
 ## Add a REST API to App Insights
+
+Deploy the Random Number API to the same App Service Plan:
 
 ```
 cd ../Numbers.Api
@@ -97,7 +140,9 @@ cd ../Numbers.Api
 az webapp up -g labs-appinsights-apps --plan rng-plan-01 --os-type Linux --runtime dotnetcore:6.0 -l westus -n <api-name>
 ```
 
+Open the API in the Portal:
 
+- 
 Get the URL for the RNG API
 
 In web app configuration, add two appsettings:
