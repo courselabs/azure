@@ -5,6 +5,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     {
         services.AddHostedService<Worker>();
         services.AddApplicationInsightsTelemetryWorkerService();
+        services.AddSingleton(new RoleNameInitializer("FulfilmentProcessor"));
     })
     .Build();
 
