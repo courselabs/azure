@@ -1,7 +1,7 @@
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.Extensibility;
 
-namespace fulfilment_processor_ai;
+namespace FulfilmentProcessor;
 
 public class RoleNameInitializer : ITelemetryInitializer
 {

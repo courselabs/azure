@@ -1,4 +1,4 @@
-using fulfilment_processor_ai;
+using FulfilmentProcessor;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>

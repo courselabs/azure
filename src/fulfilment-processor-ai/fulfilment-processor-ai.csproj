@@ -4,8 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-fulfilment_processor_ai-bc121475-0123-463a-8d24-1ba73dae2746</UserSecretsId>
-    <RootNamespace>fulfilment_processor_ai</RootNamespace>
+    <RootNamespace>FulfilmentProcessor</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

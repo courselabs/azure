@@ -1,26 +1,29 @@
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
 
-namespace fulfilment_processor_ai;
+namespace FulfilmentProcessor;
 
 public class Worker : BackgroundService
 {
     private static Random _Random = new Random();
     private readonly TelemetryClient _telemetry;
+    private readonly IConfiguration _config; 
     private readonly ILogger<Worker> _logger;
 
-    public Worker(TelemetryClient telemetry, ILogger<Worker> logger)
+    public Worker(TelemetryClient telemetry, IConfiguration config, ILogger<Worker> logger)
     {
         _telemetry = telemetry;
+        _config = config;
         _logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        var failureFactor = _config.GetValue<double>("Fulfilment:FailureFactor");
         while (!stoppingToken.IsCancellationRequested)
         {
             var inFlight = GenerateMetric(0, 200);
-            var failed = _Random.Next(0, (int)Math.Round(inFlight * 0.1));
+            var failed = _Random.Next(0, (int)Math.Round(inFlight * failureFactor));
             using (var operation = _telemetry.StartOperation<RequestTelemetry>("BatchReceived"))
             {
                 RecordProcessed(inFlight, failed);

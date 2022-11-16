@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "fulfilment_processor_ai": {
+    "FulfilmentProcessor": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "environmentVariables": {
