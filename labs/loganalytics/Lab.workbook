@@ -1,0 +1,75 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AppTraces\n| summarize arg_max(TimeGenerated, AppRoleInstance) by AppRoleInstance\n| project Instance=AppRoleInstance, LastSeen=datetime_diff('minute', now(), TimeGenerated)",
+              "size": 0,
+              "title": "Instances Logging",
+              "timeContext": {
+                "durationMs": 1800000
+              },
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "customWidth": "20",
+            "name": "query - 2",
+            "styleSettings": {
+              "padding": "10px"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AppTraces\n| where Properties.EventType == \"Fulfilment.Failed\"\n| summarize count() by AppRoleInstance",
+              "size": 0,
+              "title": "FulfilmentFailed events",
+              "timeContext": {
+                "durationMs": 1800000
+              },
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "visualization": "barchart"
+            },
+            "customWidth": "30",
+            "name": "query - 0",
+            "styleSettings": {
+              "margin": "10"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AppMetrics\n| where (Name == \"QueueSize\")\n| summarize AvgQueueLength = avg(Sum) by bin(TimeGenerated, 10m)",
+              "size": 0,
+              "title": "Average Queue Length",
+              "timeContext": {
+                "durationMs": 3600000
+              },
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "visualization": "timechart"
+            },
+            "customWidth": "40",
+            "name": "query - 2",
+            "styleSettings": {
+              "margin": "10"
+            }
+          }
+        ]
+      },
+      "name": "group - 3"
+    }
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}

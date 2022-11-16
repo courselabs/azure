@@ -127,9 +127,9 @@ That average isn't much use because it's the average over all time. More useful 
 
 ## Lab
 
-Visualizations in Log Analytics are good for quick queries, but if you want a more useful view of application health and performance you need to create a Dashboard. The Dashboard UX in Azure takes some getting used to, but the visualizations are powered by KQL queries over a Log Analytics Workspace.
+Visualizations in Log Analytics are good for quick queries, but if you want a more useful view of application health and performance you need to create a Workbook. The Workbook UX in Azure takes some getting used to, but the visualizations are powered by KQL queries over a Log Analytics Workspace.
 
-Build a dashboard for the Fulfilment Processor app which shows:
+Build a Workbook for the Fulfilment Processor app which shows:
 
 - a table of all the instances which are currently running
 - a breakdown of the `Fulfilment.Failed` events, split by instance
