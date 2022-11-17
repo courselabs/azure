@@ -152,7 +152,7 @@ If you want a more thorough test, try the [GoTestWAF](https://github.com/wallarm
 Start Docker Desktop and run this command, using your AppGW IP address:
 
 ```
-docker run --add-host test.url:<app-gw-ip> sixeyed/gotestwaf:2211 --noEmailReport --url http://test.url --skipWAFIdentification --skipWAFBlockCheck  --testSet owasp
+docker run --add-host simple.appgw.azure.courselabs.co:<app-gw-ip> sixeyed/gotestwaf:2211 --noEmailReport --url http://simple.appgw.azure.courselabs.co --skipWAFIdentification --skipWAFBlockCheck  --testSet owasp
 ```
 
 > It takes a while, but you should see over 500 test cases all successfully blocked by WAF.

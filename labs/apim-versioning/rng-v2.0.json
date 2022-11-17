@@ -29,7 +29,8 @@
             "schema": {
               "type": "integer",
               "format": "int32"
-            }
+            },
+            "required": true
           },
           {
             "name": "max",
@@ -37,7 +38,8 @@
             "schema": {
               "type": "integer",
               "format": "int32"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
