@@ -14,6 +14,8 @@ In this lab we'll deploy App Gateway with WAF and use it as the front-end for so
 
 - [Fronting API Management with Application Gateway](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-integrate-internal-vnet-appgateway)
 
+- [Troubleshooting 502 Bad Gateway errors](https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-troubleshooting-502)
+
 
 ## Create Application Gateway
 
@@ -96,6 +98,12 @@ _For the Pi app create:_
 - a listener with domain name `pi.appgw.azure.courselabs.co`
 - backend pool with the Pi ACI IP address
 - rule linking the listener and pool
+
+_De-prioritize the default rule:_
+
+- the default rule is a single-site rule
+- this will stop your multi-site rules being evaluted
+- change the default `rule1` priority to a higher number than both your other rules
 
 Add the fake domains to your hosts file **pointing to the IP address of your AppGW**:
 
