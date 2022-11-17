@@ -168,7 +168,7 @@ _Monitoring_
 
 _Project_
 
-- Project 4: Serverless API
+- [Project 4: Serverless Apps](/projects/serverless/README.md)
 
 
 #### Credits

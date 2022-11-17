@@ -1,0 +1,60 @@
+﻿@page
+@model ToDoList.Pages.ListModel
+
+<script>   
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl('@Model.SignalRUrl')
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+    connection.on('newMessage', (message) => {
+        addRow(message);
+      });
+
+    connection.start()
+        .catch(console.error);
+</script>
+
+<script>
+    function addRow(newItem) {
+      let table = document.getElementById("tblItem");
+      let row = table.insertRow(-1);
+   
+      let c1 = row.insertCell(0);
+      let c2 = row.insertCell(1);
+   
+      c1.innerText = newItem.Item
+      c2.innerText = new Date(newItem.DateAdded).toLocaleDateString()
+   }
+</script>
+  
+<h1>TODO List</h1>
+
+<p>There is much still to do.</p>
+
+<p>But there's always room to <a href="/new">add more</a>.</p>
+
+@if (@Model.ToDos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table" id="tblItem">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Date Added</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var todo in @Model.ToDos)
+            {
+                <tr>
+                    <td>@todo.Item</td>
+                    <td>@todo.DateAdded.ToLongDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
