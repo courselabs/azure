@@ -65,6 +65,12 @@ It's a good idea to try and run the application locally first, so you get a feel
     - `events.todo.itemsaved`
 - a SignalR Service instance
 
+You'll also need a local container for the Storage Account emulator:
+
+```
+docker run -d -p 10000-10002:10000-10002 --name azurite mcr.microsoft.com/azure-storage/azurite
+```
+
 To configure the functions create the file `local.settings.json` in the folder `functions/TodoList.Functions` with these settings and your connection strings:
 
 ```
